@@ -1,1 +1,139 @@
+Literal:
+	A constant value which can we assigned to the variables is called literal.
+Example: int x = 10;
+int -> data type/reserved words
+x	-> variables/identifiers
+10	-> constant/Literal
 
+Integral Literals
+	For Integral data types (byte, short, int, long) we can specify literal value in the following ways.
+	1. Decimal form: (base 10) - Allowed digits are 0 - 9
+		Example: int x = 10;
+	2. Octal form: (base 8)	- Allowed digits are 0 - 7. Literal value should be prefix with 0.
+		Example: int x = 010;
+	3. Hexadecimal: (base 16)	- Allowed digits are 0 - 9, a - f.
+	For extra digits (a-f we can use both lower & upper case characters.
+	This is one of very few areas where java is not case sensitive).
+	Literal value should be prefix with 0x or 0X.
+		Example: int x = 0x10
+
+	These are only possible ways literal value for Integral data types.
+
+	int x = 10;
+    int x1 = 0786; // Invalid
+    int x2 = 0777; // Valid
+    int x3 = 0xFace;
+    int x4 = 0xBeef;
+    int x5 = 0xBeer; // Invalid
+
+	int x = 10;
+    int y = 010;
+    int z = 0x10;
+    System.out.println(x + "..." + y + "..." + z);
+
+	By default every integral literal is of int type. But we can specify as long type by suffixed with l or L.
+
+	int x = 10;
+    long l = 10L;
+    int x1 = 10l;	//Compile time error -> error: incompatible types: possible lossy conversion from long to int -> int x1 = 10l;
+    long l1 = 10;
+
+	There is no direct way to specify byte & short literals explicitly but indirectly we can specify. Whenever we are assigning integral literal to the
+	byte variable and if the value within the range of byte then compiler treats it automatically as byte literal similarly short literal also.
+	Example: byte b =10; byte b1 = 127; byte b2 = 128 //compile time error
+			short s = 32767; short s1 = 32768 // compile time error
+
+Floating Point Literals:
+	By default every floating point literal is of double type and hence we can't assign directly to the float variable.
+	But we can specify floating point literal as float type by suffixed with f or F.
+	Example: float f = 123.456f, double d = 123.456;
+
+	We can specify explicitly floating point literal as double type by suffixed with d or D. of course this convenience is not required.
+	Example: double d = 123.456d, float f = 123.456 // Compile time error possible lossy conversion.
+
+	We can specify floating point literal only in decimal form and we can't specify in octal and hexadecimal forms.
+	Example: double d = 123.456; double d1 = 0123.456; // Valid
+	double d2 = 0x123.456; //Compile time error -> error: malformed floating-point literal -> double d = 0x123.456;
+
+	We can assign integral literal directly to floating-point variables and that integral literal can be specified either decimal, octal or hexadecimal forms.
+	double d = 0789;	//Compile time error ->
+	double d1 = 0xFace	// Valid
+	double d2 = 0789.0	// Valid
+	double d3 = 0xFace.0	// Invalid
+	double d4 = 10;		// Valid
+	double d5 = 0777;	// Valid
+
+	We can't assign floating-point literal to integral types.
+	double d = 10;
+	int i = 10.0; // Compile time error
+
+	We can specify floating-point literal even in exponential form (scientific notation).
+	Example: double d = 1.2e3; float f = 1.2e3 // Invalid
+	float f1 = 1.2e3f; // Valid
+
+Boolean Literal:
+	The only allowed value for boolean data type are true or false;
+
+Char Literal:
+	We can specify char literal as single characters within single quotes.
+	Example:
+		char ch = 'a'; // Valid
+		char ch1 = a; //Compile time error -> error: cannot find symbol -> char ch1 = a;
+		char ch2 = "a"; //Compile time error -> error: incompatible types: String cannot be converted to char -> char ch2 = "a";
+		char ch3 = 'ab'; //Compile time error ->
+												error: unclosed character literal -> char ch = 'ab';
+												error: unclosed character literal -> char ch = 'ab';
+												error: not a statement -> char ch = 'ab';
+
+	We can specify char literal as integral literal which represents unicode value of the character and that integral literal can be specified either in
+	decimal, octal or hexadecimal forms, but allowed range is 0 to 65535.
+	Example: char ch = 97; char ch1 = 0xFace; char ch2 = 0777; char ch3 = 65535;
+	char ch3 = 65536; //Compile time error -> error: incompatible types: possible lossy conversion from int to char -> char ch3 = 65536;
+
+	We can represent char literal in unicode representation which is nothing but '\uxxxx'.
+	Example: char ch = '\u0061'; sop - a;
+
+	Every escape character is a valid char literal.
+	Example: char ch = '\n'; char ch1 = '\t'; char ch2 = '\m'; // illegal escape character
+
+Escape character:
+	Total 8 escape characters are available.
+	'\n' -> New Line; '\t' -> Horizontal tab; '\r' -> carriage return; '\b' -> backspace; '\f' -> Form Feed; '\'' -> Single quotes; '\"' -> Double quotes;
+	'\\' -> Back Slash
+
+	Which of the following are valid
+	char ch = 65536;	// Invalid
+	char ch1 = 0xbeer;	// Invalid
+	char ch2 = \uface;	// Invalid
+	char ch3 = '\ubeef';	// Valid
+	char ch4 = '\m';		// Invalid
+	char ch5 = '\iface';	// Invalid
+
+String Literal:
+	Any sequence of character within double quotes is treated as string Literal.
+	Example: String s = "Test";
+
+1.7 version enhancement with respect to literals:
+	Binary Literal: For Integral data types until 1.6 version we can specify literal value in the following ways.
+		Decimal form, Octal form, Hexadecimal form
+	But from 1.7 version onwards we can specify literal value even in binary form also. Allowed digits are 0 and 1.
+	Literal value should be prefix with 0b or 0B.
+	Example: int x = 0b1111; sop -> 15;
+
+	Use case of _ symbol in numeric literal. From 1.7 onwards we can use _ symbol between digits of numeric literal.
+	Example: double d = 123456.789; ==> double d = 1_23_456.789 or double d = 123_456.789;
+
+	The main advantage of this approach is readability of the code will be improved.
+
+	At the time of compilation these _ symbol will be removed automatically. Hence after compilation the above lines will become double d = 123456.789
+
+	We can use more than 1 _ symbol also between the digits. double d = 1__23__4_56.789
+
+	We can use _ symbol only between the digits. If we are using any where else we'll get compile time error.
+	Example: double d = _1_23_456.789; double d = 1_23_456_.789; double d = 1_2_3_456.7_8_9_
+
+	byte - short - int - long - float - double
+	char - int - long - float - double
+
+	8 Byte long value we can assign to 4 byte float variable because both are following different memory representation internally.
+	Example: float f =10l; sop -> 10.0;
