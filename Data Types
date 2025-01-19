@@ -2,8 +2,98 @@ Data Type:
 	In java every variable and every expression has some type. Each and every data type is clearly defined. Every assignment should be checked by compiler for type compatibility.
 	Because of above reason we can conclude java language is strongly typed programing language.
 
-Java is not considered as pure object oriented programming language Because several oops feature are not satisfied by java like (operator overloading, multiple inheritance, etc.). More over we are depending on primitive data types which are non objects.
+	Java is not considered as pure object oriented programming language Because several oops feature are not satisfied by java like (operator overloading, multiple inheritance, etc.). More over we are depending on primitive data types which are non objects.
 
 Primitive data types.
 	Numeric data types
-	Non Numeric data types.
+		Integral	-	byte, sort, int, long
+		Floating	-	float, double
+	Non-Numeric data types	-	char, boolean
+
+Except char & boolean remaining data types are considered as signed data types. Because we can represent both +ve and -ve numbers.
+
+Byte: 1 byte (8 bits)
+Max value 127
+Min value -128
+Default_Value: 0
+Range 2^7 to 2^7-1 [-128 to 127]
+0 +ve number
+1 -ve number
+Positive numbers will be directly represented in memory whereas negative numbers will be represented in 2s compliment form.
+Byte is the best choice if we want to handle data in terms of streams either from the file or from the network (file supported forms or network supported forms are byte).Sort is the most rarely used data type in java.
+Example: 
+		byte b = 10;
+        byte b1 = 127;
+        byte b2 = 128;	//Compile time error -> error: incompatible types: possible lossy conversion from int to byte ->  byte b2 = 128;
+		byte b3 = 10.5;	//Compile time error -> error: incompatible types: possible lossy conversion from double to byte -> byte b3 = 10.5;
+		byte b4 = true;		//Compile time error -> error: incompatible types: boolean cannot be converted to byte -> byte b4 = true;
+		byte b5 = "Test";	//Compile time error -> error: incompatible types: String cannot be converted to byte -> byte b5 = "Test";
+
+Sort: 2 byte (16 bits)
+Default_Value: 0
+Range 2^15 to 2^15-1 [-32768 to 32767]
+Sort data type is best suitable for 16 bit processors like 8085 but these processors are completely outdated and hence corresponding data types are also outdated data types.
+Example:
+		short s = 32767;
+		short s1 = 32768;	//Compile time error -> error: incompatible types: possible lossy conversion from int to short -> short s = 32768;
+		short s2 = 10.5;	//Compile time error -> error: incompatible types: possible lossy conversion from double to short -> short s2 = 10.5;
+		short s3 = true;	//Compile time error -> error: incompatible types: boolean cannot be converted to short -> short s3 = true;
+
+Int: 4 byte (32 bits)
+Default_Value: 0
+Range 2^31 to 2^31-1 (-2147483648 to 2147483647)
+Int is the most commonly used data type in java.
+Example:
+		int i = 2147483647;
+		int i1 = 2147483648; //Compile time error -> error: integer number too large -> int i = 2147483648;
+		int i2 = 2147483648l; //Compile time error -> error: incompatible types: possible lossy conversion from long to int -> int i2 = 2147483648l;
+		int i3 = true; //Compile time error -> error: incompatible types: boolean cannot be converted to int -> int i3 = true;
+		
+Long: 8 byte (64 bits)
+Default_Value: 0
+Range -2^63 to 2^63-1
+Some times int may not enough hold big value, then we should go for long type.
+Example:
+	the amount of distance traveled by light in thousend days, to hold this value int may not enough we should go for long datatype.
+	long l = 126000*60*60*24*1000
+	
+	The no of characters present in big file may exeed int range. Hence the return type of length methode is long but not int.
+	long l = f.length();
+	
+All the above data bypes (byte, short, int, long) meant for representing integral values. If we want to represent floating values then we should go for floating point data types.
+
+Floating - Point data types
+float: Default_Value: 0.0, 5 to 6 decimal point, Single precision, 4 bytes, -1.7e^38 to 1.3e^38
+double: Default_Value: 0.0, 14 to 15 decimal point, double precision, 8 bytes, -3.4e^308 to 3.4e^308
+
+Boolean: Size not applicable. [It's dependent on VM]
+Default_Value: false
+Range: NA [But allowed values are: true/false]
+
+		boolean b = true;
+		boolean b1 = 0; //Compile time error -> error: incompatible types: int cannot be converted to boolean -> boolean b1 = 0;
+		boolean b2 = True //Compile time error -> error: cannot find symbol -> boolean b = True;
+		boolean b3 = "True"; //Compile time error -> error: incompatible types: String cannot be converted to boolean -> boolean b3 = "True";
+		
+	int x = 0;
+        if(x) {
+            System.out.println("Hello");
+        } else {
+            System.out.println("Hi");
+        }
+
+
+	while(true) {
+            System.out.println("Hello");
+        }
+		
+Char: 2 byte (16 bits)
+Range: 0 to 65535
+Default_Value: 0 represent space characters
+	Old languages (c or c++) or ASCII code based and no of different allowed ASCII code characters are less than or equals to 256. 
+	To represent these 256 characters 8 bits are enough. Hense the size of char in old languages is 1 byte,
+	but java is unicode based and the no of different unicode characters are > 256 and <= 65536.
+	To represent these many characters 8 bits may not enough compulsory we should go for 16 bits. Hense the size of char is 2 bytes.
+	
+null is the default value for object reference and we can't apply for primitives. If we are trying to user for primitives then we'll get compile time error.
+Example: char ch = null; //Compile time error -> error: incompatible types: <null> cannot be converted to char -> char ch = null;
