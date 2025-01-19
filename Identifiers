@@ -1,0 +1,23 @@
+Identifier: A name in the java program is called an identifier which can be used for identification purposes. It can be a class name, method name, variable name or label name.
+only allowed characters in java identifiers are: a-z, A-Z, 0-9, $, _
+
+Note:
+1. Identifier can't start with digits/number
+2. We can differentiate the case so number=10, Number=10, NUMBER=10 all are allowed and valid identifier.
+3. No length limit for java identifiers.
+4. We can't use the reserved word as an identifier.
+5. All predefined java class name and interface name we can use as identifiers like below.
+int String=888; int Runnable=999;
+Even these are valid but it's not good programming practice because it reduces the readability and creates confusion.
+
+total-number: valid
+total#: invalid
+123total: invalid
+total123: valid
+ca$h: valid
+_$_$_$_$: valid
+all@hands: invalid
+Java2Share: valid
+Integer: valid
+Int: valid
+int: invalid

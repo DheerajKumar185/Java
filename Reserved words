@@ -1,0 +1,33 @@
+Reserved words: All 53 reserved words in java contains only lower case alphabet symbols.
+53 words are reserved = 50+3
+In java some words are reserved to represent some meaning or functionality Such types of words are called reserved words.
+Keywords - 50 = 48+2
+Used keywords: 48 (if, else...)
+Unused keywords: 2 (goto, const)
+Reserved literal - 3 (true, false, null)
+Keywords for data types: 8 (byte, sort, int, long, float, double, boolean, char)
+Keywords for flow control- 11 (if, else, switch, case, default, while, do, for, break, continue, return)
+Keywords for modifier - 11 (public, private, protected, static, final, abstract, synchronized, native, strictfp, transient, volatile)
+Keywords for exception handling: 6 ( try, catch, finally, throw, throws, assert)
+Keywords for class related: 6 (class, interface, extends, implements, package, import)
+Keywords for object related - 4 (new, instanceof, super, this)
+Keywords for return type - 1 (void) In java return type is mandatory. If the method won't return anything then we have to declare that method with void return type
+Keywords for enum - 1 (enum) we can use enum to define a group of named constants.
+
+New keywords in java -
+strictfp 1.2
+assert 1.4
+enum 1.5
+
+Which of the following list contains Java reserved words
+new, delete
+goto, constant
+break, continue, return, exit
+final finally, finalize
+throw, throws, thrown
+notify, notifyAll
+implements, extends, imports
+sizeof, instanceof
+instanceOf, strictFp
+byte, short, Int
+None of the above
