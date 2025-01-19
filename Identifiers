@@ -10,14 +10,17 @@ Note:
 int String=888; int Runnable=999;
 Even these are valid but it's not good programming practice because it reduces the readability and creates confusion.
 
-total-number: valid
-total#: invalid
-123total: invalid
-total123: valid
-ca$h: valid
-_$_$_$_$: valid
-all@hands: invalid
-Java2Share: valid
-Integer: valid
-Int: valid
-int: invalid
+        int number = 10; // valid
+        int Number = 11; // valid
+        int NUMBER = 12; // valid
+        int total_number = 10; // valid
+        int total# = 10 // invalid
+        int 123total = 10; // invalid
+        int total123 = 10; // valid
+        int ca$h = 10; // valid
+        int _$_$_$_$ = 10; // valid
+        int all@hands = 10; // invalid
+        int Java2Share = 10; // valid
+        int Integer = 10; // valid
+        int Int = 10; // valid
+        int int = 10; // invalid
