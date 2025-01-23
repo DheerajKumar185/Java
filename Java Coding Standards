@@ -1,0 +1,96 @@
+Java Coding Standards:
+	Whenever we are writing java code, it's highly recommended to follow coding standards. Whenever we are writing any component it's a name should
+	reflect the purpose of that component (functionality).
+	The main advantage of this approach is readability and maintainability of the code will be improved.
+	Example:
+		class a {
+			p int m1(int x, int y) {
+				return x+y;
+			}
+		}
+		
+		package com.tech.test
+		
+		public class Calculator {
+			public static int add(int number1, int number2)	{
+				return number1+number2;
+			}
+		}
+	
+Coding standards for classes:
+	Usually class names are nouns should starts with upper case characters and if it contains multiple words every inner word should starts with upper
+	case character.
+	Example: String, StringBuffer, Account, Dog
+	
+Coding standards for interfaces:
+	Usually interface names are adjectives. Should starts with upper case character and if it contains multiple words, every inner words should start
+	with upper character.
+	Example: Runnable, Serializable, Comparable
+	
+Coding standards for methods:
+	Usually method names are either verbs or verb-noun combination. Should starts with lower case alphabet symbol and if it contains multiple words
+	then every inner words should start with upper case (Camel case conversion).
+	Example: println(), sleep(), run(), getSalary(), getName(),
+	
+Coding standards for variables:
+	Usually variables names are nouns. Should starts with lower case alphabet symbol and if it contains multiple words then every inner words should
+	starts with upper case character(Camel case conversion).
+	Example: name, age, salary, mobileNumber
+
+Coding standards for constants:
+	Usually constants names are nouns. Should contain only upper case characters and if it contains multiple words then these words are separated 
+	with _ symbol.
+	Example: MAX_VALUE, MAX_PRIORITY, PI.
+	
+	Usually we can declare constants with public static and final modifiers.
+
+JavaBean Coding Standards:
+	A java bean is a simple java class with private properties and public getter & setter methods.
+	Example:
+		public class StudentName {
+			private String name;
+			
+			public void setName(String name) {
+				this.name = name;
+			}
+			
+			public String getName() {
+				return name;
+			}
+		}
+			
+	class name ends with Bean is not official conversion from Sun.
+	
+Syntax for setter method:
+	It should be public method. The return type should be void. Method name should be prefix with set. It should take some argument. That is it should
+	not be no argument method.
+
+Syntax for getter method:
+	It should be public method. The return type should not be void. Method name should be prefix with get. It should not take any argument.
+	
+	Note: For boolean properties getter method name can be prefixed with either get or is. But recommended to use is.
+	Example:
+		private boolean empty;
+		public boolean getEmpty() {
+			return empty;
+		}
+		
+		public boolean isEmpty() {
+			return empty;
+		}
+
+Coding standards for Listeners:
+	Case 1:
+		To register a listener: Method name should be prefixed with add.
+		Example:
+			public void addMyActionListener(MyActionListener l);	// Valid
+			public void registerMyActionLister(MyActionListener l);	// Invalid
+			public void addMyActionListener(ActionListener l);		// Invalid
+			
+	Case 2:
+		To unregister a listener: Method name should be prefixed with remove.
+		Example:
+			public void removeMyActionListener(MyActionListener l);		// Valid
+			public void unRegisterMyActionLister(MyActionListener l);	// Invalid
+			public void removeMyActionListener(ActionListener l);		// Invalid
+			public void deleteMyActionListener(MyActionListener l);		// Invalid			
