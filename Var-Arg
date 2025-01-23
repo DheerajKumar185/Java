@@ -1,0 +1,136 @@
+Var-Arg Methods (variable no of argument methods):
+	Until 1.4 version, we can't declare a method with variable no of arguments. If there is a change in no of arguments, compulsory we should go
+	for	new method. It increases the length of code and reduces readability. To overcome this problem Sun people introduced var-arg method in 1.5
+	version. According to this we can declare a method which can take variable no of arguments. Such type of methods are called var-arg methods.
+
+	We can declare var arg methods as follows.
+		m1(int... x)
+
+	We can call this method by passing any no of int values including 0 no.
+		m1(10);
+		m1(10, 20);
+		m1(10, 20, 30);
+		m1(10, 20, 30, ..... N);
+
+		Example 1:
+			public class Test {
+				public static void m1(int... x) {
+					System.out.println("var-arg method");
+				}
+				public static void main(String[] args) {
+					m1(10);
+					m1(10, 20);
+					m1(10, 20, 30);
+					m1(10, 20, 40);
+				}
+			}
+	Internally var-arg parameter converted into One-Dimensional array. Hence within the var-arg method we can differentiate values by index.
+		Example 2:
+			public class Test {
+				public static void sum(int... x) {
+					int total = 0;
+					for(int x1 : x) {
+						total = total + x1;
+					}
+					System.out.println("The sum: " + total);
+				}
+				public static void main(String[] args) {
+					sum(10);
+					sum(10, 20);
+					sum(10, 20, 30);
+					sum(10, 20, 30, 40);
+				}
+			}
+			output:
+				The sum: 10
+				The sum: 30
+				The sum: 60
+				The sum: 100
+	Case 1:
+		Which of the followings are valid var-arg declaration
+		m1(int... x)	// Valid
+		m1(int ...x)	// Valid
+		m1(int...x)		// Valid
+		m1(int x...)	// Invalid
+		m1(intx ...)	// Invalid
+		m1(int .x..)	// Invalid
+
+	Case 2:
+		We can mix var-arg parameter with normal parameter
+		Example 3:
+			m1(int x, int... y);
+			m1(String s, double... d);
+
+	Case 3:
+		If we mix normal parameter with var-arg parameter, then var-arg parameter should be last parameter.
+		Example 4:
+			m1(double... d, String s)	// Invalid
+			m1(char ch, String... s)	// Valid
+	Case 4:
+		Inside var-arg method we can take only one var-arg parameter and we can't take more than one var-arg parameter.
+		Example 5:
+			m1(int... x, double... d);
+
+	Case 5:
+		Inside a class we can't declare var-arg method and corresponding one-dimensional array otherwise we'll get compile time error.
+		Example 6:
+			public class Test {
+				public static void m1(int... x) {
+					System.out.println("int...");	// CTE: error: cannot declare both m1(int[]) and m1(int...) in Test
+				}
+				public static void m1(int[] x) {
+					System.out.println("int[]");	// CTE: error: cannot declare both m1(int[]) and m1(int...) in Test
+				}
+			}
+
+	Case 6:
+		In general var-arg method will get lease priority that is if no other method matched then only var-arg method get chance.
+		It it exactly same as inside switch().
+		Example 7:
+			public class Test {
+				public static void m1(int... x) {
+					System.out.println("var-arg method");
+				}
+				public static void m1(int x) {
+					System.out.println("General method");
+				}
+
+				public static void main(String[] args) {
+					m1();				//	var-arg method
+					m1(10, 20);			//	var-arg method
+					m1(10);				//	General method
+				}
+			}
+Equivalence between var-arg parameter and one-dimensional array:
+	Case 1:
+		Wherever one-dimensional array present we can replace with var-arg parameter.
+		m1(int[] x) replaced with m1(int... x)
+		Example 1:
+			main(String[] args) replace with main(String... args)
+
+	Case 2:
+		Wherever var-arg parameter present we can't replace with one-dimensional array.
+		Example 2:
+			m1(int... x) replace with m1(int[] x)
+			m1() -> x
+			m1(10) -> x
+			m1(new int[]{10, 20, 30} -> Pass
+		Note:
+			1. m1(int... x) we can call this method by passing a group of int values and x will become one-dimensional array.
+			2. m1(int[]... x) we can call this method by passing a group of one-dimensional int arrays and x will become two-dimensional int array.
+
+		Example 3:
+			public class Test1 {
+				public static void main(String[] args) {
+					int[] a = {10, 20, 30};
+					int[] b = {40, 50, 60};
+					int[] c = {70, 80, 90};
+					m1(a, b, c);
+				}
+				public static void m1(int[]... x) {
+					for(int[] x1 : x) {
+						System.out.println(x1[0]);
+					}
+				}
+			}
+		Output: 10 40 70
