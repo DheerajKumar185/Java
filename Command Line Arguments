@@ -1,0 +1,54 @@
+Command Line Argument:
+	The arguments which are passing from command prompt are called command line arguments. With these command line arguments JVM will create an
+	array and by passing that array as argument JVM will call main method.
+	Example 1:
+		java Test A B C
+		args[0] = A
+		args[1] = B
+		args[2] = C
+
+	The main objective of command line arguments is we can customized behaviour of the main method.
+
+	Case 1:
+		public class Test {
+			public static void main(String[] args) {
+				for(int i = 0; i <= args.length; i++) {
+					System.out.println(args[i]);
+				}
+			}
+		}
+	Input: java Test A B C
+	Output: A B C Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+
+	If we replace <= with < then we won't get any run time exception.
+
+	Case 2:
+		public class Test {
+			public static void main(String[] args) {
+				String[] argh = {"X", "Y", "Z"};
+				args = argh;
+				for(String s : args) {
+					System.out.println(s);
+				}
+			}
+		}
+	Input: java Test A B C
+	Output: X Y Z
+
+	Case 3:
+		Within main method command line arguments are available in String form.
+		public class Test {
+			public static void main(String[] args) {
+				System.out.println(args[0] + args[1]);
+			}
+		}
+	Case 4:
+		Space it self is the separator between command line arguments. If our command line argument contains space then we have to enclose
+		that command line arguments within double quote "".
+		public class Test {
+			public static void main(String[] args) {
+				System.out.println(args[0]);
+			}
+		}
+	Input: java Test "Note Book"
+	Output Note Book
