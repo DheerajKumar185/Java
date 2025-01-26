@@ -1,0 +1,129 @@
+Increment and Decrement Operators:
+	Case 1:
+		We can apply increment & decrement operators only for variables but not for constant values. If we are trying to apply for constant values
+		then we'll get compile time error.
+		Example 1:
+			public class Test {
+				public static void main(String[] args) {
+					int x = 10;
+					int y = ++x;
+					System.out.println(y);		// Output: 11
+				}
+			}
+
+		Example 2:
+		    public class Test {
+                public static void main(String[] args) {
+                    int x = 10;
+                    int y = x++;
+                    System.out.println(x);		// Output: 11
+                    System.out.println(y);      // Output: 10
+                }
+            }
+
+		Example 3:
+			public class Test {
+				public static void main(String[] args) {
+					int x = 10;
+					int y = ++10;	//CTE -> error: unexpected type -> int y = ++10; required: variable found:    value
+					System.out.println(y);
+				}
+			}
+
+	Case 2:
+		Nesting of Increment & Decrement operators not allowed.
+		Example 1:
+			public class Test {
+				public static void main(String[] args) {
+					int x = 10;
+					int y = ++ (++x);	//CTE -> error: unexpected type -> int y = ++10; required: variable found:    value
+					System.out.println(y);
+				}
+			}
+
+	Case 3:
+		For final variables we can't apply Increment & Decrement operators.
+		Example 1:
+			public class Test {
+				public static void main(String[] args) {
+					final int x = 10;
+					x++;		// CTE -> error: cannot assign a value to final variable x
+					System.out.println(x);
+				}
+			}
+
+	Case 4:
+		We can apply Increment & Decrement operators for every primitive type except boolean.
+		Example 1:
+			public class Test {
+				public static void main(String[] args) {
+					char x = 'a';
+					x++;
+					System.out.println(x);	// Output: b
+				}
+			}
+
+		Example 2:
+			public class Test {
+				public static void main(String[] args) {
+					double d = 10.5;
+					d++;
+					System.out.println(d);	// Output: 11.5
+				}
+			}
+
+		Example 3:
+			public class Test {
+				public static void main(String[] args) {
+					boolean b = true;
+					b++;
+					System.out.println(b);	// CTE -> error: bad operand type boolean for unary operator '++'
+				}
+			}
+
+	Case 5:
+		Difference between b++ & b = b + 1 : But in case of increment & decrement operators internal type casting perform automatically
+		If we apply any arithmetic operator between two variable a & b. The result type is always max(int, type of a, type of b).
+		Example 1:
+			public class Test {
+				public static void main(String[] args) {
+					byte a = 10;
+					byte b = 20;
+					byte c = a + b;	// CTE -> error: incompatible types: possible lossy conversion from int to byte
+					System.out.println(c);
+				}
+			}
+		Example 2:
+			public class Test {
+				public static void main(String[] args) {
+					byte a = 10;
+					byte b = 20;
+					byte c = (byte) (a + b);
+					System.out.println(c);	// Output: 30
+				}
+			}
+		Example 3:
+			public class Test {
+				public static void main(String[] args) {
+					byte b = 20;
+					b = b + 1;	// CTE -> incompatible types: possible lossy conversion from int to byte
+					System.out.println(b);
+				}
+			}
+
+		Example 4:
+			public class Test {
+				public static void main(String[] args) {
+					byte b = 20;
+					b = (byte) (b + 1);
+					System.out.println(b);	// Output: 21
+				}
+			}
+		Example 5:
+			public class Test {
+				public static void main(String[] args) {
+					byte b = 10;
+					b++;	// (byte) (b + 1); - internal type casting perform automatically
+					System.out.println(b);	// Output: 11
+				}
+			}
