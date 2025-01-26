@@ -1,0 +1,68 @@
+Arithmetic Operators: (+, -, *, /, %)
+	If we apply any arithmetic operator between two variable, the result type is always max (int, type of a, type of b)
+	byte + byte = int;
+	byte + short = int;
+	short + short = int;
+	byte + long = long;
+	long + double = double;
+	float + long = float;
+	char + char = int;
+	char + double = double;
+									byte-short___
+												 \ int - long - float - double
+									char_________/
+
+	Example 1:
+		System.out.println('a' +'b');	// Output (97 + 98) = 195
+		System.out.println('a' + 0.98);	// Output (97 + 0.98)
+
+	Infinity:
+		In Integral arithmetic (byte, short, int, long) there is not way to represent infinity. Hence if Infinity is the result we'll get
+		ArithmeticException in integral arithmetic.
+	Example 1:
+		System.out.println(10/0);	// RTE : java.lang.ArithmeticException: / by zero
+
+	But in floating point arithmetic (float & double) there is a way to represent infinity. For this Float and Double classes contains the
+	following 2 constant. POSITIVE_INFINITY, NEGATIVE_INFINITY. Hence even tho result is infinity we won't get any arithmetic exception in floating
+	point arithmetic.
+	Example 2:
+		System.out.println(10/0.0);		// Infinity
+		System.out.println(-10/0.0);	// -Infinity
+
+	NaN(Not a Number):
+		Int integral arithmetic (byte, short, int, long) there is no way to represent undefined results. Hence if the result is undefined we'll get
+		RTE saying ArithmeticException.
+		Example 1:
+			System.out.println(0/0);		// RTE: java.lang.ArithmeticException
+
+		But in floating point arithmetic (float, double) there is a way to represent undefined results. For this Float & Double classes contains NAN
+		constant. Hence if the result is undefined we won't get any ArithmeticException in floating point arithmetic.
+		Example 2:
+			System.out.println(0.0/0);		// NaN
+			System.out.println(-0.0/0);		// NaN
+			System.out.println(-0/0.0);		// NaN
+
+		Note: For any x value including NaN the following expressions return false
+		x < NaN
+		x <= NaN
+		x > NaN
+		x >= NaN
+		x == NaN
+
+		For any x value including NaN the following expressions return true
+		x != NaN
+
+		Example 3:
+			System.out.println(10 < Float.NaN);				// false
+			System.out.println(10 <= Float.NaN);			// false
+			System.out.println(10 > Float.NaN);				// false
+			System.out.println(10 >= Float.NaN);			// false
+			System.out.println(10 == Float.NaN);			// false
+			System.out.println(Float.NaN == Float.NaN);		// false
+			System.out.println(10 != Float.NaN);			// true
+			System.out.println(Float.NaN != Float.NaN);		// true
+
+	ArithmeticException:
+		It is runtime Exception but not compile time error
+		It is possible only in Integral arithmetic but not in Floating point arithmetic.
+		The only operators which cause ArithmeticException are / or %
