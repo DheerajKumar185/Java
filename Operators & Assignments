@@ -139,7 +139,7 @@ Arithmetic Operators: (+, -, *, /, %)
 	char + char = int;
 	char + double = double;
 									byte-short___
-												       \ int - long - float - double
+										     \ int - long - float - double
 									char_________/
 
 	Example 1:
@@ -162,30 +162,30 @@ Arithmetic Operators: (+, -, *, /, %)
 	NaN(Not a Number):
 		Int integral arithmetic (byte, short, int, long) there is no way to represent undefined results. Hence if the result is undefined we'll get
 		RTE saying ArithmeticException.
-		Example 1:
-			System.out.println(0/0);		// RTE: java.lang.ArithmeticException
+	Example 1:
+		System.out.println(0/0);		// RTE: java.lang.ArithmeticException
 
-		But in floating point arithmetic (float, double) there is a way to represent undefined results. For this Float & Double classes contains NAN
-		constant. Hence if the result is undefined we won't get any ArithmeticException in floating point arithmetic.
-		Example 2:
-			System.out.println(0.0/0);		// NaN
-			System.out.println(-0.0/0);		// NaN
-			System.out.println(-0/0.0);		// NaN
+	But in floating point arithmetic (float, double) there is a way to represent undefined results. For this Float & Double classes contains NAN
+	constant. Hence if the result is undefined we won't get any ArithmeticException in floating point arithmetic.
+	Example 2:
+		System.out.println(0.0/0);		// NaN
+		System.out.println(-0.0/0);		// NaN
+		System.out.println(-0/0.0);		// NaN
 
-		Note: For any x value including NaN the following expressions return false
+	Note: For any x value including NaN the following expressions return false
 		x < NaN
 		x <= NaN
 		x > NaN
 		x >= NaN
 		x == NaN
 
-		For any x value including NaN the following expressions return true
+	For any x value including NaN the following expressions return true
 		x != NaN
 
 		Example 3:
-			System.out.println(10 < Float.NaN);				// false
+			System.out.println(10 < Float.NaN);			// false
 			System.out.println(10 <= Float.NaN);			// false
-			System.out.println(10 > Float.NaN);				// false
+			System.out.println(10 > Float.NaN);			// false
 			System.out.println(10 >= Float.NaN);			// false
 			System.out.println(10 == Float.NaN);			// false
 			System.out.println(Float.NaN == Float.NaN);		// false
@@ -250,41 +250,106 @@ Equality Operators (==, !=):
 	We can apply equality operators for every primitive type including boolean type also.
 	Example 1:
 		System.out.println(10 == 20);		// false
-        System.out.println('a' == 'b');		// false
-        System.out.println(97 == 97.0);		// true
-        System.out.println(false == false);	// true
+	        System.out.println('a' == 'b');		// false
+	        System.out.println(97 == 97.0);		// true
+	        System.out.println(false == false);	// true
 	
 	We can apply equality operators for object types also.
 	For object references r1, r2. r1 == r2 returns true if and only if both references pointing to the same object(reference comparing or address).
 	Example 2:
 		Thread t1 = new Thread();
-        Thread t2 = new Thread();
-        Thread t3 = t1;
-        System.out.println(t1 == t2);	// false
-        System.out.println(t1 == t3);	// true
+	        Thread t2 = new Thread();
+	        Thread t3 = t1;
+	        System.out.println(t1 == t2);	// false
+	        System.out.println(t1 == t3);	// true
 		
 	If we apply equality operators for object types then compulsory there should be some relational between argument type(either child to parent or
 	parent to type or same type) otherwise we'll get CTE saying incomparable types.
 	Example 3:
 		Thread t = new Thread();
-        Object o = new Object();
-        String s = new String("Test");
-        System.out.println(t == o);	// false
-        System.out.println(o == s);	// false
-        System.out.println(s == t);	// CTE -> error: incomparable types: String and Thread
+	        Object o = new Object();
+	        String s = new String("Test");
+	        System.out.println(t == o);	// false
+	        System.out.println(o == s);	// false
+	        System.out.println(s == t);	// CTE -> error: incomparable types: String and Thread
 	
 Difference between == operator & .equals() method:
 	In general we can use == operator for reference comparison(address comparison) and .equals method for content comparison.
 	Example 1:
 		String s1 = new String("Test");
-        String s2 = new String("Test");
-        System.out.println(s1 == s2);		// false
-        System.out.println(s1.equals(s2));	// true
+	        String s2 = new String("Test");
+	        System.out.println(s1 == s2);		// false
+	        System.out.println(s1.equals(s2));	// true
 	
 	Note: For any object reference are,	== null is always false but null == null is always true.
 	Example 2:
 		String s1 = new String("Test");
-        String s2 = null;        
-        System.out.println(s1 == null);		// false
-        System.out.println(s2 == null);		// true
-        System.out.println(null == null);	// true
+	        String s2 = null;        
+	        System.out.println(s1 == null);		// false
+	        System.out.println(s2 == null);		// true
+	        System.out.println(null == null);	// true
+
+instanceof Operators:
+	We can use instanceof operator to check whether the given object is of particular type of not.
+	Example 1:
+		Object o = l.get(0);
+		if(o instanceof Student) {
+			Student s = (Student)o;
+			// perform Student type functionality
+		} else if(o instanceof Customer) {
+			Customer c = (Customer) 0;
+			// perform Customer type functionality
+		}
+		
+	Syntax: r instanceof X
+	r -> Object reference
+	X -> class/interface
+	
+	Example 2:
+		Thread t = new Thread();
+        	System.out.println(t instanceof Thread);		// true
+        	System.out.println(t instanceof Object);		// true
+        	System.out.println(t instanceof Runnable);		// true
+	
+	Example 3:
+		To use instanceof operator compulsory there should be some relation between argument types(either child to parent or parent to child or same)
+		otherwise we'll get CTE inconvertible type.
+		
+		Thread t = new Thread();
+        	System.out.println(t instanceof String);		// CTE -> error: incompatible types: Thread cannot be converted to String
+		
+	Note: For any class/interface X, null instanceof X is always false.
+	
+	Example 4:
+		System.out.println(null instanceof Thread);
+        	System.out.println(null instanceof Runnable);
+
+Bitwise Operators(&, |, ^): Applicable for both boolean & Integral
+	& -> AND => Returns true if both arguments are true
+	| -> OR => Returns true if at lest one argument is true
+	^ -> X-OR => Returns true if both arguments are different
+	
+	Example 1:
+		System.out.println(true & false)	// false
+		System.out.println(true | false)	// true
+		System.out.println(true ^ false)	// true
+	
+	Example 2:
+		System.out.println(4 & 5);	// Output: 4 (100 & 101 = 100)
+        	System.out.println(4 | 5);	// Output: 5 (100 & 101 = 101)
+        	System.out.println(4 ^ 5);	// Output: 1 (100 & 101 = 001)
+	
+Bitwise Complement Operator(~): Applicable only for Integral type but not for boolean
+	We can apply this operator only for integral types but not for boolean. If we are trying to apply for boolean then we'll get CTE.
+	Example 1:
+		System.out.println(~true);	// CTE -> error: bad operand type boolean for unary operator '~'
+        	System.out.println(~4);		// Output: -5 (100 = 101)
+	
+	Note: The most significant access signed bit. 0 means positive number 1 means negative number. +ve number will be represented directly in memory
+		where as -ve numbers will be represented indirectly memory in 2's complement form.
+	
+Boolean Complement Operator(!): Applicable only for boolean but not for Integral
+	We can apply this operator only for boolean types but not for integral types.
+	Example 1:
+		System.out.println(!4);		// CTE -> operator ! can't be applied to int.
+        	System.out.println(!true);	// false
