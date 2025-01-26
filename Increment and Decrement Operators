@@ -127,3 +127,164 @@ Increment and Decrement Operators:
 					System.out.println(b);	// Output: 11
 				}
 			}
+
+Arithmetic Operators: (+, -, *, /, %)
+	If we apply any arithmetic operator between two variable, the result type is always max (int, type of a, type of b)
+	byte + byte = int;
+	byte + short = int;
+	short + short = int;
+	byte + long = long;
+	long + double = double;
+	float + long = float;
+	char + char = int;
+	char + double = double;
+									byte-short___
+												 \ int - long - float - double
+									char_________/
+
+	Example 1:
+		System.out.println('a' +'b');	// Output (97 + 98) = 195
+		System.out.println('a' + 0.98);	// Output (97 + 0.98)
+
+	Infinity:
+		In Integral arithmetic (byte, short, int, long) there is not way to represent infinity. Hence if Infinity is the result we'll get
+		ArithmeticException in integral arithmetic.
+	Example 1:
+		System.out.println(10/0);	// RTE : java.lang.ArithmeticException: / by zero
+
+	But in floating point arithmetic (float & double) there is a way to represent infinity. For this Float and Double classes contains the
+	following 2 constant. POSITIVE_INFINITY, NEGATIVE_INFINITY. Hence even tho result is infinity we won't get any arithmetic exception in floating
+	point arithmetic.
+	Example 2:
+		System.out.println(10/0.0);		// Infinity
+		System.out.println(-10/0.0);	// -Infinity
+
+	NaN(Not a Number):
+		Int integral arithmetic (byte, short, int, long) there is no way to represent undefined results. Hence if the result is undefined we'll get
+		RTE saying ArithmeticException.
+		Example 1:
+			System.out.println(0/0);		// RTE: java.lang.ArithmeticException
+
+		But in floating point arithmetic (float, double) there is a way to represent undefined results. For this Float & Double classes contains NAN
+		constant. Hence if the result is undefined we won't get any ArithmeticException in floating point arithmetic.
+		Example 2:
+			System.out.println(0.0/0);		// NaN
+			System.out.println(-0.0/0);		// NaN
+			System.out.println(-0/0.0);		// NaN
+
+		Note: For any x value including NaN the following expressions return false
+		x < NaN
+		x <= NaN
+		x > NaN
+		x >= NaN
+		x == NaN
+
+		For any x value including NaN the following expressions return true
+		x != NaN
+
+		Example 3:
+			System.out.println(10 < Float.NaN);				// false
+			System.out.println(10 <= Float.NaN);			// false
+			System.out.println(10 > Float.NaN);				// false
+			System.out.println(10 >= Float.NaN);			// false
+			System.out.println(10 == Float.NaN);			// false
+			System.out.println(Float.NaN == Float.NaN);		// false
+			System.out.println(10 != Float.NaN);			// true
+			System.out.println(Float.NaN != Float.NaN);		// true
+
+	ArithmeticException:
+		It is runtime Exception but not compile time error
+		It is possible only in Integral arithmetic but not in Floating point arithmetic.
+		The only operators which cause ArithmeticException are / or %
+
+String Concatenation Operators (+):
+	The only overloaded operator in java is '+' operator. Sometimes it access Arithmetic addition operator and sometime it access String concatenation
+	operator.
+	If at least one argument is String type then + operator access concatenation operator and if both arguments are number type then + operator access
+	arithmetic addition operator.
+	Example 1:
+		public class Test {
+			public static void main(String[] args) {
+				String a = "Test";
+				int b = 10, c = 20, d = 30;
+				System.out.println(a+b+c+d);		// Test102030
+				System.out.println(b+c+d+a);		// 60Test
+				System.out.println(b+c+a+d);		// 30Test30
+				System.out.println(b+a+c+d);		// 10Test2030
+			}
+		}
+	
+	Example 2:
+		Consider the following declaration, Which of the following expressions are valid?
+		public class Test {
+			public static void main(String[] args) {
+				String a = "Test";
+				int b = 10, c = 20, d = 30;
+				a = b+c+d;	//	CTE ->	error: incompatible types: int cannot be converted to String
+				a = a+b+c;
+				b = a+c+d;	//	CTE ->	error: incompatible types: String cannot be converted to int
+				b = b+c+d;
+			}
+		}
+
+Relational Operators (<, <=, >, >=):
+	We can apply relational operators for every primitive type except boolean.
+	Example 1:
+		System.out.println(10<20);			// true
+		System.out.println('a'<10);			// false
+		System.out.println('a'<97.6);		// true
+		System.out.println('a'>'A');		// true
+		System.out.println(true>false);		//	CTE -> Operator > can't be applied to java.lang.String
+											//	CTE -> error: bad operand types for binary operator '>'
+		
+	We can't apply relational operators for Object types.
+	Example 2:
+		System.out.println("Test123" > "Test");	//	CTE -> Operator > can't be applied to java.lang.String
+												//	CTE -> error: bad operand types for binary operator '>'	
+	
+	Nesting of relational operators is not allowed, otherwise we'll get compile time error.
+	Example 3:
+		System.out.println(10<20<30);	// CTE -> CTE -> Operator > can't be applied to boolean, int
+	
+Equality Operators (==, !=):
+	We can apply equality operators for every primitive type including boolean type also.
+	Example 1:
+		System.out.println(10 == 20);		// false
+        System.out.println('a' == 'b');		// false
+        System.out.println(97 == 97.0);		// true
+        System.out.println(false == false);	// true
+	
+	We can apply equality operators for object types also.
+	For object references r1, r2. r1 == r2 returns true if and only if both references pointing to the same object(reference comparing or address).
+	Example 2:
+		Thread t1 = new Thread();
+        Thread t2 = new Thread();
+        Thread t3 = t1;
+        System.out.println(t1 == t2);	// false
+        System.out.println(t1 == t3);	// true
+		
+	If we apply equality operators for object types then compulsory there should be some relational between argument type(either child to parent or
+	parent to type or same type) otherwise we'll get CTE saying incomparable types.
+	Example 3:
+		Thread t = new Thread();
+        Object o = new Object();
+        String s = new String("Test");
+        System.out.println(t == o);	// false
+        System.out.println(o == s);	// false
+        System.out.println(s == t);	// CTE -> error: incomparable types: String and Thread
+	
+Difference between == operator & .equals() method:
+	In general we can use == operator for reference comparison(address comparison) and .equals method for content comparison.
+	Example 1:
+		String s1 = new String("Test");
+        String s2 = new String("Test");
+        System.out.println(s1 == s2);		// false
+        System.out.println(s1.equals(s2));	// true
+	
+	Note: For any object reference are,	== null is always false but null == null is always true.
+	Example 2:
+		String s1 = new String("Test");
+        String s2 = null;        
+        System.out.println(s1 == null);		// false
+        System.out.println(s2 == null);		// true
+        System.out.println(null == null);	// true
