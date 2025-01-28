@@ -353,3 +353,206 @@ Boolean Complement Operator(!): Applicable only for boolean but not for Integral
 	Example 1:
 		System.out.println(!4);		// CTE -> operator ! can't be applied to int.
         	System.out.println(!true);	// false
+
+Short Circuit Operators(&&, ||):
+	These are exactly same as bitwise operators (&, |) except the following differences.
+	&, |							|		&&, ||
+	Both arguments should be evaluated always		|	Second arguments evaluation is optional
+	Relatively performance is low				|	Relatively performance is high
+	Applicable for both boolean & Integral types		|	Applicable only for boolean but not for integral types
+	
+	Note: 
+		x && y => y will be evaluated if and only if x is true. i.e. if x is false then y won't be evaluated.
+		x || y => y will be evaluated if and only if x is false. i.e. if x is true then y won't be evaluated.
+	
+	Example 1:		
+		int x = 10, y =15;
+	        if(++x < 10 & ++ y > 15) {
+	            x++;
+	        } else {
+	            y++;
+	        }
+	        System.out.println(x + " " + y);		// Output: 11	17
+		
+		int x = 10, y =15;
+	        if(++x < 10 && ++ y > 15) {
+	            x++;
+	        } else {
+	            y++;
+	        }
+	        System.out.println(x + " " + y);		// Output: 11	16
+		
+		int x = 10, y =15;
+	        if(++x < 10 | ++ y > 15) {
+	            x++;
+	        } else {
+	            y++;
+	        }
+	        System.out.println(x + " " + y);		// Output: 12	16
+		
+		int x = 10, y =15;
+	        if(++x < 10 || ++ y > 15) {
+	            x++;
+	        } else {
+	            y++;
+	        }
+	        System.out.println(x + " " + y);		// Output: 12	16
+		
+	Example 2:
+		int x = 10;
+	        if(++x < 10 && x/0 > 10) {
+	            System.out.println("Hello");
+	        } else {
+	            System.out.println("Hi");			// Output: Hi
+	        }
+		
+		int x = 10;
+	        if(++x < 10 && x/0 > 10) {
+	            System.out.println("Hello");
+	        } else {
+	            System.out.println("Hi");			// Output: java.lang.ArithmeticException
+	        }
+		
+	If we replace && with & then we'll get RTE saying ArithmeticException / by Zero
+
+Type Cast Operator:
+	There are 2 types of type-casting
+	1. Implicit Type Casting
+	2. Explicit Type Casting
+
+	1. Implicit Type Casting:
+		1. Compiler is responsible to perform implicit type-casting.
+		2. Whenever we are assigning smaller data type value to bigger type variable, implicit type-casting will be performed.
+		3. It is also known as widening or upcasting.
+		4. There is no loss of information in this type-casting.
+		5. The followings are various possible conversions where implicit type-casting will be performed.
+		
+		byte -> short
+				\___> int -> long -> float -> double
+		char ->		/
+			
+		Example 1:
+			int x = 'a';
+			System.out.println(x); // Output: 97 - compiler convert char to int automatically by implicit type-casting
+			
+		Example 2:
+			double d = 10;
+			System.out.println(d); // Output: 10.0 compiler convert int to double automatically by implicit type-casting
+	
+	2. Explicit Type Casting:
+		1. Programmer is responsible to perform explicit type-casting.
+		2. Whenever we are assigning bigger data type value to smaller data type variable, explicit type-casting is required.
+		3. It is also known as narrowing or down casting
+		4. There may be a chance of loss of information in this type-casting.
+		5. The following are various possibility where explicit type-casting is required.
+		
+		byte <- short
+				\___ int <- long <- float <- double
+		char <-		/
+				
+		Example 1:
+			int x = 130;
+			byte b = x;		// CTE -> error: incompatible types: possible lossy conversion from int to byte
+			
+			int x = 130;
+			byte b = (byte) x;
+			System.out.println(b);
+			
+		Whenever we are assigning bigger data type value to smaller data type variable by explicit type-casting the most significant bits will be 
+		lost. We have to consider only least significant bits (LSB).
+		
+		Example 2:
+			int x = 150;
+			short s = (short) 150;
+			System.out.println(s);		// Output: 150
+
+			byte b = (byte) x;
+			System.out.println(b);		// Output: -106
+			
+		Example 3:
+			If we assign floating point values to the integral types by explicit type-casting the digits after the decimal point will be lost.
+			
+			double d = 130.456;
+			int i = (int) d;
+			System.out.println(i);		// Output: 130
+
+			byte b = (byte) d;
+			System.out.println(b);		// Output: -126
+			
+Assignments Operators:
+	There are 3 types of assignment operators.
+	1. Simple assignment:
+		Example 1: int x = 10;
+	
+	2. Chained assignment:
+		Example 2: 
+			int a, b, c, d;
+			a = b = c = d = 20;
+			System.out.println(a + " " + b + " " + c + " " + d);
+		
+		We can't perform chained assignment directly at the time of declaration.
+		Example 3:
+			int a = b = c = d = 20; CTE -> error: cannot find symbol. symbol:   variable b, location: class Test
+			int b, c, d;
+			int a = b = c = d = 20;
+
+	3. Compound assignment:
+		Sometimes assignment operator mixed with some other operator, such type of assignment operators are called compound assignment operator.
+		Example 4:
+			int a = 10;
+			a += 20;
+			System.out.println(a); // Output: 30
+		
+	The following are all possible compound assignment
+	+=, -=, *=, /=, %=
+	&=, |=, ^=
+	>>=, >>>, <<=
+	
+	In the case of compound assignment operator, internal type-casting will be performed automatically.
+	Example 5:
+		byte b = 10;
+		b = b + 1;
+		System.out.println(b); // CTE -> error: incompatible types: possible lossy conversion from int to byte
+		
+		byte b = 10;
+		b++;
+		System.out.println(b);		// Output: 11
+		
+		byte b = 10;
+		b += 1;						// (byte) (b + 1)
+		System.out.println(b);		// Output: 11
+		
+		byte b = 127;
+		b += 3;
+		System.out.println(b);		// Output: -126
+		
+	Example 6:
+		int a, b, c, d;
+		a = b = c = d = 20;
+		a += b -= c *= d /= 2;
+		System.out.println(a + " " + b + " " + c + " " + d);		Output: -160 -180 200 10
+		
+Conditional Operator (?:):
+	The only possible ternary operator in java is conditional operator.
+	Syntax:	
+		int x = (10 < 20) ? 30 : 40;
+		System.out.println(x);		// Output: 30
+		
+	We can perform nesting of conditional operator also.
+		int x = (10 > 20) ? 30 : (40 > 50) ? 60 : 70;
+		System.out.println(x);		// Output: 70
+		
+New Operator:
+	We can use new operator to create object.
+	Example 1:
+		Test t = new Test();
+	
+	Note:
+		1. After creating an object constructor will be executed to perform initialization of an object. Hence constructor is not for creation of
+			object and it's for initialization of an object.
+		2. In java we have only new keyword but not delete keyword because destruction of useless object is the responsibility of garbage collector.
+
+[] Operator:
+	We can use this operator to declare and create arrays.
+	Example 1:
+		int[] x = new int[10];
