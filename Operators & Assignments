@@ -556,3 +556,121 @@ New Operator:
 	We can use this operator to declare and create arrays.
 	Example 1:
 		int[] x = new int[10];
+
+Operator Precedence:
+	1. Unary Operators:
+		[], X++, X--
+		++x, --x, ~, !
+		new, <type>
+	2. Arithmetic Operators:
+		*, /, %
+		+, -
+	3. Shift Operators:
+		>>, >>>, <<
+	4. Comparison Operators:
+		<, <=, >, >=, instanceof
+	5. Equality Operators:
+		==, !=
+	6. Bitwise Operators:
+		&
+		^
+		|
+	7. Short Circuit Operators:
+		&&
+		||
+	8. Conditional Operator:
+		?:
+	9. Assignment Operators:
+		=, +=, -=, *= ....
+
+Evaluation order of java operands:
+	In java we have only operator precedence but not operand precedence. Before applying any operator all operands will be evaluated from left to
+	right.
+	Example 1:
+		public static void main(String[] args) {
+			System.out.println(m1(1) + m1(2) * m1(3) / m1(4) + m1(5) * m1(6));	// Output: 32
+		}
+		public static int m1(int i) {
+			System.out.println(i);							// Output: 1 2 3 4 5 6
+			return i;
+		}
+
+new() v/s newInstance():
+	We can use new operator to create an object if we know class name at the beginning.
+	Example 1:
+		Test t = new Test();
+		Student s = new Student();
+		Customer c = new Customer();
+	newInstance is a method present in class Class. We can newInstance method to create object if we don't know class name at the beginning and it is
+	available dynamically at runtime.
+	Example 2:
+		Object o = Class.forName(args[0]).newInstance();
+        	System.out.println("Object created for " + o.getClass().getName());
+
+		java Test Student		// Output: Object created for com.example.demo.Student
+		java Test Customer		// Output: Object created for com.example.demo.Customer
+		java Test String		// Output: Object created for java.lang.String
+
+	In the case of new operator, based on our requirement we can invoke any constructor.
+	Example 3:
+		Test t = new Test();
+		Test t1 = new Test(10);
+		Test t2 = new Test("test");
+	but newInstance instance internally call no-arg constructor. Hence to use newInstance method compulsory corresponding class should contain no-arg
+	constructor otherwise we'll get runtime exception saying InstantiationException.
+
+	While using new operator at runtime if the corresponding .class file is not available then we'll get runtime Exception
+	saying java.lang.NoClassDefFoundError: Student
+	Example 4:
+		Student s = new Student();
+		At runtime if Student.class file not available then we'll get runtime exception saying NoClassDefFoundError: Student
+
+	While using newInstance method at runtime if the corresponding .class file is not available we'll get runtime exception saying
+	java.lang.ClassNotFoundException: Student
+	Example 5:
+		Object o = Class.forName(args[0]).newInstance();
+		java test test123
+		At runtime if test123 .class file not available then we'll get runtime exception saying ClassNotFoundException: test123.
+
+Differences between new & newInstance:
+
+		new						|				newInstance
+1. It's an operator in java					| It's a method present in java.lang.Class
+2. We can use new operator to create object if we know class	| We can use newInstance method to create Object if we don't know class name at the
+	name at the beginning					| beginning and it's available dynamically at runtime.
+3. To use new operator class not require to contain no-arg	| To use newInstance method compulsory class should contain no-arg constructor
+	constructor.						| otherwise we'll get runtime exception saying InstantiationException.
+4. At runtime if the corresponding .class not available then	| At runtime time if the corresponding .class file not available then we'll get
+	we'll get runtime exception saying NoClassDefFoundError,| runtime exception saying ClassNotFoundException, which is checked.
+	which is unchecked					|
+
+Differences between ClassNotFoundException and NoClassDefFoundError:
+
+		ClassNotFoundException				|				NoClassDefFoundError
+1. For hard coded class name's, at runtime if the   		| For dynamically provided class name at runtime if the corresponding.class file is
+	corresponding .class file is not available then we'll	| not available then we'll get runtime exception saying ClassNotFoundException,
+	get runtime exception saying NoClassDefFoundError, which| Which is checked exception. Example: Object o = Class.forName(args[0]).newInstance
+	is unchecked	Example Test t = new Test().		| java Test Student
+	At runtime if Test.class file isn't available then we'll| At runtime if Student.class not available then we'll get runtime exception
+	get runtime exception saying NoClassDefFoundError: Test	| saying ClassNotFoundException: Student
+
+Differences between instanceof and isInstance()
+
+		instanceof					|				isInstance()
+1. instanceof is an operator in java.				| isInstance is a method present in java.lang.Class.
+2. We can use instanceof to check whether give object is of	| We can use isInstance method to check whether the give object is particular
+	particular type of not and we know the type at the      | type or not and we don't know the type at the beginning and it's available
+	beginning                                               | dynamically at runtime.
+	Example:						| 
+		Thread t = new Thread()				| Example:
+		System.out.println(t instanceof Runnable);	|	public class Test {
+		System.our.println(t instanceof Object);	|		public static void main(String[] args) throws Exception {
+								|			Thread t = new Thread();
+								|			System.out.println(Class.forName(args[0]).isInstance(t));
+								|		}
+								|	}
+								|
+								|	java Test java.lang.Runnable	// Output: true
+								|	java Test java.lang.String	// Output: false
+
+Note: isInstance() is method equivalent of instanceof operator.
