@@ -1,11 +1,31 @@
 Language Fundamentals
-1. Identifiers
-2. Reserved world
-3. Data Types
-4. Literal
-5. Arrays
-6. Types of variables
-7. var-arg methods
-8. main method
-9. Command Line arguments
-10. Java coding Standard
+  1. Identifiers
+  2. Reserved world
+  3. Data Types
+  4. Literal
+  5. Arrays
+  6. Types of variables
+  7. var-arg methods
+  8. main method
+  9. Command Line arguments
+  10. Java coding Standard
+
+Operators & Assignments:
+	Increment and Decrement Operators
+	Arithmetic Operators
+	String concatenation operator
+	Relational operators
+	Equality operators
+	instanceof operator
+	bitwise operators
+	short circuit operators
+	type cast operator
+	assignment operators
+	conditional operator
+	new operator
+	[] operator
+	operator precedence
+	Evaluation order of operands
+	new() vs newInstance()
+	instanceof vs isInstance()
+	ClassNotFoundException vs NoClassDefFoundError
