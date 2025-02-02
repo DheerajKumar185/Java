@@ -11,21 +11,38 @@ Language Fundamentals
   10. Java coding Standard
 
 Operators & Assignments:
-	Increment and Decrement Operators
-	Arithmetic Operators
-	String concatenation operator
-	Relational operators
-	Equality operators
-	instanceof operator
-	bitwise operators
-	short circuit operators
-	type cast operator
-	assignment operators
-	conditional operator
-	new operator
-	[] operator
-	operator precedence
-	Evaluation order of operands
-	new() vs newInstance()
-	instanceof vs isInstance()
-	ClassNotFoundException vs NoClassDefFoundError
+  1. Increment and Decrement Operators
+  2. Arithmetic Operators
+  3. String concatenation operator
+  4. Relational operators
+  5. Equality operators
+  6. instanceof operator
+  7. Bitwise operators
+  8. Short circuit operators
+  9. Type cast operator
+  10. Assignment operators
+  11. Conditional operator
+  12. new operator
+  13. [] operator
+  14. Operator precedence
+  15. Evaluation order of operands
+  16. new() vs newInstance()
+  17. instanceof vs isInstance()
+  18. ClassNotFoundException vs NoClassDefFoundError
+
+Flow-Control
+  1. Selection Statement
+    a. if-else
+    b. switch
+  
+  2. Iterative Statement
+    a. while()
+    b. do-while()
+    c. for()
+    d. for-each loop (1.5v)
+  3. Transfer Statement
+    a. break
+    b. continue
+    c. return
+    d. try-catch-finaly
+    e. assert (1.4)
