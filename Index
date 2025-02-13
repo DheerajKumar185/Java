@@ -46,3 +46,9 @@ Flow-Control
     c. return
     d. try-catch-finaly
     e. assert (1.4)
+
+Declarations & Access Modifiers
+	1. Java source file structure
+	2. Class level modifiers
+	3. Member level modifiers
+	4. Interfaces
