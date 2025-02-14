@@ -1749,4 +1749,31 @@ volatile	|	|	|	|Yes	 |	|	|	|	|	|		|
  			
 		While implementing interface we can extend some other class. Hence we won't miss any inheritance benefit.
 		In this case object creation is not costly. Example: Test t = new Test(); 2 sec required
-		
+
+Which of the following are Valid?
+1) The Purpose of Constructor is to Create an Object.
+2) The Purpose of Constructor is to Initialize an Object but Not to Create Object. 
+3) Once Constructor completes then Only Object Creation completes. 
+4) First Object will be Created and then Constructor will be executed. 
+5) The Purpose of new Key Word is to Create Object and the Purpose of Constructor is to Initialize that Object. 
+6) We can't Create Object for Abstract Class Directly but Indirectly we can Create.
+7) Whenever we are creating Child Class Object Automatically Parent Class Object will be created Internally.
+8) Whenever we are creating a Child Class Object Automatically Abstract Class Constructor will be executed.
+9) Whenever we are creating a Child Class Object Automatically Parent Object will be Created.
+10) Whenever we are creating Child Class Object Automatically Parent Constructor will be executed but Parent Object won't be Created.
+11) Either Directly OR Indirectly we can't Create Object for Abstract Class and Hence Constructor Concept is Not Applicable for Abstract Class. 
+12) Interface can contain Constructor.
+
+Ans.
+1. False
+2. True
+3. False
+4. True
+5. True
+6. False
+7. False
+8. True
+9. False
+10. True
+11. False
+12. False
