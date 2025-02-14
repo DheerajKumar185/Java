@@ -93,10 +93,10 @@ Types of import statements:
 	
 	Case 2.
 		Which of the following import statements are meaningfully.
-		import java.util.ArrayList;				// Valid
+		import java.util.ArrayList;			// Valid
 		import java.util.ArrayList.*;			// Invalid
-		import java.util.*;    						// Valid
-		import java.util;				      		// Invalid
+		import java.util.*;    				// Valid
+		import java.util;				// Invalid
 	
 	Case 3.
 		Consider the following code 
@@ -182,15 +182,15 @@ Types of import statements:
 		
 		Without static import
 		public class Test {
-            public static void main(String[] args) throws Exception {
-                String s = new String("Test");
-                Student s1 = new Student(101, "Test");
-                System.out.println(s1.getName() + " " + s1.getId());
-                System.out.println(Math.sqrt(4));
-                System.out.println(Math.max(10, 20));
-                System.out.println(Math.random());
-            }
-        }
+	            public static void main(String[] args) throws Exception {
+	                String s = new String("Test");
+	                Student s1 = new Student(101, "Test");
+	                System.out.println(s1.getName() + " " + s1.getId());
+	                System.out.println(Math.sqrt(4));
+	                System.out.println(Math.max(10, 20));
+	                System.out.println(Math.random());
+	            }
+	        }
 		
 		With Static import
 		import static java.lang.Math.*;
@@ -252,7 +252,7 @@ Types of import statements:
 		public class Test {
 			static int MAX_VALUE = 999;
 			public static void main(String[] args) throws Exception {
-				System.out.println(MAX_VALUE);							// Output: 999
+				System.out.println(MAX_VALUE);				// Output: 999
 			}
 		}
 	
@@ -261,7 +261,7 @@ Types of import statements:
 		import static java.lang.Byte.*;
 		public class Test {
 			public static void main(String[] args) throws Exception {
-				System.out.println(MAX_VALUE);							// Output: 2147483647
+				System.out.println(MAX_VALUE);				// Output: 2147483647
 			}
 		}
 		
@@ -270,7 +270,7 @@ Types of import statements:
 		public class Test {
 			static int MAX_VALUE = 999;
 			public static void main(String[] args) throws Exception {
-				System.out.println(MAX_VALUE);							// Output: 127
+				System.out.println(MAX_VALUE);				// Output: 127
 			}
 		}
 		
@@ -303,16 +303,16 @@ Types of import statements:
 				import static java.lang.System.*;
 				
 	Which of the following import statements are valid
-		import java.lang.Math.*;					// Invalid
-		import static java.lang.Math.*;				// Valid
-		import java.lang.Math.sqrt;					// Invalid
+		import java.lang.Math.*;			// Invalid
+		import static java.lang.Math.*;			// Valid
+		import java.lang.Math.sqrt;			// Invalid
 		import static java.lang.Math.sqrt();		// Invalid
-		import java.lang.Math.sqrt.*;				// Invalid
-		import static java.lang.Math.sqrt;			// Valid
-		import java.lang;							// Invalid
-		import static java.lang;					// Invalid
-		import java.lang.*;							// Valid
-		import static java.lang.*;					// Invalid
+		import java.lang.Math.sqrt.*;			// Invalid
+		import static java.lang.Math.sqrt;		// Valid
+		import java.lang;				// Invalid
+		import static java.lang;			// Invalid
+		import java.lang.*;				// Valid
+		import static java.lang.*;			// Invalid
 		
 	Two packages contains a class or Interface with the same name is very rear and hence ambiguity problem is very rear in normal import.
 	Example: Date & List
@@ -404,8 +404,8 @@ Types of import statements:
 			Output: error: class, interface, enum, or record expected
 			
 		The following is valid java source file structure.
-		package statement		        			-	At most one
-		import statement			        		-	Any number
+		package statement			-	At most one
+		import statement			-	Any number
 		class/interface/enum declaration	-	Any number
 		
 	Note: Any empty source file is a valid java program. Hence the following are valid java source files.
@@ -494,7 +494,7 @@ Types of import statements:
 				}
 			}
 			class c extends p {
-				public void marry() {							// CTE -> 'marry()' cannot override 'marry()' in 'P'; overridden method is final
+				public void marry() {					// CTE -> 'marry()' cannot override 'marry()' in 'P'; overridden method is final
 					System.out.println("3Sha/9tara/4me");
 				}
 			}
@@ -563,7 +563,7 @@ Types of import statements:
 		Example: 
 			abstract class Test {
 				public static void main(String[] args) {
-					Test1 t = new Test();					// CTE -> error: Test is abstract; cannot be instantiated
+					Test1 t = new Test();			// CTE -> error: Test is abstract; cannot be instantiated
 				}
 			}
 			
@@ -586,12 +586,12 @@ Types of import statements:
 			
 		Example 3:
 			class Test {
-				public abstract void m1() {}		// CTE -> error: abstract methods cannot have a body
+				public abstract void m1() {}	// CTE -> error: abstract methods cannot have a body
 			}
 		
 		Example 4:
 			class Test {
-				public abstract void m1();			// CTE -> error: Test is not abstract and does not override abstract method m1() in Test
+				public abstract void m1();	// CTE -> error: Test is not abstract and does not override abstract method m1() in Test
 			}
 		
 		3. If we are extending abstract class than for each and every abstract method of parent class we should provide implementation otherwise we
@@ -604,7 +604,7 @@ Types of import statements:
 			}
 
 			class C extends Test {
-				public void m1() {}					// CTE -> error: C is not abstract and does not override abstract method m2() in Test
+				public void m1() {}		// CTE -> error: C is not abstract and does not override abstract method m2() in Test
 			}
 	final vs abstract:
 		1. abstract method compulsory we should override in child classes to provide implementation. Where as we can't override final methods. Hence
@@ -614,11 +614,11 @@ Types of import statements:
 		final abstract combination is illegal combination for classes.
 		
 		3. abstract class can contain final method where as final class can't contain abstract method.
-		abstract class Test {					// Valid
+		abstract class Test {				// Valid
 			public final void m1();
 		}
 		
-		final class Test {						// Invalid
+		final class Test {				// Invalid
 			public abstract void m1();
 		}
 		
@@ -662,11 +662,11 @@ Types of import statements:
 				}
 				
 				package pack2;
-				import pack1.A;		// CTE -> 'pack1.A' is not public in 'pack1'. Cannot be accessed from outside package
+				import pack1.A;				// CTE -> 'pack1.A' is not public in 'pack1'. Cannot be accessed from outside package
 				class B {
 					public static void main(String[] args) {
 						A a = new A();		// CTE -> 'pack1.A' is not public in 'pack1'. Cannot be accessed from outside package
-						a.m1();				// CTE -> Cannot access 'm1()' in 'pack1.A'
+						a.m1();			// CTE -> Cannot access 'm1()' in 'pack1.A'
 					}
 				}
 				
@@ -756,15 +756,17 @@ Types of import statements:
 					}
 				}
 				
-		Summery table of private, default, protected, public modifier:
-		Visibility						            			|		private			default			protected			public
-		--------------------------------------------------------------------------------------------------------------------
-		Within the same class	        					|		Yes				Yes				Yes					Yes
-		From child class of same package	  		|		No				Yes				Yes					Yes
-		From Non child class of same package		|		No				Yes				Yes					Yes
-		From child class of outside package			|		No				No				Yes					Yes
-											                  		|									[we should use child reference only]
-		From Non-child class of outside package	|		No				No				No					Yes
+Summery table of private, default, protected, public modifier:
+________________________________________________________________________________________________________________________________________________
+Visibility				|		private		|	default		|	protected			public	|
+----------------------------------------|-------------------------------|-----------------------|-----------------------------------------------|
+Within the same class	        	|		Yes		|	Yes		|	Yes				Yes	|
+From child class of same package	|		No		|	Yes		|	Yes				Yes	|
+From Non child class of same package	|		No		|	Yes		|	Yes				Yes	|
+From child class of outside package	|		No		|	No		|	Yes				Yes	|
+					|				|			|[we should use child reference only]		|
+From Non-child class of outside package	|		No		|	No		|	No				Yes	|
+-------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		The most restricted modifier is private. The most accessible modifier is public
 			private	< default < protected <	public
@@ -843,7 +845,7 @@ Types of import statements:
 			class Test {
 				static int x;
 				public static void main(String[] args) {
-					System.out.println(x);					// Output: 0	
+					System.out.println(x);			// Output: 0	
 				}
 			}
 			
@@ -885,7 +887,7 @@ Types of import statements:
 				class Test {
 					final static int x;
 					public void m1() {
-						x = 0;				// CTE -> error: cannot assign a value to final variable x
+						x = 0;		// CTE -> error: cannot assign a value to final variable x
 					}
 				}
 	
@@ -899,14 +901,14 @@ Types of import statements:
 			class Test {
 				public static void main(String[] args) {
 					int x;
-					System.out.println("Hello");				// Output: Hello
+					System.out.println("Hello");		// Output: Hello
 				}
 			}
 			
 			class Test {
 				public static void main(String[] args) {
 					int x;
-					System.out.println(x);						// CTE -> error: variable x might not have been initialized
+					System.out.println(x);			// CTE -> error: variable x might not have been initialized
 				}
 			}
 			
@@ -916,14 +918,14 @@ Types of import statements:
 			class Test {
 				public static void main(String[] args) {
 					final int x;
-					System.out.println("Hello");				// Output: Hello
+					System.out.println("Hello");		// Output: Hello
 				}
 			}
 			
 			class Test {
 				public static void main(String[] args) {
 					final int x;
-					System.out.println(x);						//  CTE ->  error: variable x might not have been initialized
+					System.out.println(x);			//  CTE ->  error: variable x might not have been initialized
 				}
 			}
 		
@@ -931,13 +933,13 @@ Types of import statements:
 		Example:
 			class Test {
 				public static void main(String[] args) {
-					public int x = 10;			// CTE -> error: illegal start of expression
-					private int y = 10;			// CTE -> error: illegal start of expression
+					public int x = 10;		// CTE -> error: illegal start of expression
+					private int y = 10;		// CTE -> error: illegal start of expression
 					protected int z = 10;		// CTE -> error: illegal start of expression
-					static int a = 10;			// CTE -> error: illegal start of expression
+					static int a = 10;		// CTE -> error: illegal start of expression
 					transient int b = 10;		// CTE -> error: illegal start of expression
 					volatile int c = 10;		// CTE -> error: illegal start of expression
-					final int d = 10;			// Valid
+					final int d = 10;		// Valid
 				}
 			}
 			
@@ -965,8 +967,8 @@ Types of import statements:
 						m1(10,20);
 					}
 					public static void m1(final int x, final int y) {
-						x = 100;										// CTE -> error: final parameter x may not be assigned
-						y = 200;										// CTE -> error: final parameter x may not be assigned
+						x = 100;					// CTE -> error: final parameter x may not be assigned
+						y = 200;					// CTE -> error: final parameter x may not be assigned
 						System.out.println(x +" "+ y);
 					}
 				}
@@ -1076,19 +1078,19 @@ Types of import statements:
 				int marks;
 				static String CName;
 				
-				getStudentInfo() {					// instance method
+				getStudentInfo() {			// instance method
 					return name + " " + marks;
 				}
 				
-				getCollegeInfo() {					// static method
+				getCollegeInfo() {			// static method
 					return CName;
 				}
 				
-				getAverage(int x, int y) {			// static method
+				getAverage(int x, int y) {		// static method
 					return x+y/2;
 				}
 				
-				getCompleteInfo() {					// instance method
+				getCompleteInfo() {			// instance method
 					return name + " " + rollNo + " " + marks + " " + CName; 
 				}
 			}
@@ -1109,4 +1111,642 @@ Types of import statements:
 		synchronized is illegal combination of modifiers for methods.
 		
 	native modifier:
+		native is modifier applicable only for methods and we can't apply anywhere else. 
+		The methods which are implemented in non java (mostly c or c++) are called native methods or foreign method.
+		
+		The main objectives of native keyword are
+		1. To improve performance of the system
+		2. To achieve machine or memory level communication
+		3. To use already existing legacy non-java code
+	
+		sudo code to use native keyword in java:
+		1. Load native library
+		2. Declare a native method
+		3. Invoke a native method
+			class native {
+				static {
+					System.loadLibrary("native library path");
+				}
+				public native void m1();
+			}
+			
+			class client {
+				public static void main(String[] args) {
+					Native n = new Native();
+					n.m1();
+				}
+			}
+		For native methods implementation is already available in old languages like c or c++ and we are not responsible to provide implementation.
+		Hence native method declaration should ends with semicolon ();
+		Example:
+			public native void m1();		// Valid
+			public native void m1() {}		// Invalid - native method can't have a body
+		For native methods implementation is already available in old languages. But for abstract methods implementation should not be available.
+		Hence we can't declare native method as abstract. That's native-abstract combination is illegal combination for methods.
+		
+		We can't declare native method as strictfp because there is no guaranty that old languages follow IEEE754 standard. Hence native-strictfp
+		combination	is illegal combination for methods.
+		
+		The main advantage of native keyword is performance will be improved but main disadvantage of native keyword is it breaks platform
+		independent	nature of java.
+	
+	transient modifier:
+		transient is the modifier applicable only for variables. We can use transient keyword with in serialization context.
+		
+		At the time of serialization if we don't want to same the value of a particular variable to meet the security constraint then we should
+		declare that variable as transient. At the time of serialization JVM ignores original value of transient variable and save default value
+		to the file. Hence transient means not to serialize.
+		
+	volatile modifier:
+		volatile is a modifier applicable only for variables and we can't apply anywhere else.
+		If the value of a variable keep on changing by multiple threads then there may be a chance of data inconsistency problem. We can solve this
+		problem by using volatile modifier.
+		
+		If a variable declared as volatile than for every thread JVM will create a separate local copy. Every modification performed by thread
+		will takes place in local copy so that there is no effect on remaining threads.
+		
+		The main advantage of volatile keyword is we can overcome data inconsistency problem. But the main disadvantage of volatile keyword is
+		creating and maintaining a separate copy for every thread increases complexity of programming and creates performance problems. Hence if 
+		there is no specific requirement, then it's never recommended to use volatile keyword and it's almost deprecated keyword.
+		
+		final variable means the value never changes, where as volatile variable means the value keep on changing. Hence volatile-final is illegal
+		combination for variables.
+_________________________________________________________________________________________________________
+		|	classes	|			|Interface	|Enum		|	    	|
+Modifier	|outer	|inner	|methods|variable|blocks|outer	|inner	|outer	|inner	|constructor	|
+----------------|-------|-------|-------|--------|------|-------|-------|-------|-------|---------------|
+public		|Yes	|Yes	|Yes	|Yes	 |	|Yes	|Yes	|Yes	|Yes	|Yes		|
+private		|	|Yes	|Yes	|Yes	 |	|	|Yes	|	|Yes	|Yes		|
+protected	|	|Yes	|Yes	|Yes	 |	|	|Yes	|	|Yes	|Yes		|
+default		|Yes	|Yes	|Yes	|Yes	 |	|Yes	|Yes	|Yes	|Yes	|Yes		|
+final		|Yes	|Yes	|Yes	|Yes	 |	|	|	|	|	|		|
+abstract	|Yes	|Yes	|Yes	|	 |	|Yes	|Yes	|	|	|		|
+static		|	|Yes	|Yes	|Yes	 |Yes	|	|Yes	|	|Yes	|		|
+synchronized	|	|	|Yes	|	 |Yes	|	|	|	|	|		|
+native		|	|	|Yes	|	 |	|	|	|	|	|		|
+strictfp	|Yes	|Yes	|Yes	|	 |	|Yes	|Yes	|Yes	|Yes	|		|
+transient	|	|	|	|Yes	 |	|	|	|	|	|		|
+volatile	|	|	|	|Yes	 |	|	|	|	|	|		|
+---------------------------------------------------------------------------------------------------------
+		
+	The only applicable modifier for local variable is final
+	The only applicable modifier for constructors: public, private, protected, default
+	The modifiers which are applicable only for method: native
+	The modifiers which are applicable only for variables: transient, volatile
+	The modifiers which are applicable for classes but not for interface: final
+	THe modifiers which are applicable for classes but not for enum: final, abstract
+
+4. Interface:
+	1. Introduction
+	2. Interface declaration & implementation
+	3. extends vs implements
+	4. Interface methods
+	5. Interface variables
+	6. Interface naming conflicts
+		i. Method naming conflicts
+		ii. Variable Naming conflicts
+	7. Marker Interface
+	8. Adapter classes
+	9. Interface vs abstract class vs concrete class
+	10. Differences between interface and abstract classes
+	11. Conclusions
+	
+	1. Introduction:
+		Any service requirement specification (SRS) is considered as an interface.
+		Example 1:
+			JDBC API access requirement specification to develop database driver. Database verner is responsible to implement this JDBC API.
+			SUN - JDBC API - Oracle driver, MySQL driver, DB2 driver
+			
+		Example 2:
+			Servlet API access requirement specification to develop web server. Web server vendor is responsible to implement Servlet API.
+			SUN - Servlet API - Apache tomcat server, Oracle Weblogic Server, IBM Websphere Server
+			
+		From client point of view an interface defines the set of services what he's expecting.
+		From service provider point of view and interface define the set of services what he's offering. Hence any contract between client &
+		service	provider is consider as an interface.
+		
+		Example 3:
+			Through Bank ATM GUI screen bank people are highlighting the set of services what they are offering at the same time the same GUI 
+			screen represent the set of services what customer is expecting. Hence this GUI screen access contract between customer & bank people.
+			
+		Inside interface every method is always abstract whether we are declaring or not. Hence interface is consider as 100% pure abstract class.
+		
+		Summery definition:
+			any service requirement specification or any contract between client & service provider or 100% pure abstract class is nothing but
+			interface.
+		
+		Whenever we are implementing an interface for each and every method of that interface we have to provide implementation. Otherwise we
+		have to declare class as abstract then next level child class is responsible to provide implementation.
+		
+		Every interface method is always public and abstract. Whether we are declaring or not. Hence whenever we are implementing an interface
+		method compulsory we should declare as public. Otherwise we'll get CTE.
+		
+		Example 4:
+			interface Interf {
+				void m1();
+				void m2();
+			}
+
+			abstract class ServiceProvider implements Interf {
+				public void m1() {}
+			}
+
+			class SubServiceProvider extends ServiceProvider {
+				public void m2() {}
+			}
+			
+	extends vs implements:
+		A class can extend only one class at a time.
+		An interface can extend any no of interface simultaneously
+		
+		Example 5:
+			interface A {}
+			interface B {}
+			interface C extends A, B {}
+			
+		A can implement any no of interface simultaneously.
+		A class can extend another class and can implement any no of interface simultaneously
+		
+		Example 6:
+			Class A extends B implements C, D, E
+			
+		Which of the following is valid
+		1. A class can extend any no of classes at a time	// Invalid
+		2. A class can implement only one interface at a time 	// Invalid
+		3. Interface can extend only one interface at a time	// Invalid
+		4. An interface can implement any no of interface simultaneously		// Invalid
+		5. A class can extend another class or can implement an interface but not both simultaneously // Invalid
+		6. Non of the above
+		
+		Consider the following expression X extends Y. Which of the following possibilities of x & y the above expression is valid.
+		1. Both X & Y should be classes
+		2. BOth X & Y should be interface
+		3. Both X & Y should be either classes or interfaces		// True
+		4. No restrictions
+		
+		X extends Y, Z: 
+			X, Y, Z should be interface
+		
+		X implements Y, Z:
+			X - class
+			Y, Z - interface
+			
+		X extends Y implements Z:
+			X, Y - class
+			Z - interface
+			
+		X implements Y extend Z:
+	
+	Interface methods:
+		Every method present inside interface is always public & abstract whether we are declaring or not.
+		
+		Example:
+			interface Interf {
+				void m1();
+			}
+		
+		public: To make this method available to every implementation class
+		abstract: Implementation class is responsible to provide implementation
+		
+		Hence inside interface the following method declarations are equal
+		1. void m1();
+		2. public void m1();
+		3. abstract void m1();
+		4. public abstract void m1();
+		
+		As every interface method is always public & abstract we can't declare interface method with the following modifiers.
+		1. private
+		2. protected
+		3. static
+		4. final
+		5. synchronized
+		6. strictfp
+		7. native
+		
+		Which of the following method declarations are allowed inside interface.
+		1. public void m1(){};			// Invalid
+		2. private void m1();			// Invalid
+		3. protected void m1();			// Invalid
+		4. static void m1();			// Invalid
+		5. public abstract native void m1();	// Invalid
+		6. abstract public void m1();		// Valid
+		
+	Interface variables:
+		An interface can contain variables. The main purpose of interface variable is to define requirement level constants.
+		
+		Every interface variable is always public static final. whether we are declaring or not.
+		
+		Example:
+			interface Interf {
+				int x = 10;
+			}
+
+			public: To make this variable available to every implementation class
+			static: Without existing object implementation class can access this variable
+			final: If one implementation class changes value, then remain implementation classes will be effected
+				to restrict this every interface variable is always final
+				
+			Hence within the interface the following variable declarations are equal
+			int x = 10;
+			public int x = 10;
+			static int x =10;
+			final int x = 10;
+			public static int x = 10;
+			public final int x = 10;
+			static final int x = 10;
+			public static final int x = 10;
+			
+			As every interface variable is always public static final. We can't declare with the following modifiers.
+			private, protected, transient, volatile
+			
+			For interface variables compulsory we should perform initialization at the time of declaration. Otherwise we'll get CTE.
+			Example:
+				interface Interf {
+					int x;		// CTE -> error: = expected
+				}
+				
+			Inside interface which of the following variable declarations are allowed.
+			int x;				// Invalid
+			private int x = 10;		// Invalid
+			protected int x = 10;		// Invalid
+			volatile int x = 10;		// Invalid
+			transient int x = 10;		// Invalid
+			public static int x = 10;	// Valid
+		
+		Inside implementation class we can access variables but we can't modify values.
+		Example:
+			interface Interf {
+				int x = 10;
+			}
+
+			class Test implements Interf {
+				public static void main(String[] args) {
+					x = 777;				// CTE -> error: cannot assign a value to final variable x
+					System.out.println(x);
+				}
+			}
+
+			class Test implements Interf {
+				public static void main(String[] args) {
+					int x = 777;
+					System.out.println(x);			// Output: 777
+				}
+			}
+	
+	Interface naming conflicts:
+		1. Method naming conflicts:
+			Case 1:
+				If two interface contains method with the same signature and same return type then in the implementation class we have to
+				provide implementation for only one method.
+				Example:
+					interface Left {
+						public void m1();
+					}
+
+					interface Right {
+						public void m1();
+					}
+
+					class Test implements Left, Right {
+						public void m1() {}
+					}
+				
+			Case 2:
+				If two interfaces contains method with the same name but different argument types, than in the implementation class we have
+				to provide implementation for both methods. And these method access overloaded methods.
+				Example:
+					interface Left {
+						public void m1();
+					}
+
+					interface Right {
+						public void m1(int i);
+					}
+
+					class Test implements Left, Right {
+						public void m1() {}
+						public void m1(int i) {}
+					}
+			
+			Case 3:
+				If two interface contains method with same signature but different return type then it's impossible to implement both interface
+				simultaneously (if return types are not co-variant).
+				Example:
+					interface Left {
+						public void m1();
+					}
+
+					interface Right {
+						public int m1();
+					}
+				
+				We can't write any java class which implements both interface simultaneously.
+				
+				Q. Is a java class implement any no of interfaces simultaneously?
+				Ans. Yes except a particular case. If two interfaces contain a method with the same signature but different return types. Then
+				it's impossible to implement both interfaces simultaneously.
+		
+		2. Interface variable naming conflicts:
+			Two interfaces can contain a variable with the same name and there may be a chance of variable naming conflicts. But we can solve
+			this problem by using interface names.
+			Example:
+				interface Left {
+					int x = 777;
+				}
+
+				interface Right {
+					int x = 888;
+				}
+
+				class Test implements Left, Right {
+					public static void main(String[] args) {
+						System.out.println(Left.x);			// Output: 777
+						System.out.println(Right.x);			// Output: 888
+					}
+				}
+	
+	Marker Interface:
+		If an interface doesn't contain any methods and by implementing that interface if our object will get some ability such types of interfaces
+		are called marker interfaces or Ability interface or Tag interface.
+		Example:
+			Serializable, Cloneable, RandomAccess, SingleThreadModel: These are marked for some ability.
+			
+		Example:
+			By implementing Serializable interface, our object can be save to the file and can travel across the network.
+			
+			By implementing Cloneable interface, our objects are in a position to produce exactly duplicate cloned object.
+			
+		Q. Without having any methods how the objects will get some ability in marker interfaces?
+		Ans. Internally JVM is responsible to provide required ability.
+		
+		Q. Why JVM is providing required ability in marker interfaces?
+		Ans. To reduces complexity of programming and to make java language as simple.
+		
+		Q. Is it possible to create our own marker interface?
+		Ans. Yes, But customization of JVM is required.
+		
+	Adapter classes:
+		Adapter class is a simple java class that implements an interface with only empty implementation.
+		
+		Example:		
+			interface X {
+				m1();
+				m2();
+				m3();
+				.
+				.
+				.
+				m1000();
+			}
+			
+			abstract class Adapter implement X {
+				m1(){}
+				m2(){}
+				m3(){}
+				.
+				.
+				.
+				.
+				m1000(){}
+			}
+			
+		If we implement an interface for each and every method of that interface compulsory we should provide implementation. Whether it's required
+		or not required.
+		class Test implements X {
+			m3() {
+				.
+				.
+				.
+				.
+			}
+			m1(){}
+			m1(){}
+			m1(){}
+			.
+			.
+			.
+			m1000(){}
+		}
+		
+		The problem in this approach is it increases length of the code and reduces readability.
+		We can solve this problem by using Adapter classes. Instead of implementing interface if we extend adaptor class we have to provide 
+		implementation only for required methods and we are not responsible to provide implementation for each and every method of the interface.
+		So that length of the code will be reduced.
+		Example:
+			class Test extends Adapter {
+				m1() {
+					.
+					.
+					.
+				}
+			}
+			
+			class Sample extends Adapter {
+				m2() {
+					.
+					.
+					.
+				}
+			}
+			
+			class Test extends Adapter {
+				m1000() {
+					.
+					.
+					.
+				}
+			}
+			
+		We can develop a servlet in the following 3 ways
+		1. By implementing Servlet interface
+		2. By extending GenericServlet
+		3. By extending HttpServlet
+		
+		If we implements servlet interface for each and every method of that interface we should provide implementation. It increases length of
+		the code and reduces readability.
+		
+		Instead of implementing servlet interface directly if we extend GenericServlet we have to provide implementation only for service method.
+		and all remaining method we are not required to provide implementation. Hence more or less GenericServlet access adaptor class for
+		servlet interface.
+		
+		Note:
+			Marker interface and Adapter classes simplifies complexity of programming and these are best utilities to the programmer and programmers
+			life will become simple.
+	
+	Interface vs Abstract class vs Concrete Class:
+		1. If don't know anything about implementation just we have requirement specification then we should go for interface.
+		Example:
+			Servlet
+		
+		2. If we are talking about implementation but not completely (partial implementation) then we should go for abstract class.
+		Example:
+			GenericServlet, HttpServlet
+		
+		3. If we are talking about implementation completely and ready to provide service then we should go for Concrete class
+		Example:
+			MyServlet
+	
+	Difference between Interface and Abstract class:
+-------------------------------------------------------------------------------------------------------------------------------------------------
+			Interface						|				Abstract Class
+-------------------------------------------------------------------------------------------------------------------------------------------------
+1. If we don't know any thing about implementation and just we have requirement	|1.  If we are talking about implementation but not completely partial
+ specification then we should go for interface.					| implementation then we should go for abstract class.
+2. Inside interface every method is always public & abstract whether we are 	|2. Every method present in abstract class need not be public &
+ declaring or not. Hence interface is consider as 100% pure abstract class.	| abstract and we can take concrete method also.
+3. As every interface method is always public & abstract and hence we can't	|3. There are no restriction on abstract class method modifiers.
+ declare with the following modifier.						|
+ private, protected, final, static, synchronized, native, strictfp		|
+4. Every variable present inside interface is always public static final whether|4. Every variable present inside abstract class need not be public
+ we are declaring or not.							| static final.
+5. As every interface variable is always public static final we can't declare 	|5. There are no restrictions on abstract class variable modifiers.
+ with the following modifiers. private, protected, volatile, transient.		|
+6. For interface variables compulsory we should perform initialization at the	|6. For abstract class variable we are not required to perform
+ time of declaration only otherwise we'll get CTE.				| initialization at the time of declaration.
+7. Inside interface we can't declare static & instance blocks.			|7. Inside abstract class we can declare static and instance blocks.
+8. Inside interface we can't declare constructors.				|8. Inside abstract class we can declare constructor.
+
+	Q. Any way we can't create object for abstract class but abstract class can contain constructor. What is the need?
+	Ans. Abstract class constructor will be executed whenever we are creating child class object to perform initialization of child class object.
+	
+	Approach 1:
+		Without having constructor in abstract class
+		abstract class Person {
+			String name;
+			int age;
+			.
+			.
+			.
+			.
+			100 property
+		}
+
+		class Student extends Person {
+			int rollNo;
+			
+			Student(String name, int age, ... 101 property) {
+				this.name = name;
+				this.age = age;
+				.
+				.
+				.
+				this.rollNo = rollNo;
+			}
+		}
+		Student s1 = new Student(101, property);
+
+		class Teacher extends Person {
+			String subject;
+			Teacher(String name, int age, .... 101 property) {
+				this.name = name;
+				this.age = age;
+				.
+				.
+				.
+				this.subject = subject;
+			}
+		}
+		Teacher t = new Teacher(101, property)
+		More code -> code Redundant
+		
+	Approach 2:
+		With constructor inside abstract class
+		abstract class Person {
+			String name;
+			int age;
+			.
+			.
+			.
+			100 property;
+			
+			Person(String name, int age, ... 100 property) {	// This constructor will work for every child object creation.
+				this.name = name;
+				this.age = age;
+				.
+				.
+				.
+				100 line of code
+			}
+		}
+
+		class Student extends Person {
+			int rollNo;
+			Student(String name, ing age... 101 property) {
+				super(100 property);
+				this.rollNo = rollNo;
+			}
+		}
+
+		Student s1 = new Student(101 property);
+
+		class Teacher extends Person {
+			String subject;
+			Teacher(String name, int age, ... 101 property) {
+				super(100 property);
+				this.subject = subject;
+			}
+		}
+
+		Teacher t1 = new Teacher(101 property);
+		Less code -> Code reusability
+		
+	Note:
+		1. Either directly or indirectly we can't create object for abstract class.
+		
+		Q. Any way we can't create objects for abstract class and interface. But abstract class can contain constructor but interface doesn't
+		contain constructor. What's the region.
+		Ans. The main purpose of constructor is to perform initialization of instance variable.
+			Abstract class can contain instance variables which are required for child object. To perform initialization of those instance variables
+			constructor is required for abstract class. But every variable present inside interface is always public static final whether we are
+			declaring or not and there is no chance of existing instance variable inside interface. Hence constructor concept is not required
+			for interface.
+			
+		Whenever we are creating child class object parent object won't be created, just parent class constructor will be executed for the child
+		object purpose only.
+		Example:
+			class P {
+				P() {
+					System.out.println("P " + this.hashCode());
+				}
+			}
+
+			class C extends P {
+				C() {
+					System.out.println("C " + this.hashCode());
+				}
+			}
+
+			class Test {
+				public static void main(String[] args) {
+					C c = new C();
+					System.out.println("Test " + c.hashCode());
+				}
+			}
+			
+		Output:	P 804564176
+				C 804564176
+				Test 804564176
+				
+		Q. Inside interface every method is always abstract and we can take only abstract methods int abstract class also. Then what's the difference
+		between interface and abstract class. Is it possible to replace interface with abstract class?
+		Ans. We can replace interface with abstract class but it's not a good programming practice. This is something like recruiting IAS officer
+		for swiping activity.
+		If every thing is abstract then it's highly recommended to go for interface but not for abstract class.
+		Approach 1:
+			abstract class X {}
+
+			class Test extends X
+			Test t = new Test(); 2 min required
+			
+		While extending abstract class it's not possible to extend any other class. Hence we are missing inheritance benefit.
+		In this case object creation is costly. Example: Test t = new Test(); 2 min required
+		
+		Approach 2:
+			interface X {}
+			
+			class Test implements X {}
+			Test t = new Test(); 2 sec required
+ 			
+		While implementing interface we can extend some other class. Hence we won't miss any inheritance benefit.
+		In this case object creation is not costly. Example: Test t = new Test(); 2 sec required
 		
