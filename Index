@@ -48,7 +48,24 @@ Flow-Control
     e. assert (1.4)
 
 Declarations & Access Modifiers
-	1. Java source file structure
-	2. Class level modifiers
-	3. Member level modifiers
-	4. Interfaces
+  1. Java source file structure
+  2. Class level modifiers
+  3. Member level modifiers
+  4. Interfaces
+
+Object-Oriented Programming (OOP)
+  1. Data Hiding
+  2. Abstraction
+  3. Encapsulation
+  4. Tighly Encapsulated class
+  5. Is-A Relationship
+  6. Has-A Relationship
+  7. Method Signature
+  8. Overloading
+  9. Overriding
+  10. Static Control flow
+  11. Instance Control flow
+  12. Constructors
+  13. Coupling
+  14. Cohesion
+  15. Type-Casting
