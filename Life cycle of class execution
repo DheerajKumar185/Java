@@ -1,0 +1,10 @@
+Life cycle of class execution.
+
+1. Start JVM
+2. Create & start main thread
+3. Locate Test.class file
+4. Load Test.class			// Static variable creation // Static variables will be stored in method area
+5. Execute main() method
+6. Unload Test.class		// Static variable destraction
+7. Terminate main thread
+8. Shutdown JVM
