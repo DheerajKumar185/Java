@@ -896,24 +896,25 @@ ____________________________________________________________________|___________
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	Pillars of OOP
-	Encapsulation		-	Security
-	Inheritance		    - 	Reusability
-	Polymorphism	    -	Flexibility
+	Encapsulation	-	Security
+	Inheritance	- 	Reusability
+	Polymorphism	-	Flexibility
 
 					Polymorphism
-						/\
+					    /\
 					   /  \
 					  /    \
 					 /      \
-				Static		Dynamic
-			Compile-time 	Runtime
-		Early Binding		Late Binding
-			/\					|
-		   /  \					|
-		  /    \				|
-		 /      \			Overriding
-		/        \
-Overloading		Method Hiding
+					/	 \
+				    Static	Dynamic
+				Compile-time 	Runtime
+				Early Binding	Late Binding
+				     /\			|
+		  		    /  \		|
+		  		   /    \		|
+		 		  /      \		Overriding
+				 /        \
+			Overloading	Method Hiding
 
 	Beautiful definition of Polymorphism:
 		A BOY starts LOVE with the work FRIENDSHIP, but GIRL ends LOVE with the same word FRIENDSHIP. Word is the same but attitude is different.
