@@ -722,15 +722,15 @@
 					p1.m1();			// Output: Parent
 				}
 			}
-____________________________________________________________________________________________________________________________________________________
-					Method Hiding										|							Overriding
-----------------------------------------------------------------------------------------------------------------------------------------------------
-1. Both Parent and Child class method should be static.					|1. Both Parent and Child class method should be non-static.
-2. Compiler is responsible for method resolution based of reference	|2. JVM is always responsible for method resolution based of runtime object.
-	type.																|
-3. It's also known as Compile time Polymorphism, Static Polymorphism,	|3. It's also known as Runtime Polymorphism, Dynamic Polymorphism, Late
-	Early Binding.														|	Binding.
-----------------------------------------------------------------------------------------------------------------------------------------------------
+________________________________________________________________________________________________________________________________________________________
+			Method Hiding					|				Overriding					|
+------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+1. Both Parent and Child class method should be static.			|1. Both Parent and Child class method should be non-static.			|
+2. Compiler is responsible for method resolution based of reference	|2. JVM is always responsible for method resolution based of runtime object.	|
+ type.									|										|
+3. It's also known as Compile time Polymorphism, Static Polymorphism,	|3. It's also known as Runtime Polymorphism, Dynamic Polymorphism, Late	Binding.|
+ Early Binding.								|										|
+--------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 	Overriding WRT Var-Args Methods:
 		We can override Var-Args method with another Var-Args method only. If we are trying to override with normal method then it'll become
@@ -792,21 +792,21 @@ ________________________________________________________________________________
 			class Test {
 				public static void main(String[] args) {
 					P p = new P();
-					System.out.println(p.x);				// Output: 888
+					System.out.println(p.x);		// Output: 888
 					C c = new C();
-					System.out.println(c.x);				// Output: 999
+					System.out.println(c.x);		// Output: 999
 					P p1 = new C();
-					System.out.println(p1.x);				// Output: 888
+					System.out.println(p1.x);		// Output: 888
 				}
 			}
-____________________________________________________________________________________
-P:non-static	|		P:static				P:non-static			P:static
-C:non-static	|		C:non-static			C:static				C:static
-------------------------------------------------------------------------------------
-888				|		888						888						888
-999				|		999						999						999
-888				|		888						888						888
-------------------------------------------------------------------------------------
+________________________________________________________________________________________________
+P	|	non-static	|	static		|	non-static	|	static	|
+C	|	non-static	|	non-static	|	static		|	static	|
+--------|-----------------------------------------------|-----------------------|---------------|
+	|	888		|	888		|	888		|	888	|
+	|	999		|	999		|	999		|	999	|
+	|	888		|	888		|	888		|	888	|
+------------------------------------------------------------------------------------------------|
 
 Difference between Overloading and Overriding:
 ________________________________________________________________________________________________________________________________________________________
