@@ -84,7 +84,7 @@
 		private int x = 10;			// Yes
 	}
 	class B extends A {
-		int y = 20;					    // No
+		int y = 20;					// No
 	}
 	class C extends A {
 		private int z = 30;			// Yes
@@ -92,7 +92,7 @@
 
 	Q. Which of the following classes are tightly encapsulated?
 	class A {
-		int x = 10;					    // No
+		int x = 10;					// No
 	}
 	class B extends A {
 		private int y = 20;			// No
@@ -338,7 +338,7 @@
 				Test t = new Test();
 				t.m1();				// Output: No-Arg method
 				t.m1(10);			// Output: int-Arg method
-				t.m1(10.5);		// Output: double-Arg method
+				t.m1(10.5);			// Output: double-Arg method
 			}
 		}
 
@@ -367,7 +367,7 @@
 				}
 				public static void main(String[] args) {
 					Test t = new Test();
-					t.m1(10);		  // Output: int-Arg method
+					t.m1(10);		// Output: int-Arg method
 					t.m1(10.5f);	// Output: float-Arg method
 					t.m1('a');		// Output: int-Arg method
 					t.m1(10l);		// Output: float-Arg method
@@ -386,8 +386,8 @@
 			public static void main(String[] args) {
 				Test t = new Test();
 				t.m1(new Object());		// Output: Object version
-				t.m1("Test");			  // Output: String version
-				t.m1(null);				  // Output: String version
+				t.m1("Test");			// Output: String version
+				t.m1(null);				// Output: String version
 			}
 		}
 
@@ -403,9 +403,9 @@
 			}
 			public static void main(String[] args) {
 				Test t = new Test();
-				t.m1("Test");						          // Output: String version
+				t.m1("Test");						// Output: String version
 				t.m1(new StringBuffer("Test"));		// Output: StringBuffer version
-				t.m1(null);							          // Output: CTE -> error: reference to m1 is ambiguous
+				t.m1(null);							// Output: CTE -> error: reference to m1 is ambiguous
 			}
 		}
 
@@ -421,7 +421,7 @@
 				Test t = new Test();
 				t.m1(10, 10.5f);	// Output: int-float version
 				t.m1(10.5f, 10);	// Output: float-int version
-				t.m1(10, 10);		  // Output: error: reference to m1 is ambiguous
+				t.m1(10, 10);		// Output: error: reference to m1 is ambiguous
 				t.m1(10.5f, 10.5f);	// Output: error: no suitable method found for m1(float,float)
 			}
 		}
@@ -436,9 +436,9 @@
 			}
 			public static void main(String[] args) {
 				Test t = new Test();
-				t.m1();			  // Output: Var-Args Method
+				t.m1();			// Output: Var-Args Method
 				t.m1(10, 20);	// Output: Var-Args Method
-				t.m1(10);		  // Output: General Method
+				t.m1(10);		// Output: General Method
 			}
 		}
 
@@ -524,7 +524,7 @@
 
 			It's invalid in 1.4 version but from 1.5 version it's valid.
 
-			Parent class method return type:	Object						          Number			    String		double
+			Parent class method return type:	Object						Number			String		double
 
 			Child class method return type: 	Object|String|StringBuffer	Number|Integer	String		int - not possible - CTE
 
@@ -575,9 +575,9 @@
 			3. strictfp
 			4. abstract
 
-parent method	|  final          |  non-final   |  abstract		  |  synchronized		  |  native          | strictfp
-				      |  not possible		|  possible    |  both possible	|  both possible		|  both possible   | both possible
-child method  |	non-final		    |  final		   |  non-abstract	|  non-synchronized	|  non-native      | non-strictfp
+		parent method	final			non-final	abstract		synchronized		native			strictfp
+						not				possible	both possible	both possible		both possible	both possible
+		child method  	non-final		final		non-abstract	non-synchronized	non-native		non-strictfp
 
 		8. While overriding we can't reduce scope of access modifier. But we can increase the scope.
 			Example:
@@ -586,7 +586,7 @@ child method  |	non-final		    |  final		   |  non-abstract	|  non-synchronized	
 				}
 				class C extends P {
 					void m1() {}		// CTE -> error: m1() in C cannot override m1() in P
-										      // attempting to assign weaker access privileges; was public
+										// attempting to assign weaker access privileges; was public
 				}
 
 				class P {
@@ -597,8 +597,9 @@ child method  |	non-final		    |  final		   |  non-abstract	|  non-synchronized	
 				}
 
 		private < default < protected < public
-	Parent class method:	public	|	protected				  |  default							    |  private  
-	Child class method :	public	|	protected|public	|	default|protected|public	|  overloading concept not applicable for private
+	Parent class method:	public		protected				default							private
+
+	Child class method :	public		protected|public		default|protected|public		overloading concept not applicable for private
 
 		9. If child class method throws any checked exception compulsory parent class method should throw the same checked exception or it's parent
 		otherwise we'll get CTE. But there are no restriction for unchecked exception.
@@ -678,7 +679,7 @@ child method  |	non-final		    |  final		   |  non-abstract	|  non-synchronized	
 				public static void m1() {}
 			}
 			class C extends P {
-				public void m1() {}			    // CTE ->  error: m1() in C cannot override m1() in P, overridden method is static
+				public void m1() {}			// CTE ->  error: m1() in C cannot override m1() in P, overridden method is static
 			}
 
 			class P {
@@ -714,22 +715,22 @@ child method  |	non-final		    |  final		   |  non-abstract	|  non-synchronized	
 			class Test {
 				public static void main(String[] args) {
 					P p = new P();
-					p.m1();				  // Output: Parent
+					p.m1();				// Output: Parent
 					C c = new C();
-					c.m1();				  // Output: Child
+					c.m1();				// Output: Child
 					P p1 = new C();
-					p1.m1();			  // Output: Parent
+					p1.m1();			// Output: Parent
 				}
 			}
 ____________________________________________________________________________________________________________________________________________________
-					Method Hiding										                            |							Overriding                                                      |
-----------------------------------------------------------------------------------------------------------------------------------------------------|
-1. Both Parent and Child class method should be static.					      |1. Both Parent and Child class method should be non-static.                  |
-2. Compiler is responsible for method resolution based of reference	  |2. JVM is always responsible for method resolution based of runtime object.  |
-	type.																                                |                                                                             |
-3. It's also known as Compile time Polymorphism, Static Polymorphism,	|3. It's also known as Runtime Polymorphism, Dynamic Polymorphism, Late       |
-	Early Binding.														                          |	Binding.                                                                    |
-----------------------------------------------------------------------------------------------------------------------------------------------------|
+					Method Hiding										|							Overriding
+----------------------------------------------------------------------------------------------------------------------------------------------------
+1. Both Parent and Child class method should be static.					|1. Both Parent and Child class method should be non-static.
+2. Compiler is responsible for method resolution based of reference	|2. JVM is always responsible for method resolution based of runtime object.
+	type.																|
+3. It's also known as Compile time Polymorphism, Static Polymorphism,	|3. It's also known as Runtime Polymorphism, Dynamic Polymorphism, Late
+	Early Binding.														|	Binding.
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	Overriding WRT Var-Args Methods:
 		We can override Var-Args method with another Var-Args method only. If we are trying to override with normal method then it'll become
@@ -752,7 +753,7 @@ ________________________________________________________________________________
 					C c = new C();
 					c.m1(10);				// Output: Child
 					P p1 = new C();
-					p1.m1(10);			// Output: Parent
+					p1.m1(10);				// Output: Parent
 				}
 			}
 
@@ -775,7 +776,7 @@ ________________________________________________________________________________
 					C c = new C();
 					c.m1(10);				// Output: Child
 					P p1 = new C();
-					p1.m1(10);			// Output: Child
+					p1.m1(10);				// Output: Child
 				}
 			}
 	Overriding WRT variables:
@@ -798,31 +799,31 @@ ________________________________________________________________________________
 					System.out.println(p1.x);				// Output: 888
 				}
 			}
-_________________________________________________________________
-P  |  non-static	|		static			|	  non-static	|		static    |
-C  |  non-static	|		non-static	|		static			|	  static    |
-------------------|---------------|---------------|-------------|
-        888				|		888					|  	888					|  	888       |
-        999				|		999					|	  999					|	  999       |
-        888				|		888					|	  888					|	  888       | 
-----------------------------------------------------------------|
+____________________________________________________________________________________
+P:non-static	|		P:static				P:non-static			P:static
+C:non-static	|		C:non-static			C:static				C:static
+------------------------------------------------------------------------------------
+888				|		888						888						888
+999				|		999						999						999
+888				|		888						888						888
+------------------------------------------------------------------------------------
 
 Difference between Overloading and Overriding:
-____________________________________________________________________________________________________________________________________________________
-Property					        |      Overloading							        |        	Overriding                                                             |
---------------------------|---------------------------------------|--------------------------------------------------------------------------------|
-1. Method Name				    |  Must be same.							          |  Must be same.                                                                 |
-2. Argument Types			    |  Must be different (at lease order).	|  Must be different (including order).                                          |
-3. Method Signature		    |  Must be different.						        |  Must be same.                                                                 |
-4. Return Types				    |  No Restriction.							        |  Must be same until 1.4 but from 1.5 version onwards Co-Variant also allowed   |
-5. private, static, final |  Can be overloaded.						        |  can't be overridden.                                                          |
-6. Access Modifier		    |  No restriction.							        |  We can't reduce scope of access modifier but we can increase the scope.       |
-7. throws clause			    |  No restriction.							        |  If child class method throws any checked exception compulsory parent class    |
-													|                                       |  method should throw same or parent but no restriction for unchecked exception.|
-8. Method resolution	    |  Always takes care by compiler. 			|  Always takes care by JVM based on runtime object.                             |
-							            |  based on reference type.             |                                                                                |
-9. It's also known as	    |  CTP|SP|Early binding.					      |  RTP|DP|Late binding.                                                          |
-----------------------------------------------------------------------------------------------------------------------------------------------------
+____________________________________________________________________________________
+Property					Overloading								Overriding
+______________________________________________________________________________________
+1. Method Name				Must be same							Must be same
+2. Argument Types			Must be different (at lease order)		Must be different (including order)
+3. Method Signature			Must be different						Must be same
+4. Return Types				No Restriction							Must be same until 1.4 but from 1.5 version onwards Co-Variant also allowed
+5. private, static, final	Can be overloaded						can't be overridden
+6. Access Modifier			No restriction							We can't reduce scope of access modifier but we can increase the scope
+7. throws clause			No restriction							If child class method throws any checked exception compulsory parent class
+																	method should throw same or parent but no restriction for unchecked exception
+8. Method resolution		Always takes care by compiler 			Always takes care by JVM based on runtime object
+							based on reference type
+9. It's also known as		CTP|SP|Early binding					RTP|DP|Late binding
+
 	Note:
 		In Overloading we have to checked only method names (must be same) and argument types (must be different). We are not required to check
 		remaining like return types, access modifier etc.
@@ -833,7 +834,7 @@ Property					        |      Overloading							        |        	Overriding      
 		public void m1(int x) throws IOException
 
 	In the child class which of the following method we can take
-		1. public void m1(int i)			    // Overriding
+		1. public void m1(int i)			// Overriding
 		2. public static int m1(long l)		// Overloading
 		3. public static void m1(int i)		// Overriding Invalid
 		4. public void m1(int i) throws Exception	// Overriding Invalid
@@ -883,31 +884,31 @@ Property					        |      Overloading							        |        	Overriding      
 		Hence the return type of get method is Object, which can hold any object.
 		Example: Object o = l.get(0);
 
-______________________________________________________________________________________________________________________________________________________
-				C c = new C();										                          |					                    P p = new P();                                      |
-				ArrayList al = new ArrayList();						                  |					              List l = new ArrayList();                                 |
---------------------------------------------------------------------|---------------------------------------------------------------------------------|
-1. We can use this approach if we know exact runtime of object.		  |1. We can use this approach if we don't know exact runtime type of object.       |
-2. By using child reference we can call both parent & child methods	|2. By using parent reference we can call only methods available in parent class  |
-	(this is the advantage of this approach).						              |	and we can't call child specific methods (this is the disadvantage of it).      |
-3. We can use child reference to hold only particular child class	  |3. We can use parent reference to hold any child class object. (this is the      |
-	object (this is the disadvantage of this approach).				        |	advantage of this approach).                                                    |
--------------------------------------------------------------------------------------------------------------------------------------------------------
+____________________________________________________________________________________________________________________________________________________
+				C c = new C();										|					P p = new P();
+				ArrayList al = new ArrayList()						|					List l = new ArrayList()
+____________________________________________________________________|_______________________________________________________________________________
+1. We can use this approach if we know exact runtime of object		|1. We can use this approach if we don't know exact runtime type of object
+2. By using child reference we can call both parent & child methods	|2. By using parent reference we can call only methods available in parent class
+	(this is the advantage of this approach)						|	and we can't call child specific methods (this is the disadvantage of it.)
+3. We can use child reference to hold only particular child class	|3. We can use parent reference to hold any child class object. (this is the
+	object (this is the disadvantage of this approach)				|	advantage of this approach)
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	Pillars of OOP
-	Encapsulation		  -	  Security
+	Encapsulation		-	Security
 	Inheritance		    - 	Reusability
-	Polymorphism	    -	  Flexibility
+	Polymorphism	    -	Flexibility
 
 					Polymorphism
-				  		/\
+						/\
 					   /  \
 					  /    \
 					 /      \
 				Static		Dynamic
 			Compile-time 	Runtime
 		Early Binding		Late Binding
-		  	/\					|
+			/\					|
 		   /  \					|
 		  /    \				|
 		 /      \			Overriding
