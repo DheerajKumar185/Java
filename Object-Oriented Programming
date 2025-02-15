@@ -884,16 +884,16 @@ ________________________________________________________________________________
 		Hence the return type of get method is Object, which can hold any object.
 		Example: Object o = l.get(0);
 
-____________________________________________________________________________________________________________________________________________________
-				C c = new C();										|					P p = new P();
-				ArrayList al = new ArrayList()						|					List l = new ArrayList()
-____________________________________________________________________|_______________________________________________________________________________
-1. We can use this approach if we know exact runtime of object		|1. We can use this approach if we don't know exact runtime type of object
-2. By using child reference we can call both parent & child methods	|2. By using parent reference we can call only methods available in parent class
-	(this is the advantage of this approach)						|	and we can't call child specific methods (this is the disadvantage of it.)
-3. We can use child reference to hold only particular child class	|3. We can use parent reference to hold any child class object. (this is the
-	object (this is the disadvantage of this approach)				|	advantage of this approach)
-----------------------------------------------------------------------------------------------------------------------------------------------------
+________________________________________________________________________________________________________________________________________________________
+	C c = new C();							|			P p = new P();						|
+	ArrayList al = new ArrayList()					|			List l = new ArrayList()				|
+------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+1. We can use this approach if we know exact runtime of object.		|1. We can use this approach if we don't know exact runtime type of object.	|
+2. By using child reference we can call both parent & child methods	|2. By using parent reference we can call only methods available in parent class|
+ (this is the advantage of this approach).				| and we can't call child specific methods (this is the disadvantage of it).	|
+3. We can use child reference to hold only particular child class	|3. We can use parent reference to hold any child class object. (this is the	|
+ object (this is the disadvantage of this approach).			| advantage of this approach).							|
+--------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 	Pillars of OOP
 	Encapsulation	-	Security
