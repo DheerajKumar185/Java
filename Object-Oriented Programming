@@ -84,7 +84,7 @@
 		private int x = 10;			// Yes
 	}
 	class B extends A {
-		int y = 20;					// No
+		int y = 20;				// No
 	}
 	class C extends A {
 		private int z = 30;			// Yes
@@ -92,7 +92,7 @@
 
 	Q. Which of the following classes are tightly encapsulated?
 	class A {
-		int x = 10;					// No
+		int x = 10;				// No
 	}
 	class B extends A {
 		private int y = 20;			// No
@@ -294,7 +294,7 @@
 				Test t = new Test();
 				t.m1(10);
 				t.m2("Hello");
-				t.m3(10.5);			// CTE -> error: cannot find symbol. symbol:   method m3(double), location: variable t of type Test
+				t.m3(10.5);		// CTE -> error: cannot find symbol. symbol:   method m3(double), location: variable t of type Test
 			}
 		}
 
@@ -368,7 +368,7 @@
 				public static void main(String[] args) {
 					Test t = new Test();
 					t.m1(10);		// Output: int-Arg method
-					t.m1(10.5f);	// Output: float-Arg method
+					t.m1(10.5f);		// Output: float-Arg method
 					t.m1('a');		// Output: int-Arg method
 					t.m1(10l);		// Output: float-Arg method
 					t.m1(10.5);		// CTE -> error: no suitable method found for m1(double)
@@ -387,7 +387,7 @@
 				Test t = new Test();
 				t.m1(new Object());		// Output: Object version
 				t.m1("Test");			// Output: String version
-				t.m1(null);				// Output: String version
+				t.m1(null);			// Output: String version
 			}
 		}
 
@@ -403,9 +403,9 @@
 			}
 			public static void main(String[] args) {
 				Test t = new Test();
-				t.m1("Test");						// Output: String version
+				t.m1("Test");				// Output: String version
 				t.m1(new StringBuffer("Test"));		// Output: StringBuffer version
-				t.m1(null);							// Output: CTE -> error: reference to m1 is ambiguous
+				t.m1(null);				// Output: CTE -> error: reference to m1 is ambiguous
 			}
 		}
 
@@ -437,7 +437,7 @@
 			public static void main(String[] args) {
 				Test t = new Test();
 				t.m1();			// Output: Var-Args Method
-				t.m1(10, 20);	// Output: Var-Args Method
+				t.m1(10, 20);		// Output: Var-Args Method
 				t.m1(10);		// Output: General Method
 			}
 		}
@@ -459,11 +459,11 @@
 			public static void main(String[] args) {
 				Test t = new Test();
 				Animal a = new Animal();
-				t.m1(a);								// Output: Animal version
+				t.m1(a);				// Output: Animal version
 				Monkey m = new Monkey();
-				t.m1(m);								// Output: Monkey version
+				t.m1(m);				// Output: Monkey version
 				Animal a1 = new Monkey();
-				t.m1(a1);								// Output: Animal version
+				t.m1(a1);				// Output: Animal version
 			}
 		}
 
@@ -524,9 +524,9 @@
 
 			It's invalid in 1.4 version but from 1.5 version it's valid.
 
-			Parent class method return type:	Object						Number			String		double
+Parent class method return type:	Object				Number		String		double
 
-			Child class method return type: 	Object|String|StringBuffer	Number|Integer	String		int - not possible - CTE
+Child class method return type: 	Object|String|StringBuffer	Number|Integer	String		int - not possible - CTE
 
 			Co-Variant return type concept applicable only fro Object types but not for primitive types
 
@@ -575,9 +575,9 @@
 			3. strictfp
 			4. abstract
 
-		parent method	final			non-final	abstract		synchronized		native			strictfp
-						not				possible	both possible	both possible		both possible	both possible
-		child method  	non-final		final		non-abstract	non-synchronized	non-native		non-strictfp
+parent method	final			non-final	abstract		synchronized		native			strictfp
+		not			possible	both possible		both possible		both possible		both possible
+child method  	non-final		final		non-abstract		non-synchronized	non-native		non-strictfp
 
 		8. While overriding we can't reduce scope of access modifier. But we can increase the scope.
 			Example:
@@ -586,7 +586,7 @@
 				}
 				class C extends P {
 					void m1() {}		// CTE -> error: m1() in C cannot override m1() in P
-										// attempting to assign weaker access privileges; was public
+								// attempting to assign weaker access privileges; was public
 				}
 
 				class P {
@@ -597,9 +597,9 @@
 				}
 
 		private < default < protected < public
-	Parent class method:	public		protected				default							private
+Parent class method:	public		protected				default							private
 
-	Child class method :	public		protected|public		default|protected|public		overloading concept not applicable for private
+Child class method :	public		protected|public		default|protected|public		overloading concept not applicable for private
 
 		9. If child class method throws any checked exception compulsory parent class method should throw the same checked exception or it's parent
 		otherwise we'll get CTE. But there are no restriction for unchecked exception.
@@ -679,7 +679,7 @@
 				public static void m1() {}
 			}
 			class C extends P {
-				public void m1() {}			// CTE ->  error: m1() in C cannot override m1() in P, overridden method is static
+				public void m1() {}		// CTE ->  error: m1() in C cannot override m1() in P, overridden method is static
 			}
 
 			class P {
