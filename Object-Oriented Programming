@@ -1015,3 +1015,882 @@ ________________________________________________________________________________
 				Example 2:
 					Object o = new String("Test");
 					Object sb = (String) o;				// Valid
+
+	Strictly speaking through type casting we are not creating any new object. For the existing object we are providing another type of reference
+	variable. That's we are performing type casting but not object casting.
+	Example:
+		String s = new String("Test");
+		Object o = (Object)s;
+				or
+		Object o = new String("Test");
+
+	Example:
+		Integer i = new Integer(10);
+		Number n = (Integer)i;
+		Object o = (Object)n;
+				or
+		Object o = new Integer(10);
+
+		A
+		|
+		B
+		|
+		C
+
+		C c = new C();
+		(B)c or B b = new C();
+		(A)((B)c) or A a = new C();
+
+	Example 1:
+		P - m1() {}
+		|
+		C - m2() {}
+
+		C c = new C();
+		c.m1();		// Valid
+		c.m2();		// Valid
+		((P)c).m1();	// Valid
+		((P)c).m2();	// Invalid
+
+	Reason: Parent reference can be used to hold child object. But by using that reference we can't call child specific methods. And we can call
+		only methods available in parent class.
+
+	Example 2:
+		A - m1() {Sop("A")}
+		|
+		B - m1() {Sop("B")}
+		|
+		C - m1() {Sop("C")}
+
+		C c = new C();
+		c.m1();
+		((B)c).m1();
+		((A)((B)c)).m1();
+	It's Overriding and method resolution is always based on runtime object type.
+
+		A - static m1() {Sop("A")}
+		|
+		B - static m1() {Sop("B")}
+		|
+		C - static m1() {Sop("C")}
+
+		C c = new C();
+		c.m1();
+		((B)c).m1();
+		((A)((B)c)).m1();
+
+
+	Example 1:
+		class A {
+			void m1 () {
+				System.out.println("A");
+			}
+		}
+		class B extends A {
+			void m1 () {
+				System.out.println("B");
+			}
+		}
+		class C extends B {
+			void m1 () {
+				System.out.println("C");
+			}
+		}
+
+		class Test {
+			public static void main(String[] args) {
+				C c = new C();
+				c.m1();			// Output: C
+				((B)c).m1();		// Output: C
+				((A)((B)c)).m1();	// Output: C
+			}
+		}
+	It's Overriding and method resolution is always based on runtime object type.
+
+	Example 2:
+		class A {
+			static void m1 () {
+				System.out.println("A");
+			}
+		}
+		class B extends A {
+			static void m1 () {
+				System.out.println("B");
+			}
+		}
+		class C extends B {
+			static void m1 () {
+				System.out.println("C");
+			}
+		}
+
+		class Test {
+			public static void main(String[] args) {
+				C c = new C();
+				c.m1();			// Output: C
+				((B)c).m1();		// Output: B
+				((A)((B)c)).m1();	// Output: A
+			}
+		}
+
+	It's method hiding and method resolution is always based on reference type.
+
+	Example 3:
+		class A {
+			int x = 777;
+		}
+		class B extends A {
+			int x = 888;
+		}
+		class C extends B {
+			int x = 999;
+		}
+
+		class Test {
+			public static void main(String[] args) {
+				C c = new C();
+				System.out.println(c.x);
+				System.out.println(((B)c).x);
+				System.out.println(((A)((B)c)).x);
+			}
+		}
+
+	Variable resolution is always based on reference type but not based on runtime object.
+
+10. Static Control Flow:
+		When ever we are executing a java class the following sequence of steps will be executed as the part or static control flow.
+		1. Identification of static members from top to bottom.
+		2. Execution of static variable assign and static block from top to bottom
+		3. Execution of main method.
+		Example:
+			class Test {
+				static int i = 10;
+				static {
+					m1();
+					System.out.println("First Static Block");
+				}
+				public static void main(String[] args) {
+					m1();
+					System.out.println("main method");
+				}
+				public static void m1() {
+					System.out.println(j);
+				}
+				static {
+					System.out.println("Second Static Block");
+				}
+				static int j = 20;
+			}
+
+		Output: 0
+			First Static Block
+			Second Static Block
+			20
+			main method
+
+	Read Indirectly Write Only (RIWO):
+		Inside static block if we are trying to read a variable that read operation is called direct read.
+		If we are calling a method and within that method if we are trying to read a variable that read operation is called Indirect read
+		Example:
+			class Test {
+				static int i = 10;
+				static {
+					m1();
+					System.out.println(i);		// Direct read
+				}
+				public static void m1() {
+					System.out.println(i);		// Indirect read
+				}
+			}
+
+		If a variable is just identified by the JVM and original value not yet assigned then the variable is said to be in read indirectly and
+		write only state (RIWO).
+		If a variable is in RIWO state then we can't perform direct read but we can perform indirect read.
+		If we are trying to read directly then we'll get CTE saying Illegal forward reference.
+		Example:
+			class Test {
+				static int x = 10;
+				static {
+					System.out.println(x);		// Direct read	// Output: 10, RTE -> NoSuchMethodError: main
+				}
+			}
+			class Test {
+				static {
+					System.out.println(x);		// Direct read	// CTE -> error: illegal forward reference
+				}
+				static int x = 10;
+			}
+			class Test {
+				static {
+					m1();
+				}
+				public static void m1() {
+					System.out.println(x);		// Indirect read	// Output: 0, RTE -> NoSuchMethodError: main
+				}
+				static int x = 10;
+			}
+
+	Static Block:
+		static block will be executed at the time of class loading. Hence at the time of class loading if we want to perform any activity, we have
+		to define that inside static block.
+		Example 1:
+			At the time of java class loading the corresponding native library should be loaded. Hence we have to define this activity inside static
+			block.
+			class Test {
+				static {
+					System.loadLibrary("native library path");
+				}
+			}
+
+		Example 2:
+			After loading every DB driver class we have to register driver class with Driver Manger but inside DB Driver class there is a static
+			block to perform this activity and we are not responsible to register explicitly.
+
+			class DbDriver {
+				static {
+					Register this driver with DriverManager;
+				}
+			}
+
+		Within a class we can declare any no of static blocks but all this static blocks will be executed from top to bottom.
+
+		Q. Without writing main method, is it possible to print some statements to the console?
+		Ans. Yes, by using static block.
+
+		Example:
+			class Test {
+				static {
+					System.loadLibrary("Hello I can print");
+					System.exit(0);
+				}
+			}
+		Output: Hello I can print
+
+		Q. Without writing main method and static block is it possible to print some statements to the console?
+		Ans. Yes, Of course, there are multiple ways.
+
+		class Test {
+			static int x = m1();
+			public static int m1() {
+				System.out.println("Hello I am print");
+				System.exit(0);
+				return 10;
+			}
+		}
+		class Test {
+			static Test t = new Test();
+			{
+				System.out.println("Hello I can print");
+				System.exit(0);
+			}
+		}
+		class Test {
+			static Test t = new Test();
+			Test () {
+				System.out.println("Hello I can print");
+				System.exit(0);
+			}
+		}
+
+	Note:
+		From 1.7 version onwards main method mandatory to start a problem execution. Hence from 1.7 Version onwards without writing main method
+		it's impossible to print some statements to the console.
+
+	Static control flow in parent to child relationship:
+		Whenever we are executing child class the following sequence of events will be executed automatically as a part of static control flow.
+		1. Identification of static members from parent to child.
+		2. Execution of static variable assignment and static blocks from parent to child.
+		3. Execution of only child class main method.
+
+		Example:
+			class Base {
+				static int i = 10;
+				static {
+					m1();
+					System.out.println("Base Static Block");
+				}
+				public static void main(String[] args) {
+					m1();
+					System.out.println("Base main");
+				}
+				public static void m1() {
+					System.out.println(j);
+				}
+				static int j = 20;
+			}
+
+			class Derived extends Base {
+				static int x = 100;
+				static {
+					m2();
+					System.out.println("Derived First Static Block");
+				}
+				public static void main(String[] args) {
+					m2();
+					System.out.println("Derived main");
+				}
+				public static void m2() {
+					System.out.println(y);
+				}
+				static {
+					System.out.println("Derived Second Static Block");
+				}
+				static int y = 200;
+			}
+
+		Output: java Derived
+			0
+			Base Static Block
+			0
+			Derived First Static Block
+			Derived Second Static Block
+			200
+			Derived main
+
+		Output: java Base
+			0
+			Base Static Block
+			20
+			Base main
+
+		Note:
+			Whenever we are loading child class automatically parent class will be loaded. Whenever we are loading parent class child class won't
+			be loaded (because parent class member by default available to the child class where as child class members by default won't available
+			to the parent).
+
+11. Instance Control Flow:
+		Whenever we are executing a java class first static control flow will be executed. In the static control flow if we are creating ans object
+		the follow sequence of events will be executed as a part of instance control flow.
+		1. Identification of instance member from top to bottom.
+		2. Execution of instance variable assignment and instance blocks from top to bottom.
+		3. Execution of constructor.
+
+		Example 1:
+			class Test {
+				int i = 10;
+				{
+					m1();
+					System.out.println("First Instance Block");
+				}
+				Test() {
+					System.out.println("Constructor");
+				}
+				public static void main(String[] args) {
+					Test t = new Test();
+					System.out.println("main");
+				}
+				public void m1() {
+					System.out.println(j);
+				}
+				{
+					System.out.println("Second Instance Block");
+				}
+				int j = 20;
+			}
+		Output: 0
+			First Instance Block
+			Second Instance Block
+			Constructor
+			main
+		if we'll commented or remove below line then Output: main
+		Test t = new Test();
+
+	Note:
+		Static control flow is one time activity which will be performed at the time of class loading.
+		But instance control flow is not one time activity and it'll be performed for every object creation.
+
+		Object creation is the most costly operation if there is no specific requirement then it's not recommended to create object.
+
+	Instance control float in parent to child relationship:
+		Whenever we are creating child class object the following sequence of events will be performed automatically. As a part of instance control
+		flow.
+		1. Identification of instance member from parent to child (4-14).
+		2. Execution of instance variable assignments and instance blocks only in parent class (15-19).
+		3. Execution of parent constructor (20).
+		4. Execution of instance variable assignments and instance blocks in child class (21-26).
+		5. Execution of child constructor (27).
+
+		Example 2:
+			class Parent {
+				int i = 10;
+				{
+					m1();
+					System.out.println("Parent Instance Block");
+				}
+				Parent() {
+					System.out.println("Parent Constructor");
+				}
+				public static void main(String[] args) {
+					Parent p = new Parent();
+					System.out.println("Parent main");
+				}
+				public void m1() {
+					System.out.println(j);
+				}
+				int j = 10;
+			}
+			class Child extends Parent {
+				int x = 100;
+				{
+					m2();
+					System.out.println("Child First Instance Block");
+				}
+				Child() {
+					System.out.println("Child Constructor");
+				}
+				public static void main(String[] args) {
+					Child c = new Child();
+					System.out.println("Child main");
+
+				}
+				public void m2() {
+					System.out.println(y);
+				}
+				{
+					System.out.println("Child Second Instance Block");
+				}
+				int y = 20;
+			}
+		Output: 0
+			Parent Instance Block
+			Parent Constructor
+			0
+			Child First Instance Block
+			Child Second Instance Block
+			Child Constructor
+			Child main
+
+		Example 3:
+			class Test {
+				{
+					System.out.println("FIB");
+				}
+				static {
+					System.out.println("FSB");
+				}
+				Test() {
+					System.out.println("Constructor");
+				}
+				public static void main(String[] args) {
+					Test t1 = new Test();
+					System.out.println("main");
+					Test t2 = new Test();
+				}
+				static {
+					System.out.println("SSB");
+				}
+				{
+					System.out.println("SIB");
+				}
+			}
+		Output: FSB
+			SSB
+			FIB
+			SIB
+			Constructor
+			main
+			FIB
+			SIB
+			Constructor
+
+		Example 4:
+			public class Initialization {
+				private static String m1(String msg) {
+					System.out.println(msg);
+					return msg;
+				}
+				public Initialization() {
+					m = m1("1");
+				}
+				{
+					m = m1("2");
+				}
+				String m = m1("3");
+				public static void main(String[] args) {
+					Object o = new Initialization();
+				}
+			}
+		Output: 2
+			3
+			1
+
+		Example 5:
+			public class Initialization2 {
+				private static String m1(String msg) {
+					System.out.println(msg);
+					return msg;
+				}
+				static String m = m1("1");
+				{
+					m = m1("2");
+				}
+				static {
+					m = m1("3");
+				}
+				public static void main(String[] args) {
+					Object o = new Initialization2();
+				}
+			}
+		Output: 1
+			3
+			2
+
+	Note:
+		From static area we can't access instance members direct because while executing static area JVM may not identify instance members.
+		Example:
+			class Test {
+				int x = 10;
+				public static void main(String[] args) {
+					System.out.println(x);			// CTE -> error: non-static variable x cannot be referenced from a static context
+				}
+			}
+
+		Example:
+			class Test {
+				int x = 10;
+				public static void main(String[] args) {
+					Test t = new Test();
+					System.out.println(t.x);		// Output: 10
+				}
+			}
+
+	Q. In how many ways we can create an object in java or In how many ways we can get object in java?
+	Ans. There are 5 standard ways to create an object in java.
+		1. By using new operator:
+			Test t = new Test();
+
+		2. By using newInstance() method:
+			Test t = (Test)Class.forName("Test").newInstance();
+
+		3. By using Factory method:
+			Runtime r = Runtime.getRuntime();
+			DateFormat df = DateFormat.getInstance();
+
+		4. By using Clone() method:
+			Test t1 = new Test();
+			Test t2 = (Test) t1.clone();
+
+		5. By  using Deserialization:
+			FileInputStream fis = new FileInputStream("abc.src");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Dog d2 = (Dog)ois.readObject();
+
+12. Constructor:
+		Once we creates an object compulsory we should perform initialization then only the object in a position to respond properly.
+		Whenever we are creating an object some piece of the code will be executed automatically to perform initialization of the object. This piece
+		of the code is nothing but constructor. Hence the main purpose of constructor is to perform initialization of an object.
+		Example 1:
+			class Student {
+				String name;
+				int rollNo;
+				Student(String name, int rollNo) {
+					this.name = name;
+					this.rollNo = rollNo;
+				}
+				public static void main(String[] args) {
+					Student s1 = new Student("Test1", 101);
+					Student s2 = new Student("Test2", 102);
+				}
+			}
+
+		Note:
+			The main purpose of constructor is to perform initialization of an object but not to create object.
+
+		Difference between Constructor And Instance block:
+			The main purpose of constructor is to perform initialization of an object.
+			But other than initialization if we want to perform any activity for every object creation then we should go for instance block (like
+			updating one entry in DB for every object creation or incrementing count valur for every object creation etc).
+
+			Both constructor & instance block have their own different purposes and replacing one concept with another concept may not work always.
+
+			Both constructor & instance block will be executed for every object creation but instance block first followed by constructor.
+
+			Demo program to print no of object created for a class.
+
+			Example 2:
+				class Test {
+					static int count = 0;
+					{
+						count++;
+					}
+					Test() {}
+					Test(int i) {}
+					Test(double d) {}
+					public static void main(String[] args) {
+						Test t1 = new Test();
+						Test t2 = new Test(10);
+						Test t3 = new Test(10.5);
+						System.out.println("The no of object created: " + count);
+					}
+				}
+			Output: The no of object created: 3
+
+	Rules of writing constructors:
+		1. Name of the class & name of the constructor must be matched.
+		2. Return type concept not applicable for constructor. Even void also.
+		By mistake if we are trying to declare return type for the constructor then we won't get any CTE because compiler treats it as a method.
+		Example:
+			class Test {
+				void Test() {}
+			}
+		Hence it's legal but stupid to have a method how's name is exactly same as class name.
+			class Test {
+				void Test() {
+					System.out.println("method but not constructor");
+				}
+				public static void main(String[] args) {
+					Test t = new Test();
+					t.Test();
+				}
+			}
+		The only applicable modifier for constructors are:
+			1. public
+			2. private
+			3. protected
+			4. default
+
+		If we are trying to use any other modifier we'll get CTE.
+			class Test {
+				static Test() {							// error: modifier static not allowed here
+					System.out.println("method but not constructor");
+				}
+			}
+
+	default constructor:
+		Compiler is responsible to generate default constructor (but not JVM).
+		If we are not writing any constructor then only compiler will generate default constructor. That's if we are writing at least one constructor
+		then compiler won't generate default constructor. Hence every class in java can contain constructor it may be default constructor generated
+		by compiler or customized constructor explicitly provided by programmer. But not both simultaneously.
+
+	Prototype of default constructor:
+		1. It's always no-arg constructor.
+		2. The access modifier of default constructor is exactly same as access modifier of class (this rule is applicable only for public & default).
+		3. It contains only one line super(). It's a no argument call to super class constructor.
+________________________________________________________________________________________
+		P's Code		| 			C's Code		|
+----------------------------------------|-----------------------------------------------|
+class Test {}				| class Test {Test(){super();}}			|
+public class Test {}			| public class Test {Test(){super();}}		|
+class Test {void Test(){}}		| class Test {Test(){super();}void Test(){}}	|
+----------------------------------------|-----------------------------------------------|
+class Test {Test(){}}			| class Test {Test(){super();}}			|
+class Test {Test(){super();}}		| class Test {Test(){super();}}			|
+----------------------------------------|-----------------------------------------------|
+Programmer's generated code:
+	class Test {Test(){this(10);}Test(int i){}}
+
+Compiler's generated code:
+	class Test {Test(){this(10);}Test(int i){super();}}
+
+		The first line inside every constructor should be either super or this. and if we are not writing anything then compiler will always placed
+		super();
+
+	Case 1:
+		We can super() or this() only in first line of constructor. If we are trying to take anywhere else we'll get compile time error.
+		Example:
+			class Test {
+				Test() {
+					System.out.println("constructor");
+					super();	// CTE -> error: call to super must be first statement in constructor
+				}
+			}
+	Case 2:
+		Within the constructor we can take either super() or this(). But not both simultaneously.
+		Example:
+			class Test {
+				Test() {
+					super();
+					this();		// CTE -> error: call to this must be first statement in constructor
+				}
+			}
+
+	Case 3:
+		We can use super() or this() only inside constructor. If we are trying to use outside of constructor we'll get CTE.
+		Example:
+			class Test {
+				public void m1() {
+					super();	// CTE -> error: call to super must be first statement in constructor
+					System.out.println("Hello");
+				}
+			}
+
+		That's we can call a constructor directly from another constructor only
+
+	super() or this():
+		We can use only in constructor.
+		Only in first line.
+		Only one but not both simultaneously.
+
+________________________________________________________________________________________________________
+	super(), this()					|		super, this			|
+--------------------------------------------------------|-----------------------------------------------|
+1. These are constructor call's to call super 		|1. These are keyword to refer super class &	|
+ class & current class constructor.			| current class instance member.		|
+2. We can use only in constructor as first line.	|2. We can use anywhere except static area.	|
+3. We can use only once in constructor.			|3. We can use any no of times.			|
+--------------------------------------------------------|-----------------------------------------------|
+
+	Example:
+		class Test {
+			public static void main(String[] args) {
+				System.out.println(super.hashCode());	// CTE -> error: non-static variable super cannot be referenced from a static context
+			}
+		}
+
+	Example:
+		class P {
+			int x = 100;
+		}
+		class C extends P {
+			int x = 200;
+			public void m1() {
+				System.out.println("Current class instance variable: " + this.x);
+				System.out.println("Parent class instance variable: " + super.x);
+			}
+		}
+		class Test {
+			public static void main(String[] args) {
+				C c = new C();
+				c.m1();
+			}
+		}
+
+	Overloaded Constructors:
+		Within a class we can declare multiple constructors. and all these constructors having same name but different type of arguments. Hence
+		all these constructors are consider as Overloaded constructors. Hence Overloading concept applicable for constructors.
+		Example 1:
+			class Test {
+				Test() {
+					this(10);
+					System.out.println("no-arg");
+				}
+				Test(int i) {
+					this(10.5);
+					System.out.println("int-arg");
+				}
+				Test(double d) {
+					System.out.println("double-arg");
+				}
+				public static void main(String[] args) {
+					Test t = new Test();
+					Test t1 = new Test(10);
+					Test t2 = new Test(10.5);
+					Test t4 = new Test(10l);
+				}
+			}
+		Output:	double-arg
+			int-arg
+			no-arg
+			double-arg
+			int-arg
+			double-arg
+			double-arg
+
+		For constructor, inheritance & overriding concepts are not applicable. But overloading concept is applicable.
+
+		Every class in java including abstract class can contain constructor. But interface can't contain constructor.
+		class Test {
+			Test(){}
+		}
+
+		abstract class Test {
+			Test(){}
+		}
+
+		interface Test {
+			Test(){}	// Invalid
+		}
+
+		Case 1:
+			Recursive method call is a RTE is saying StackOverflowError.
+			But in our program if there is a chance of recursive constructor invocation then the code won't compile and we'll get CTE.
+
+			Example:
+				class Test {
+					public static void m1() {
+						m2();
+					}
+					public static void m2() {
+						m1();
+					}
+					public static void main(String[] args) {
+						m1();
+						System.out.println("Hello");
+					}
+				}
+			Output: RTE -> StackOverflowError
+
+			Example:
+				class Test {
+					Test() {		// CTE -> error: recursive constructor invocation
+						this(10);
+					}
+					Test(int i) {
+						this();
+					}
+					public static void main(String[] args) {
+						System.out.println("Hello");
+					}
+				}
+
+		Case 2:
+			class P {}		// P(){super();} - compiler provided
+			class C extends P {}	// C(){super();} - compiler provided
+
+			class P {
+				P() {}		// super(); - compiler provided
+			}
+			class C extends P {}	// C(){super();} - compiler provided
+
+			class P {
+				P(int i) {}	// super();	-	compiler provided
+			}
+			class C extends P {}	// C(){super();} - compiler provided, but no-arg constructor not found in parent so throwing below CTE
+						// CTE -> error: constructor P in class P cannot be applied to given types;
+
+			Note:
+				1. If parent class contains any argument constructor then while writing child classes we have to take special wrt constructors.
+				*2. Whenever we are writing any argument constructor it's highly recommended to write no-arg constructor also.
+
+		Case 3:
+			import java.io.IOException;
+			class P {
+				P() throws IOException {}
+			}
+			class C extends P {}		// C(){super();} - compiler provided, CTE -> error: unreported exception IOException in default constructor
+
+			import java.io.IOException;
+			class P {
+				P() throws IOException {}
+			}
+			class C extends P {
+				C() throws IOException, Exception, Throwable {
+					super();
+				}
+			}
+
+			Note:
+				If parent class constructor throws any checked exception compulsory child class constructor should throw same checked exception
+				or it's parent otherwise the code won't compile.
+
+		Q. Which of the following is valid?
+		1. The main purpose of constructor is to create an object. // Invalid
+		2. The main purpose of constructor is to perform initialization of an object.	// Valid
+		3. The name of the constructor need not be same as class name.	// Invalid
+		4. Return type concept applicable for constructor but only void.	// Invalid
+		5. We can apply any modifier for constructor. // Invalid
+		6. Default constructor generated by JVM.	// Invalid
+		7. Compiler is responsible to generate default constructor. // Valid
+		8. Compiler will always generates default constructor. // Invalid
+		9. If we are not writing no-arg constructor then compiler will generate default constructor. // Invalid
+		10. Every no-arg constructor is always default constructor. // Invalid
+		11. Default constructor is always no-arg constructor. // Valid
+		12. The first line inside every constructor should be either super() or this(). If we are not writing any thing then compiler will generates
+			this. // Invalid
+		13. For constructors both overloading & overriding concept is applicable. // Invalid
+		14. For constructors inheritance concept applicable but not overriding.		// Invalid
+		15. Only concrete classes can contain constructor but abstract classes can't. // Invalid
+		16. Interface can contain constructor. // Invalid
+		17. Recursive constructor invocation is a runtime exception. // Invalid
+		18. If parent class constructor throws some checked exception then compulsory child class should throw the same checked exception or
+			it's child. // Invalid
