@@ -1894,3 +1894,76 @@ ________________________________________________________________________________
 		17. Recursive constructor invocation is a runtime exception. // Invalid
 		18. If parent class constructor throws some checked exception then compulsory child class should throw the same checked exception or
 			it's child. // Invalid
+
+	Singleton classes:
+		For any java class if we are allow to create only one object. Such type of class is called singleton class.
+		Example:
+			Runtime, BusinessDelegate, ServiceLocator
+		
+		Advantage of singleton class:
+			If several people have same requirement then it's not recommended to create a separate object for every requirement. we have to create
+			only one object and we can use same object for every similar requirement. So that performance & memory utilization's will be improved.
+			This is the central idea of singleton classes.
+			
+			Example:
+				Runtime r1 = Runtime.getRuntime();
+				Runtime r2 = Runtime.getRuntime();
+				Runtime r3 = Runtime.getRuntime();
+				.
+				.
+				.
+				Runtime r1lakh = Runtime.getRuntime();
+		
+		Q. How to create our own singleton classes?
+		Ans. We can create our own singleton classes for this we have to use private constructor and private static variable and public factory
+			method.
+			Approach 1:
+				class Test {
+					private static Test t = new Test();
+					private Test() {
+						
+					}
+					public static Test getInstance() {
+						return t;
+					}
+				}				
+				
+				class Singleton {
+					public static void main(String[] args) {
+						Test s1 = Test.getInstance();
+						Test s2 = Test.getInstance();
+						System.out.println(s1.hashCode());
+						System.out.println(s2.hashCode());
+						System.out.println(s1== s2);
+						System.out.println(s1.equals(s2));
+					}
+				}
+				
+		Note:
+			Runtime class is internally implemented by using this approach.
+			
+			Approach 2:
+				class Test {
+					private static Test t = null;
+					private Test() {
+						
+					}
+					public static Test getInstance() {
+						if(t == null) {
+							t = new Test();
+						}
+						return t;
+					}
+				}
+			
+			At any point of time for test class we can create only one object. Hence Test class is singleton class.
+			
+		Q. Class is not final but we are not allowed to create child classes. How it's possible?
+		Ans. By declaring every constructor as private, We can restrict child class creation.
+		class P {
+			private P() {}
+		}
+
+		class C extends P {} // error: P() has private access in P
+		
+		for the above class it's impossible to create child class.
