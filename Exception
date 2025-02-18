@@ -41,17 +41,17 @@
 
 
 
-	|		|		|		|		|		  |		|			  |		|		  |		|		|		|		|
-	|		|		|		|		|		  |		|doMoreStuff()|		|		  |     |		|       |		|
-	|		|		|		|		|_________|		|_____________|		|_________|		|		|       |		|
-	|		|		|		|		|doStuff()|		|	doStuff() |     |doStuff()|		|		|       |		|
-	|		|	=>	|_______|	=>	|_________|	=>	|_____________|  => |_________|	=>	|_______|	=>	|		|
-	|		|		|main()	|		|main()	  |		|	main()	  |     |main()	  |		|main()	|       |		|
-	|_______|		|_______|		|_________|		|_____________|     |_________|		|_______|       |_______|
-		|				|																				/
-Runtime stack 		stack frame																		   /
-for main thread			or																			  /
-					Activation record										The Empty stack will be destroyed by JVM
+|	|		|	|		|	  |		|	      |	    |	      |		|	|	|	|
+|	|		|	|		|	  |		|doMoreStuff()|	    |	      |     	|	|       |	|
+|	|		|	|		|_________|		|_____________|	    |_________|		|	|       |	|
+|	|		|	|		|doStuff()|		|doStuff()    |     |doStuff()|		|	|       |	|
+|	|	=>	|_______|	=>	|_________|	=>	|_____________|  => |_________|	=>	|_______|=>	|	|
+|	|		|main()	|		|main()	  |		|main()	      |     |main()   |		|main()	|       |	|
+|_______|		|_______|		|_________|		|_____________|     |_________|		|_______|       |_______|
+	|			|												/
+Runtime stack 		stack frame											       /
+for main thread		or												      /
+			Activation record								The Empty stack will be destroyed by JVM
 					
 3. Default exception handling in java:
 	1. Inside a method if any exception occurs the method in which it is raised is responsible to create exception object by including the following
