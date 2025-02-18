@@ -250,13 +250,13 @@ for main thread			or																			  /
 		
 7 Methods to print exception information:
 	Throwable class defines the following methods to print exception information.
-___________________________________________________________________
-method 				    | printable format								              |
-------------------|-----------------------------------------------|
-printStackTrace()	|	Name of Exception: Description & Stack Trace  |
-toString()			  | Name of Exception: Description				        |
-getMessage()		  | Description									                  |
--------------------------------------------------------------------
+________________________________________________________________
+method 		  | printable format		              	|
+------------------|---------------------------------------------|
+printStackTrace() | Name of Exception: Description & Stack Trace|
+toString()	  | Name of Exception: Description		|
+getMessage()	  | Description					|
+----------------------------------------------------------------
 	Example:
 		class Test {
 			public static void main(String[] args) {
@@ -441,20 +441,20 @@ getMessage()		  | Description									                  |
 	
 	12. try{
 	}
-	sop("Hello");	// CTE -> try without catch or finally
+	System.out.println("Hello");	// CTE -> try without catch or finally
 	catch(X e) {	// CTE -> catch without try
 	}
 	
 	13. try{
 	} catch(X e) {
 	}
-	sop("Hello");
+	System.out.println("Hello");
 	catch(Y e) {	// CTE -> catch without try
 	}
 	
 	14. try{
 	} catch(X e) {}
-	sop("Hello");
+	System.out.println("Hello");
 	finally {}		// CTE -> finally without try
 	
 	15. try{
@@ -501,19 +501,19 @@ getMessage()		  | Description									                  |
 	finally{}			// CTE -> finally without try
 	
 	23. try
-		sop("Hello");	// Invalid
+		System.out.println("Hello");		// Invalid
 		catch(X e) {}
 		finally{}
 		
 	24. try{}		
 		catch(X e)
-		sop("Hello");
+		System.out.println("Hello");
 		finally{}		// Invalid
 		
 	25. try{}
 		catch(X e) {}
 		finally			// Invalid
-		sop("Hello");
+		System.out.println("Hello");
 		
 14 throw keyword:
 	Sometimes we can create exception object explicitly and we can handover to the JVM manually. For this we have to use throw keyword.
@@ -585,7 +585,7 @@ getMessage()		  | Description									                  |
 		Example:
 			class Test {
 				public static void main(String[] args) {
-					System.out.println(10/0);			// RTE -> Exception in thread "main" java.lang.ArithmeticException: / by zero
+					System.out.println(10/0);		// RTE -> Exception in thread "main" java.lang.ArithmeticException: / by zero
 					System.out.println("Hello");
 				}
 			}
@@ -867,7 +867,7 @@ getMessage()		  | Description									                  |
 			class Test {
 				public static void main(String[] args) {
 					String s = new String("Test");
-					Object o = (Object)s;			// Valid
+					Object o = (Object)s;		// Valid
 					
 					Object o1 = new Object();
 					String s1 = (String)o1;		// RTE -> ClassCastException: class java.lang.Object cannot be cast to class java.lang.String
@@ -973,14 +973,14 @@ getMessage()		  | Description									                  |
 		If x is not > 10 then we'll get RTE saying AssertionError.
 		
 ____________________________________________________________________________________________________
-ArrayIndexOutOfBoundsException	|	Raised automatically by JVM and hence these are JVM Exception.    |
+ArrayIndexOutOfBoundsException	| Raised automatically by JVM and hence these are JVM Exception.    |
 NullPointerException            |                                                                   |
 ClassCastException              |                                                                   |
 StackOverFlowError              |                                                                   |
 NoClassDefFoundError            |                                                                   |
 ExceptionInInitializerError     |                                                                   |
 --------------------------------|-------------------------------------------------------------------|
-IllegalArgumentException		    |	Raised explicitly either by programmer or by API Developer        |
+IllegalArgumentException	| Raised explicitly either by programmer or by API Developer        |
 NumberFormatException           |   and hence these are programmatic exception.                     |
 IllegalStateException           |                                                                   |
 AssertionError                  |                                                                   |
