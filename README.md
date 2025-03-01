@@ -1,2 +1,98 @@
 # Java
 Java related notes
+
+Language Fundamentals
+  1. Identifiers
+  2. Reserved word
+  3. Data Types
+  4. Literal
+  5. Arrays
+  6. Types of variables
+  7. var-arg methods
+  8. main method
+  9. Command Line arguments
+  10. Java coding Standard
+
+Operators & Assignments:
+  1. Increment and Decrement Operators
+  2. Arithmetic Operators
+  3. String concatenation operator
+  4. Relational operators
+  5. Equality operators
+  6. instanceof operator
+  7. Bitwise operators
+  8. Short circuit operators
+  9. Type cast operator
+  10. Assignment operators
+  11. Conditional operator
+  12. new operator
+  13. [] operator
+  14. Operator precedence
+  15. Evaluation order of operands
+  16. new() vs newInstance()
+  17. instanceof vs isInstance()
+  18. ClassNotFoundException vs NoClassDefFoundError
+
+Flow-Control
+  1. Selection Statement
+    a. if-else
+    b. switch
+  
+  2. Iterative Statement
+    a. while()
+    b. do-while()
+    c. for()
+    d. for-each loop (1.5v)
+  3. Transfer Statement
+    a. break
+    b. continue
+    c. return
+    d. try-catch-finally
+    e. assert (1.4)
+
+Declarations & Access Modifiers
+  1. Java source file structure
+  2. Class level modifiers
+  3. Member level modifiers
+  4. Interfaces
+
+Object-Oriented Programming (OOP)
+  1. Data Hiding
+  2. Abstraction
+  3. Encapsulation
+  4. Tightly Encapsulated class
+  5. Is-A Relationship
+  6. Has-A Relationship
+  7. Method Signature
+  8. Overloading
+  9. Overriding
+  10. Static Control flow
+  11. Instance Control flow
+  12. Constructors
+  13. Coupling
+  14. Cohesion
+  15. Type-Casting
+
+Exception:
+  1 Introduction
+  2 Runtime stack mechanism
+  3 Default exception handling in java
+  4 Exception Hierarchy
+  5 Customized exception handling by using try catch
+  6 Control flow in try catch
+  7 Methods to print exception information
+  8 try with multiple catch blocks
+  9 finally block
+  10 difference between final, finally, finalize
+  11 control flow in try-catch-finally
+  12 control flow in nested try-catch-finally
+  13 various possible combinations of try catch finally I
+  14 throw keyword
+  15 throws keyword
+  16 Exception handling keywords summary
+  17 Various possible compile time errors in exception handling
+  18 Customized or user defined exceptions
+  19 Top-10 exceptions
+  20 1.7 version enhancements
+    1. try with resources
+    2. multi-catch block
