@@ -1,6 +1,6 @@
 Language Fundamentals
   1. Identifiers
-  2. Reserved world
+  2. Reserved word
   3. Data Types
   4. Literal
   5. Arrays
@@ -44,7 +44,7 @@ Flow-Control
     a. break
     b. continue
     c. return
-    d. try-catch-finaly
+    d. try-catch-finally
     e. assert (1.4)
 
 Declarations & Access Modifiers
@@ -57,7 +57,7 @@ Object-Oriented Programming (OOP)
   1. Data Hiding
   2. Abstraction
   3. Encapsulation
-  4. Tighly Encapsulated class
+  4. Tightly Encapsulated class
   5. Is-A Relationship
   6. Has-A Relationship
   7. Method Signature
