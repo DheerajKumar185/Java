@@ -93,6 +93,4 @@ Exception:
   17 Various possible compile time errors in exception handling
   18 Customized or user defined exceptions
   19 Top-10 exceptions
-  20 1.7 version enhancements
-    1. try with resources
-    2. multi-catch block
+  20 
