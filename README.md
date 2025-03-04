@@ -96,3 +96,27 @@ Exception:
   20. Version enhancements (1.7)
     a. try with resources
     b. multi-catch block
+
+String, StringBuffer and StringBuilder
+  1. Difference between String and StringBuffer:
+    * Mutability Vs Immutability
+    * equals() method
+  2. String Objects Creation: Heap and String Constant Pool (SCP)
+  3. Importance of String Constant Pool (SCP)
+  4. Important FAQs on String and StringBuffer
+  5. Important Constructors of String class
+  6. Important Methods of String class:
+	  charAt(), concat(), equals(), equalsIgnoreCase()
+	  isEmpty(), length(), replace(), substring(), indexOf(), lastIndexOf(), toLowerCase(), toUpperCase() trim()
+  7. Important Conclusions about String Immutability
+  8. Creation of Our Own Immutable Class
+  9. final vs immutability
+  10. Need of StringBuffer ?
+  11. StringBuffer class Constructors
+  12. Important Methods of StringBuffer class:
+	  length(), capacity(), charAt(), setCharAt(), append() insert(), delete(), deleteCharAt(), reverse()
+	  setLength(), ensureCapacity(), trimToSize()
+  13. Need of StringBuilder
+  14. Differences between StringBuffer and StringBuffer
+  15. String vs StringBuffer and StringBuilder
+  16. Method Chaining
