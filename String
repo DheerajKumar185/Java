@@ -548,16 +548,16 @@ String:
 14. Differences between StringBuffer and StringBuffer:
 	Synchronized version StringBuffer and Non-Synchronized version StringBuilder. All methods and constructors are same in both.
 
-___________________________________________________________________________________________________________________________________________________
-						StringBuffer								                            	|							StringBuilder                                                  |
-----------------------------------------------------------------------|----------------------------------------------------------------------------|
+_____________________________________________________________________________________________________________________________________________________
+			StringBuffer					|			StringBuilder                                        |
+------------------------------------------------------------------------|----------------------------------------------------------------------------|
 1. Most of the methods present inside StringBuffer are synchronized.	|1. No method present inside StringBuilder is synchronized.                  |
-2. At a time only one thread is allowed to operate on StringBuffer    |2. At a time multiple threads are allowed to operate on StringBuilder object|
-	object so it's thread safe.											                    |	so it's not thread safe.                                                   |
+2. At a time only one thread is allowed to operate on StringBuffer	|2. At a time multiple threads are allowed to operate on StringBuilder object|
+ object so it's thread safe.						| so it's not thread safe.                                                   |
 3. Threads are required to wait to operate on StringBuffer object so	|3. Threads are not required to wait to operate on StringBuilder object so   |
-relatively performance is low.											                  |	relatively performance is high.                                            |
-4. Introduced in 1.0 version.											                    |4. Introduced in 1.5 Version.                                               |
----------------------------------------------------------------------------------------------------------------------------------------------------
+relatively performance is low.				                | relatively performance is high.                                            |
+4. Introduced in 1.0 version.						|4. Introduced in 1.5 Version.                                               |
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 15. String vs StringBuffer and StringBuilder
 	String: class is thread safe by default. All immutable classes means String and Wrapper classes are thread safe by default
 			When content is not changeable then String is better.
