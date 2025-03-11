@@ -1,0 +1,576 @@
+String, StringBuffer and StringBuilder
+Syllabus:
+1. Difference between String and StringBuffer:
+	* Mutability Vs Immutability
+	* equals() method
+2. String Objects Creation: Heap and String Constant Pool (SCP)
+3. Importance of String Constant Pool (SCP)
+4. Important FAQs on String and StringBuffer
+5. Important Constructors of String class
+6. Important Methods of String class:
+	charAt(), concat(), equals(), equalsIgnoreCase()
+	isEmpty(), length(), replace(), substring(), indexOf(), lastIndexOf(), toLowerCase(), toUpperCase() trim()
+7. Important Conclusions about String Immutability
+8. Creation of Our Own Immutable Class
+9. final vs immutability
+10. Need of StringBuffer ?
+11. StringBuffer class Constructors
+12. Important Methods of StringBuffer class:
+	length(), capacity(), charAt(), setCharAt(), append() insert(), delete(), deleteCharAt(), reverse()
+	setLength(), ensureCapacity(), trimToSize()
+13. Need of StringBuilder
+14. Differences between StringBuffer and StringBuffer
+15. String vs StringBuffer and StringBuilder
+16. Method Chaining
+
+String:
+	Case 1.
+		class Test {
+			public static void main(String[] args) {
+				String s = new String("Hello");
+				s.concat(" World");
+				System.out.println(s);
+				StringBuffer sb = new StringBuffer("Hello");
+				sb.append(" World");
+				System.out.println(sb);
+			}
+		}
+		Output:
+			Hello
+			Hello World
+			
+	Case 2.
+		class Test {
+			public static void main(String[] args) {
+				String s1 = new String("Hello");
+				String s2 = new String("Hello");
+				System.out.println(s1==s2);
+				System.out.println(s1.equals(s2));
+				
+				StringBuffer sb1 = new StringBuffer("Hello");
+				StringBuffer sb2 = new StringBuffer("Hello");
+				System.out.println(sb1==sb2);
+				System.out.println(sb1.equals(sb2));
+			}
+		}
+		Output:
+			false
+			true
+			false
+			false
+		
+	Note:
+		Object: .equals() method meant for reference/address comparison.
+		String: .equals() method meant for content comparison because it's overridden in String class.
+		StringBuffer: .equals() method meant for reference/address comparison because it's not overridden in StringBuffer class and it's use Object.
+		
+	Case 3.
+		class Test {
+			public static void main(String[] args) {
+				String s1 = new String("Hello");
+				String s2 = new String("Hello");
+				String s3 = "Hello";
+				String s4 = "Hello";
+			}
+		}
+	
+	Note:
+		Heap: 2 Object will be created.
+		SCP: 1 Object will be created
+		
+		class Test {
+			public static void main(String[] args) {
+				String s = new String("tech");
+				s.concat("Software");
+				s = s.concat("Solutions");
+				System.out.println(s);
+			}
+		}
+	
+	Note:
+		Heap: 3 Object will be created. tech, techSoftware, techSolutions
+		SCP: 3 Object will be created. tech, software, solutions
+		Heap: tech and techSoftware will be eligible for garbage collection
+		SCP: implicit reference/address maintain by JVM so it's not for garbage collection
+		
+		class Test {
+			public static void main(String[] args) {
+				String s1 = new String("Spring");
+				s1.concat("Fall");
+				String s2 = s1.concat("Winter");
+				s2.concat("Summer");
+				System.out.println(s1);
+				System.out.println(s2);
+			}
+		}
+		Output:
+			Spring
+			SpringWinter
+		
+		SCP: 4 Object will be created.
+		Heap: 4 Object will be created.
+		SCP: Spring, Fall, Winter, Summer
+		Heap: Spring, SpringFall, SpringWinter, SpringSummer
+		
+		class Test {
+  	public static void main(String[] args) {
+  		String s1 = new String("You can't change Me");
+  		String s2 = new String("You can't change Me");
+  		System.out.println(s1==s2); // false
+  		
+  		String s3 = "You can't change Me"; // Stored in SCP
+  		System.out.println(s1==s3); // false
+  		
+  		String s4 = "You can't change Me"; // Stored in SCP
+  		System.out.println(s3==s4); // true
+  		
+  		String s5 = "You can't "+"change Me"; // both are constant so compiler will replace this value at compile time. New object not created 
+  		System.out.println(s4==s5); // true
+  		
+  		String s6 = "You can't "; // this is constant so object created in SCP
+  		String s7 = s6+"change Me"; // s6 is a variable and next one is constant. So other is in SCP and then at runtime new object created in Heap
+  		System.out.println(s4==s7); // false
+  		
+  		final String s8 = "You can't "; // this is constant so object created in SCP. every final variable will be replaced by value by compiler
+  		String s9 = s8+"change Me";	// both are constant so operation performed at compile time and object created in SCP.
+  		System.out.println(s4==s9); // true
+  	}
+  }
+		
+		SCP: (s3, s4, s5, s6, s8, s9)"You can't change Me", "You can't ", "change Me"
+		Heap: (s1, s2, s7)"You can't change Me"
+		Output: false, false, true, true, false, true
+	
+	Note:
+		If both are constant the operation will be performed by compiler at compile time
+		If at least one normal variable then operation will be performed at runtime by JVM.
+		
+3. Importance of String Constant Pool:
+	Advantage of scp is memory reusability. Once object created in scp the same object can be used for multiple object. For example Voter City Name
+	Disadvantage of scp is, if any one able to change the value of city name then it'll be affected to all other objects.
+	So prevent this problem String is immutable. We can't change of it. A new object will be created if we are trying to change it's value.
+	
+4. Important FAQs on String and StringBuffer:
+	Why SCP concept is available only for String object but not for StringBuffer?
+	Why String objects are immutable where as StringBuffer objects are mutable?
+	In addition to String objects any other objects are immutable in java?
+	
+5. Important Constructors of String class:
+	1.	Empty an empty String object:
+		  Example:
+  			String s1 = new String();
+  			System.out.println(s1);
+	
+	2.	String Literal:
+  		Example:
+  			String s2 = new String("");
+  			System.out.println(s2);
+		
+	3.	StringBuffer:
+  		Example:
+  			String s3 = new String(new StringBuffer());
+  			System.out.println(s3);
+	
+	4.	StringBuilder
+  		Example:
+  			String s4 = new String(new StringBuilder());
+  			System.out.println(s4);
+		
+	5.	char[] ch:
+  		Example:
+  			char[] ch = {'j', 'a', 'v', 'a'};
+  			String s5 = new String(ch);
+  			System.out.println(s5);
+		
+	6.	byte[] b:
+  		Example:
+  			byte[] b = {97, 98, 99, 100};
+  			String s6 = new String(b);
+  			System.out.println(s6);
+			
+6. Important Methods of String class:
+	1. public boolean isEmpty()
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s1 = "";
+  				System.out.println(s1.isEmpty());
+  				String s2 = "Hello";
+  				System.out.println(s2.isEmpty());
+  			}
+  		}
+  		Output:
+  			true
+  			false
+		
+	2. public int length()
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s1 = "Hello";
+  				System.out.println(s1.length());
+  			}
+  		}
+  		Output: 5
+		
+	3. public String replace(char old, char new)
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "hello";
+                  System.out.println(s.replace('h','H'));
+  			}
+  		}
+  		Output: Hello
+		
+	4. public String substring(int begin)
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "Hello";
+  				System.out.println(s.substring(3));
+  			}
+  		}
+  		Output: lo
+		
+	5. public String substring(int begin, int end)
+  	Example: 
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "Hello World";
+                  System.out.println(s.substring(3, 8));
+  			}
+  		}
+  		Output: lo Wo
+		
+	6. public in indexOf(char c)
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "Hello";
+  				System.out.println(s.indexOf('l'));
+  			}
+  		}
+		Output: 2
+		
+		class Test {
+			public static void main(String[] args) {
+				String s = "Hello";
+				System.out.println(s.indexOf('z'));
+			}
+		}
+		Output: -1
+		If specified char is not available it'll return -1
+		
+	7. public int lastIndexOf(char c)
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "Hello";
+  				System.out.println(s.lastIndexOf('l'));
+  			}
+  		}
+  		Output: 3
+		
+	8. public String toLowerCase()
+	9. public String toUpperCase()
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s = "Hello";
+  				System.out.println(s.toUpperCase());
+  			}
+  		}
+  		Output: HELLO
+		
+	10. public String trim()
+  	Example:
+  		import java.util.Scanner;
+  		class Test {
+  			public static void main(String[] args) {
+  				Scanner sc = new Scanner(System.in);
+  				System.out.println("Enter you city name");
+  				String name = sc.nextLine().toLowerCase().trim();
+  				if(name.equals("hyderabad")) {
+  					System.out.println("Hello Hyderabad");
+  				} else if(name.equals("chennai")) {
+  					System.out.println("Hello Madras");
+  				} else if(name.equals("bangalore")) {
+  					System.out.println("Hello Kannada");
+  				} else {
+  					System.out.println("Please enter a valid city name");
+  				}
+  			}
+  		}
+	
+	Note: trim() method only remove spaces from the beginning & end both but not from the middle
+
+7. Important Conclusions about String Immutability:
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				String s1 = new String("hello");
+  				String s2 = s1.toUpperCase();
+  				String s3 = s1.toLowerCase();
+  				System.out.println(s1==s2);
+  				System.out.println(s1==s3);
+  			}
+  		}
+  		Output:
+  			false
+  			true
+		
+	Note: Once we created object we are not allowed to perform any changes. If any person are trying to perform the change and if there is a change
+	with those changes a new new object will be created. If not change existing object will be reuse. Whether object is presented in heap or SCP.
+	
+	Example:
+		class Test {
+			public static void main(String[] args) {
+				String s1 = "hello";
+				String s2 = s1.toString();
+				String s3 = s1.toLowerCase();
+				String s4 = s1.toUpperCase();
+				System.out.println(s1==s2);
+				System.out.println(s1==s3);
+				System.out.println(s1==s4);
+			}
+		}
+		Output:
+			true
+			true
+			false
+
+8. Creation of Our Own Immutable Class:
+		final class Test {
+			private int i;
+			Test(int i) {
+				this.i = i;
+			}
+			public Test modify(int i) {
+				if(this.i == i) {
+					return this;
+				} else {
+					return new Test(i);
+				}
+			}
+			public static void main(String[] args) {
+				Test t1 = new Test(10);
+				Test t2 = t1.modify(100);
+				Test t3 = t1.modify(10);
+				System.out.println(t1==t2);
+				System.out.println(t1==t3);
+			}
+		}
+		Output:
+			false
+			true
+			
+9. final vs immutability:
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				final StringBuffer sb = new StringBuffer("Hello");
+  				sb.append("Software");
+  				System.out.println(sb);
+  			}
+  		}
+  		Output: HelloSoftware
+	
+	Which of the following are meaningful?
+	1. final variable
+	2. final object
+	3. Immutable variable
+	4. Immutable object
+	Ans: 1, 4
+	
+10. Need of StringBuffer:
+	If content keep on changing the better to use StringBuffer.
+	All required changes will be performed in existing object only, for every small change new object will not be created.
+	
+11. Important Constructor in StringBuffer class:
+	1. StringBuffer sb = new StringBuffer();
+	
+	Note: Default initial capacity of StringBuffer is 16. if we'll add one more character the new capacity is (16+1)*2 = 34
+	
+	2. StringBuffer sb = new StringBuffer(int initial capacity):
+	3. StringBuffer sb = new StringBuffer(String s)
+		capacity = s.length() + 16
+		
+12. Important Methods of StringBuffer class:
+	1. public int length()
+	2. public int capacity()
+	3. public char charAt(int index)
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("hello");
+  					System.out.println(sb.charAt(3));
+  					System.out.println(sb.charAt(30)); // StringIndexOutOfBoundsException
+  				}
+  			}
+	4. public void setCharAt(int index, char newChar)
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("java");
+  					sb.setCharAt(0,'Y');
+  					System.out.println(sb);
+  				}
+  			}
+			
+	5. public StringBuffer append(String s)
+  	public StringBuffer append(byte b)
+  	public StringBuffer append(short s)
+  	public StringBuffer append(int i)
+  	public StringBuffer append(long l)
+  	public StringBuffer append(float f)
+  	public StringBuffer append(double d)
+  	public StringBuffer append(boolean b)
+  	public StringBuffer append(char ch)
+  	public StringBuffer append(String s)
+	
+	Example:
+		class Test {
+			public static void main(String[] args) {
+				StringBuffer sb = new StringBuffer("java");
+				sb.append("PI value is");
+				sb.append(3.14);
+				sb.append("It is exactly ");
+				sb.append(true);
+				System.out.println(sb);
+			}
+		}
+		Output: javaPI value is3.14It is exactly true
+		
+	6. public StringBuffer insert(int index, String s)
+  	public StringBuffer insert(int index, double d)
+  	public StringBuffer insert(int index, boolean b)
+  	public StringBuffer insert(int index, char ch)
+  	Example:
+  		class Test {
+  			public static void main(String[] args) {
+  				StringBuffer sb = new StringBuffer("world");
+                  sb.insert(0, " hello ");
+                  sb.insert(0, true);
+                  sb.insert(16, 10.5);
+                  System.out.println(sb);
+  			}
+  		}
+  		Output: true hello world10.5
+		
+	7. public StringBuffer delete(int begin, int end):
+  		from begin index to end-1 index
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("hello");
+  					sb.delete(2,5);
+  					System.out.println(sb);
+  				}
+  			}
+  			Output: he
+			
+	8. public StringBuffer deleteCharAt(int index)
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("hello");
+  					sb.deleteCharAt(4);
+  					System.out.println(sb);
+  				}
+  			}
+  			Output: hell
+			
+	9. public StringBuffer reverse()
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("drawer");
+  					sb.reverse();
+  					System.out.println(sb);
+  				}
+  			}
+  			Output: reward
+			
+	10. public void setLength(int length)
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer("hello world");
+  					sb.setLength(8);
+  					System.out.println(sb);
+  					System.out.println(sb.capacity());
+  				}
+  			}
+  			Output: hello wo
+  					27
+	
+	11. public void ensureCapacity(int capacity)
+  		Example:
+  			class Test {
+  				public static void main(String[] args) {
+  					StringBuffer sb = new StringBuffer();
+  					System.out.println(sb.capacity());
+  					sb.ensureCapacity(1000);
+  					System.out.println(sb.capacity());
+  				}
+  			}
+  			Output: 16
+  					1000
+					
+	12. public void trimToSize()
+	    Example:
+	        public class Test {
+                public static void main(String[] args) {
+                	// Create a StringBuilder with an initial capacity of 50
+                    StringBuilder sb = new StringBuilder(50);
+                    sb.append("Hello, World!");
+
+                    System.out.println("Length before trim: " + sb.length());
+                    System.out.println("Capacity before trim: " + sb.capacity());
+
+                    // Trim the capacity to the current length
+                    sb.trimToSize();
+
+                    System.out.println("Length after trim: " + sb.length());
+                    System.out.println("Capacity after trim: " + sb.capacity());
+                }
+            }
+            Output: Length before trim: 13
+                    Capacity before trim: 50
+                    Length after trim: 13
+                    Capacity after trim: 13
+	
+13. Need of StringBuilder:
+	All method in StringBuffer is synchronized so it's performance will going to be down. That's why StringBuilder concept came.
+	StringBuilder is the copy of StringBuffer only methods are not synchronized nothing else.
+	
+14. Differences between StringBuffer and StringBuffer:
+	Synchronized version StringBuffer and Non-Synchronized version StringBuilder. All methods and constructors are same in both.
+
+___________________________________________________________________________________________________________________________________________________
+						StringBuffer								                            	|							StringBuilder                                                  |
+----------------------------------------------------------------------|----------------------------------------------------------------------------|
+1. Most of the methods present inside StringBuffer are synchronized.	|1. No method present inside StringBuilder is synchronized.                  |
+2. At a time only one thread is allowed to operate on StringBuffer    |2. At a time multiple threads are allowed to operate on StringBuilder object|
+	object so it's thread safe.											                    |	so it's not thread safe.                                                   |
+3. Threads are required to wait to operate on StringBuffer object so	|3. Threads are not required to wait to operate on StringBuilder object so   |
+relatively performance is low.											                  |	relatively performance is high.                                            |
+4. Introduced in 1.0 version.											                    |4. Introduced in 1.5 Version.                                               |
+---------------------------------------------------------------------------------------------------------------------------------------------------
+15. String vs StringBuffer and StringBuilder
+	String: class is thread safe by default. All immutable classes means String and Wrapper classes are thread safe by default
+			When content is not changeable then String is better.
+			
+	StringBuffer: When content keep on chang the go with this one. It's thread safe.
+	StringBuilder: When concat is not fixed and thread safety not required then it's better.
+	
+16. Method Chaining:
+	Example:
+	    public class Test {
+        	public static void main(String[] args) {
+        		String str = new String("Hello ");
+        		str = str.trim().concat(" World").substring(0, 5).toLowerCase();
+        		System.out.println(str);
+        	}
+        }
