@@ -1,0 +1,2083 @@
+Multitasking:
+	Executing several tasks simultaneously is the concept of multitasking. There are 2 types of multitasking.
+	1. Process Based
+	2. Thread Based
+
+	1. Process Based: Executing several task simultaneously where each task is separate independent program (process), is called process based multitasking.
+	Example: While typing a java program in the editor we can listen audio songs from the same system. At the same time we can download a file from net. All
+	these tasks will be executed simultaneously and independent of each other. Hence it's process based multi tasking.
+
+	process based multitasking base suitable at OS level.
+
+	2. Thread based: Executing several task simultaneously where each task is a separate independent part of the same program is called thread based multitasking and each
+	independent part is called a thread.
+	
+	Thread based multitasking is bast suitable at programmatic level.
+	
+	The main important application areas of multithreading are
+	1. To develop multimedia graphics
+	2. To develop animations
+	3. To develop video games
+	4. To develop web servers and application servers
+	
+	When compared with old languages developing multithreaded application in java is very easy. Because java provides inbuilt support for multithreading with reach API (Thread,
+	Runnable, ThreadGroup, ...).
+	
+	Defining a thread:
+		We can define a thread in the following 2 ways.
+		1. By extending Thread class
+		2. By implementing Runnable interface
+		
+	1. By extending Thread class:
+	Example:
+		public class ThreadDemo {
+			public static void main(String[] args) {
+				MyThread t = new MyThread();
+				t.start();
+				for (int i = 0; i < 10; i++) {
+					System.out.println("Main Thread");
+				}
+			}
+		}
+
+		class MyThread1 extends Thread {
+			public void run() {
+				for (int i = 0; i < 10; i++) {
+					System.out.println("Child Thread");
+				}
+			}
+		}
+		
+	Output: Mixed order
+	
+	Case 1:
+		Thread scheduler: It's the part of JVM. It's responsible to schedule threads that's if multiple threads are waiting to get the chance of execution then in which order threads
+		will be executed is decided by Thread scheduler. We can't expect exact algorithm followed by thread scheduler. It's varied from JVM to JVM. Hence we can't expect thread
+		execution order and exact output.
+		
+		Hence whenever situation comes to multithreading, there is no guaranty for exact output. But we can provide several possible outputs.
+		
+		The following are various possible output for the above program.
+		
+		main, main, main ... 10 times
+		child, child, child ... 10 times
+		main, child, main, child
+		child, main, child, main, main, main, child, main
+		
+	Case 2:
+		Difference between t.start() & t.run(): In the case of t.start(), a new thread will be created which is responsible for the execution of run() method. But in the case of
+		t.run(), a new thread won't be created and run() method will be executed just like a normal method call by main thread.
+		
+		Hence in the above program if we replace t.start() with t.run() then the output is: child, child, child ... 10 times followed by main, main, main ... 10 times.
+		
+		This total output produced by only main thread.
+		
+	Case 3:
+		Importance of Thread class start() method: Thread class start() method is responsible to register the thread with thread scheduler and all other mandatory activities.
+		Hence without executing thread class start method there is no chance of starting a new thread in java. Due to this thread class start method is considered as heart of
+		multithreading.
+		
+		start() {
+			1. Register with thread scheduler
+			2. Perform all other mandatory activity
+			3. Invoke run method
+		}
+		
+	Case 4:
+		Overloading of run() method: Overloading of run method is always possible but thread class start method can invoke no-argument run method. The other overloaded method we
+		have to call explicitly like a normal method call.
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					t.start();
+				}
+			}
+
+			class MyThread1 extends Thread {
+				public void run() {
+					System.out.println("no-arg run");
+				}
+				
+				public void run(int i) {
+					System.out.println("int-arg run");
+				}
+			}
+		Output: no-arg run
+		
+	Case 5:
+		If we are not overriding run method: If we are not overriding run method then thread class run method will be executed. Which has empty implementation. Hence we won't
+		get any output.
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					t.start();
+				}
+			}
+
+			class MyThread1 extends Thread {
+				
+			}
+		Output: no output
+		
+	Note: It's highly recommended to override run method. Otherwise don't go for multithreading concept.
+	
+	Case 6:
+		Overriding of start() method: If we override start method then our start method will be executed just like a normal method call and new thread won't be created.
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					t.start();
+					System.out.println("main method");
+				}
+			}
+
+			class MyThread1 extends Thread {
+				public void start() {
+					System.out.println("start method");
+				}
+				
+				public void run() {
+					System.out.println("no-arg run");
+				}
+			}
+			
+		Output: start method
+				    main method
+				
+	Note: It's not recommended to override start method. Otherwise don't go for multithreading concept.
+	
+	Case 7:
+		super.start() call from overridden method start():
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					t.start();
+					System.out.println("main method");
+				}
+			}
+
+			class MyThread1 extends Thread {
+				public void start() {
+					super.start();
+					System.out.println("start method");
+				}
+				public void run() {
+					System.out.println("run method");
+				}
+			}
+			
+		output: start method
+				    main method
+				    run method
+				
+				    start method
+				    run method
+				    main method
+				
+	Case 8:
+		Thread life cycle:
+		
+		MyThread t = new MyThread
+			      t.start()				        If TS allocate processor		      	If run() method completed
+		new/born------------------------------Ready/Runnable----------------------------------------Running----------------------------------------Dead
+		
+	Case 9:
+		After starting a thread if we are trying to restart the same thread then we'll get runtime exception saying IllegalThreadStateException.
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					t.start();
+					t.start();
+					System.out.println("main method");
+				}
+			}
+
+			class MyThread1 extends Thread {
+				public void run() {
+					System.out.println("run method");
+				}
+			}
+	
+	Defining a thread by implementing Runnable Interface:
+		We can define a thread by implementing Runnable interface.
+		
+		1. MyThread extends Thread implements Runnable
+		2. MyRunnable implements Runnable
+		
+		Runnable interface present in java.lang package and it contains only one method that's run().
+		
+		public void run();
+			
+		Example:
+			public class MyRunnable implements Runnable {
+				@Override
+				public void run() {
+					for(int i = 0; i < 10; i++) {
+						System.out.println("child thread");
+					}
+				}
+
+				public static void main(String[] args) {
+					MyRunnable r = new MyRunnable();
+					Thread t = new Thread(r);
+					t.start();
+					for(int i = 0; i < 10; i++) {
+						System.out.println("main thread");
+					}
+				}
+			}
+			
+		Output: Mixed output of main, child
+		
+	Case Study:
+		MyRunnable r = new MyRunnable();
+		Thread t1 = new Thread();
+		Thread t2 = new Thread(r);
+		
+		Case 1: t1.start(): A new thread will be created and which is responsible for the execution of Thread cass run method, which has empty implementation.
+		Case 2: t1.run(): No new thread will be created and Thread class run method will be executed just like a normal method call.
+		Case 3: t2.start(): A new thread will be created and which is responsible for the execution of MyRunnable class run method.
+		Case 4: t2.run(): No new thread will be created and MyRunnable run method will be executed just like a normal method call.
+		Case 5: r.start(): We'll get compile time error saying MyRunnable class doesn't have start capability.
+			CTE: Can't find symbol method start() location class MyRunnable
+		Case 6: r.run(): No new thread will be created and MyRunnable run method will be executed just like a normal method call.
+		
+	Which approach is best to define a thread?
+		Among two ways defining a thread implements Runnable approach is recommended.
+		In the first approach our class always extends Thread class, there is no chance of extending any other class. Hence we are missing inheritance benefit.
+		But in the second approach while implementing Runnable interface we can extend any other class. Hence we won't miss any inheritance benefit.
+		Because of above reason implementing Runnable approach is recommended than extending Thread class.
+
+
+	Thread class Constructors:
+
+		Thread t = new Thread();
+		Thread t = new Thread(Runnable r);
+		Thread t = new Thread(String name);
+		Thread t = new Thread(Runnable r, String name);
+		Thread t = new Thread(ThreadGroup g, String name);
+		Thread t = new Thread(ThreadGroup g, Runnable r);
+		Thread t = new Thread(ThreadGroup g, Runnable r, String name);
+		Thread t = new Thread(ThreadGroup g, Runnable r, String name, long stack size);
+		
+		Example:
+			public class ThreadDemo {
+				public static void main(String[] args) {
+					MyThread1 t = new MyThread1();
+					Thread t1 = new Thread(t);
+					t1.start();
+					System.out.println("main method");
+				}
+			}
+
+			class MyThread1 extends Thread {
+				public void run() {
+					System.out.println("run method");
+				}
+			}
+		Output: main method
+				    run method
+				
+		Getting & Setting name of a thread:
+			Every thread in java has some name. It may be default name generated by JVM or customized name provided by programmer.
+			We can get and set name of a thread by using the following 2 methods of thread class.
+			
+			public final String getName()
+			public final void setName()
+			
+		Example:
+			public class Main {
+				public static void main(String[] args) {
+					System.out.println(Thread.currentThread().getName());
+					Thread.currentThread().setName("Dheeraj");
+					MyThread t = new MyThread();
+					t.start();
+					System.out.println(t.getName());
+				}
+			}
+
+			class MyThread extends Thread {
+				@Override
+				public void run() {
+					System.out.println("from run: " + Thread.currentThread().getName());
+				}
+			}
+		
+		Output: main
+				    Thread-0
+				    from run: Thread-0
+				
+		Note: We can get current executing thread object by using Thread.currentThread() method.
+		
+		Example:
+			public class Main {
+				public static void main(String[] args) {
+					System.out.println("This line executed by : " + Thread.currentThread().getName());
+					MyThread t = new MyThread();
+					t.start();
+				}
+			}
+
+			class MyThread extends Thread {
+				@Override
+				public void run() {
+					System.out.println("This line executed by : " + Thread.currentThread().getName());
+				}
+			}
+			
+		Output: This line executed by : main
+				    This line executed by : Thread-0
+				
+	Thread Priorities:
+		Every thread in java has some priority. It may be default priority generated by JVM or customized priority provided by programmer.
+		The valid range of thread priority is 1 to 10. Where 1 is min priority and 10 is max priority.
+		Thread class defines the following constants to represent some standard priorities.
+		
+		Thread.MIN_PRIORITY = 1;
+    Thread.NORM_PRIORITY = 5;
+    Thread.MAX_PRIORITY = 10;
+		
+		Thread scheduler will use priorities while allocating processor.
+		The thread which is having highest priority will get chance first.
+		
+		If 2 threads having same priority then we can't expect exact execution order. It depends on Thread scheduler.
+		
+		Thread class defines the following methods to get and set priority of a thread.
+		
+			public final int getPriority()
+			public final void setPriority(int newPriority): Allowed values range 1-10 otherwise RTE IllegalArgumentException
+			
+		Example:
+			t.setPriority(7);		// Valid
+			t.setPriority(17)		// RTE: IllegalArgumentException
+			
+	Default priority:
+		The default priority only for the main thread is 5. But for all remaining threads default priority will be inherited from parent to child. That's what ever priority
+		parent thread has the same priority will be there for the child thread.
+		
+		Example:
+			public class Main {
+				public static void main(String[] args) {
+					System.out.println(Thread.currentThread().getPriority());
+					Thread.currentThread().setPriority(8);
+					MyThread t = new MyThread();
+					System.out.println(t.getPriority());
+				}
+
+			}
+
+			class MyThread extends Thread {}
+			
+		Output: 5
+				    8
+				
+		if we'll comment line Thread.currentThread().setPriority(8); then child thread priority will become 5.
+		
+		Example:
+			public class Main {
+				public static void main(String[] args) {
+					MyThread t = new MyThread();
+					t.setPriority(10);
+					t.start();
+					for(int i = 0; i < 10; i++) {
+						System.out.println("main Thread ");
+					}
+				}
+			}
+
+			class MyThread extends Thread {
+				@Override
+				public void run() {
+					for(int i = 0; i < 10; i++) {
+						System.out.println("child Thread ");
+					}
+				}
+			}
+		
+		Output: child thread followed by main thread.
+		
+	Note: Some platform won't provide proper support for thread priorities.
+	
+	We can prevent a thread execution by using the following methods.
+	1. yield()
+	2. join()
+	3. sleep()
+	
+	1. yield(): yield method causes to pause current executing thread to give the chance for waiting threads of same priority. If there is no waiting thread or all waiting threads
+		have low priority then same thread can continue it's execution.
+		
+		If multiple threads are waiting with the same priority then which waiting thread will get the chance, we can't expect it depends on thread scheduler.
+		
+		The thread which is yield, when it'll get the chance once again it depends on Thread Scheduler and we can't expect exactly
+		
+		private static native void yield();	
+	
+	
+	MyThread t = new MyThread
+			    t.start()				        If TS allocate processor		    If run() method completed
+	new/born------------------------------Ready/Runnable----------------------------------------Running----------------------------------------Dead
+									yield()
+	
+	Example:
+		public class Main {
+			public static void main(String[] args) {
+				MyThread t = new MyThread();
+				t.start();
+				for(int i = 0; i < 10; i++) {
+					System.out.println("main thread");
+				}
+			}
+		}
+
+		class MyThread extends Thread {
+			public void run() {
+				for(int i = 0; i < 10; i++) {
+					System.out.println("child thread");
+					Thread.yield();
+				}
+			}
+		}
+		
+	Output: always main thread complete before child thread.
+	
+	In the above program if we are commenting Thread.yield(); then both threads will be executed simultaneously and we can't expect which thread will complete first.
+	
+	If we are not commenting Thread.yield(); then child thread always call yield method because of that main thread will get chance more no of times and the chance of completing
+	main thread first is high.
+	
+	Note: Some platforms won't provide proper support for yield method.
+	
+	2. join(): If a thread wants to wait until completing some other thread then we should go for join method.
+		for example if a thread t1 wants to wait until completing t2 then t1 has to call t2.join().
+		
+		If t1 executes t2.join() then immediately t1 will be entered into waiting state until t2 completes.
+		
+		Once t2 complete then t1 can continue it's execution.
+		
+		Example:
+			venue fixing thread(t1)					Wedding cards printing(t2)					Wedding cards distribution(t3)
+			
+			Wedding cards printing thread (t2) has to wait until venue fixing thread (t1) completion. Hence t2 has to call t1.join().
+			Wedding cards distribution thread (t3) has to wait until Wedding cards printing (t2) completion. Hence t3 has to call t2.join().	
+
+	public final void join() throws InterruptedException;
+	public final void join(long millisecond) throws InterruptedException;
+	public final void join(long millisecond, int nanosecond) throws InterruptedException;
+	
+	Note: Every join method throws InterruptedException which is checked exception. Hence compulsory we should handle this exception either by using try-catch of by throws keyword.
+		otherwise we'll get CTE.
+		
+	
+	MyThread t = new MyThread
+			    t.start()				        If TS allocate processor		    If run() method completed
+	new/born------------------------------Ready/Runnable----------------------------------------Running----------------------------------------Dead
+								waiting state (blocked for joining)
+								t2.join(), t2.join(1000), t2.join(1000, 100)
+	
+	1. If t2 complete
+	2. If t2 time expired
+	3. If t2 thread got Interrupted
+		then it'll come in Ready/Runnable state
+	
+	Case 1: 
+		Waiting of main thread until completing child thread:
+		
+	Example:
+		public class Main {
+			public static void main(String[] args) throws InterruptedException {
+				MyThread t = new MyThread();
+				t.start();
+				t.join();
+				for(int i = 0; i < 10; i++) {
+					System.out.println("Rama thread");
+				}
+			}
+		}
+
+		class MyThread extends Thread {
+			public void run() {
+				for(int i = 0; i < 10; i++) {
+					System.out.println("First thread");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+	Output: 1st complete First thread then complete Rama thread
+	
+	If we comment t.join(); then both main & child threads will be executed simultaneously and we can't expect exact output.
+	
+	If we are not commenting t.join(); then main thread calls join method on child thread object. Hence main thread will until completing child thread. In this case output is
+	First thread 10 times followed by Rama thread 10 times.
+	
+	Case 2:
+		Waiting of child thread until completing main thread:
+		
+	Example:
+		public class Main {
+			public static void main(String[] args) throws InterruptedException {
+				MyThread.mt = Thread.currentThread();
+				MyThread t = new MyThread();
+				t.start();
+				for(int i = 1; i <= 10; i++) {
+					System.out.println("Main Thread");
+					Thread.sleep(1000);
+				}
+			}
+		}
+
+		class MyThread extends Thread {
+			static Thread mt;
+			public void run() {
+				try {
+					mt.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				for(int i = 0; i < 10; i++) {
+					System.out.println("Child thread");
+				}
+			}
+		}
+		
+	Output: Main thread 10 times followed by Child thread 10 times.
+	
+	In the above example child thread call join method on main thread object hence Child thread has to wait until completing main thread. In this case output is Main thread 10 times
+	followed by Child thread 10 times.
+
+	Case 3:
+	If main thread calls join method on child thread object and child thread calls join method on main thread object then both thread will wait forever
+	and the program will be stuck/paused (this is something like deadlock).
+	
+	Example:
+		public class Main {
+			public static void main(String[] args) throws InterruptedException {
+				MyThread.mt = Thread.currentThread();
+				MyThread t = new MyThread();
+				t.start();
+				t.join();
+				for(int i = 1; i <= 10; i++) {
+					System.out.println("Main Thread");
+					Thread.sleep(1000);
+				}
+			}
+		}
+
+		class MyThread extends Thread {
+			static Thread mt;
+			public void run() {
+				try {
+					mt.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				for(int i = 0; i < 10; i++) {
+					System.out.println("Child thread");
+				}
+			}
+		}
+		
+	Output: No output because of Deadlock condition.
+
+	Case 4:
+	If a thread calls join method on the same thread it self then the program will be stuck/paused (this is something like deadlock). In this case
+	thread has to wait infinite amount of time.
+	
+	Example:	
+		public class Main {
+			public static void main(String[] args) throws InterruptedException {
+				Thread.currentThread().join();
+			}
+		}
+		
+	Output: No output because of Deadlock condition.
+
+	3. Sleep Method:
+		If we don't want to perform any operation for a particular amount of time then we should go for sleep method.
+
+		public static native void sleep(long millisecond) throws InterruptedException
+		public static void sleep(long millisecond, int nanosecond) throws InterruptedException
+
+		Note: Every sleep method throws InterruptedException, which is checked exception. Hence whenever we are using sleep method compulsory we should
+		handle InterruptedException either by try-catch or by throws keyword otherwise we'll get CTE.
+
+	How a thread can Interrupt another thread?
+	A thread can interrupt a sleeping thread or waiting thread by using interrupt method of thread class
+
+	public void interrupt();
+
+	public class MyThread extends Thread {
+		public void run() {
+			try {
+				for(int i = 0; i < 10; i++) {
+					System.out.println("I am lazy thread");
+					Thread.sleep(2000);
+				}
+			} catch (InterruptedException e) {
+				System.out.println("I got Interrupted");
+			}
+		}
+	}
+
+	class ThreadInterrupt {
+		public static void main(String[] args) {
+			MyThread t = new MyThread();
+			t.start();
+			t.interrupt(); // line - 1
+			System.out.println("End of main thread");
+		}
+	}
+
+	If we comment line - 1 then main thread won't interrupt child thread. In this case child thread will execute for loop 10 times.
+	If we are not commenting line - 1 then main thread interrupt child thread. In this case output is
+
+	End of main thread
+	I am lazy thread
+	I got Interrupted
+
+	Note: Whenever we are calling Interrupt method, If the target thread not in sleeping state of waiting state then there is no impact of interrupt
+	called immediately. Interrupt call will be waited until target thread entered into sleeping or waiting state. If the target thread entered into
+	sleeping or waiting state then immediately Interrupt will interrupt target thread.
+
+	If the target thread never entered into sleeping or waiting state in it's life time. Then there is no impact of interrupt call. This is the only
+	case where interrupt call will be wasted.
+
+	Example:
+		public class MyThread1 extends Thread {
+			public void run() {
+				for (int i = 0; i < 10000; i++) {
+					System.out.println("I am lazy thread - " + i);
+				}
+				System.out.println("I am entering into sleeping state");
+				try {
+					Thread.sleep(2000);
+
+				} catch (InterruptedException e) {
+					System.out.println("I got Interrupted");
+				}
+			}
+		}
+
+		class ThreadInterruptSleep {
+			public static void main(String[] args) {
+				MyThread1 t = new MyThread1();
+				t.start();
+				t.interrupt();
+				System.out.println("End of main thread");
+			}
+		}
+			
+		In the above example interrupt call waited until child thread completes for loop 10000 times.
+	
+____________________________________________________________________________________________________________________________________________
+Property			| 	yield		| join		| sleep																			|
+--------------------|---------------|-----------|-------------------------------------------------------------------------------------------|
+1. Purpose			|				|			|																				|
+yield: If a thread want to pass to it's execution to give the chance for remain thread's of same priority then we should go for yield method|
+join: If a thread want's to wait until completing some other thread then we should go for join method.										|
+sleep: If a thread don't want to perform any operation for a particular amount of time then we should go for sleep method.					|
+2. Is it Overloaded	| No			| Yes		| Yes																						|
+3. Is it final		| No			| Yes		| No																						|
+4. It is throws IE	| No			| Yes		| Yes																						|
+5. Is is Native		| Yes			| No		| Sleep(long ms) - Yes, sleep(long ms, int ns) - No											|
+6. Is it static		| Yes			| No		| Yes																						|
+--------------------|---------------|-----------|-------------------------------------------------------------------------------------------|
+
+
+Synchronization:
+	Synchronized is a modifier applicable only for methods and blocks but not for classes and variables.
+	If multiple threads are trying to operate simultaneously on the same java object then there may be a chance of data inconsistency problem. To over come this problem we should 
+	go for synchronized keyword.
+	If a method or block declared as synchronized then at a time only one thread is allowed to execute that method or block on the given object. So that data inconsistency problem
+	will be resolved.
+	The main advantage of synchronized keyword is we can resolve data inconsistency problems but the main disadvantage of synchronized keyword is it increases waiting time of 
+	threads	and creates performance problems. Hence if there is no specific requirement then it's not recommended to use synchronized keyword.
+	
+	Internally synchronization concept is implemented by using lock. Every object in java has a unique lock. Whenever we are using synchronized keyword then only lock concept will 
+	come into the picture.
+	
+	If a thread wants to execute synchronized method on the given object, first it has to get lock lock of that object. Once thread got the locked. then It's allowed to execute any 
+	synchronized method on that object.
+	
+	Once method execution completes automatically thread releases the lock. Acquiring and releasing lock internally takes care by JVM and programmer not responsible for this 
+	activity.
+	
+	While a thread executing synchronized method on the given object the remain threads are not allowed to execute any synchronized method simultaneously on the same object. But 
+	remaining threads are allowed to execute non-synchronized methods simultaneously.
+	
+	Class X {
+		sync m1();
+		sync m2();
+		m3();
+	}
+	
+	Lock concept is implemented based on object but not based on method.
+	
+	sync-area: whenever we are performing update operation (add, remove, delete, replace). ie. where state of object changing.
+	non-sync-area: whenever object state won't be changed like read operation.
+	
+	public class SynchronizedDemo {
+
+		public static void main(String[] args) {
+			Display d = new Display();
+			MyThread t1 = new MyThread(d, "Dhoti");
+			MyThread t2 = new MyThread(d, "YuvRaj");
+			MyThread t3 = new MyThread(d, "Kohl");
+			MyThread t4 = new MyThread(d, "Raina");
+			t1.start();
+			t2.start();
+			t3.start();
+			t4.start();
+		}
+
+	}
+
+	class Display {
+		public synchronized void wish(String name) {
+			for (int i = 0; i < 10; i++) {
+				System.out.print("Good Morning: ");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+				System.out.println(name);
+			}
+		}
+	}
+
+	class MyThread extends Thread {
+		Display d;
+		String name;
+
+		MyThread(Display d, String name) {
+			this.d = d;
+			this.name = name;
+		}
+
+		public void run() {
+			d.wish(name);
+		}
+	}
+	
+	If we are not declaring wish method as synchronized then both thread will be executed simultaneously and hence we'll get irregular output.
+	Good Morning: Good Morning: YuvRaj
+	Good Morning: Dhoti
+
+	If we declared wish method as synchronized then at a time only one thread is allowed to execute wish method and given display object. Hence
+	we'll get regular output.
+	Good Morning: Dhoti
+	Good Morning: Dhoti
+	Good Morning: Dhoti
+	Good Morning: Dhoti
+	Good Morning: Kohl
+	Good Morning: Kohl
+	Good Morning: Kohl
+	Good Morning: Kohl
+	
+	Case Study:
+		Display d1 = new Display();
+		Display d2 = new Display();
+		MyThread t1 = new MyThread(d1, "Dhoti");
+		MyThread t2 = new MyThread(d2, "Dheeraj");
+		t1.start();
+		t2.start();
+		
+		Even tho wish method is synchronized we'll get irregular output because threads are operating on different java object.
+		
+		Conclusion: If multiple threads are operating on same java object then synchronization is required.
+		If multiple threads are operating on multiple java objects then synchronization is not required.
+		
+		Class level lock:
+			Every class in java has a unique lock which is nothing but class level lock.
+			If a thread wants to execute a static synchronized method then thread required class level lock. Once thread got class level lock then
+			it's allowed to execute any static synchronized method of that class. Once method execution completes automatically thread releases the lock.
+			
+			class x {
+				static sync m1();
+				static sync m2();
+				sync m3();
+				sync m4();
+				m5();
+			}
+			
+			While a thread executing static synchronized method, the remaining threads are not allowed to execute any static synchronized method
+			of that class simultaneously. But remaining threads are allowed to execute the following methods simultaneously.
+			1. Normal static methods
+			2. Synchronized instance methods
+			3. Normal instance methods
+			
+			t1.m1() // valid
+			t2.m1()	// Waiting state
+			t3.m2()	// Waiting state
+			t4.m3()	// Valid
+			t5.m4()	// Valid
+			t6.m5()	// Valid
+	
+	Example:		
+	public class SynchronizedDemo1 {
+
+		public static void main(String[] args) {
+			Display1 d1 = new Display1();
+			MyThread1 t1 = new MyThread1(d1);
+			MyThread2 t2 = new MyThread2(d1);
+			t1.start();
+			t2.start();
+		}
+
+	}
+
+	class Display1 {
+		public synchronized void displayN() {
+			for (int i = 1; i <= 10; i++) {
+				System.out.print(i);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+
+		public synchronized void displayC() {
+			for (int i = 65; i <= 75; i++) {
+				System.out.print((char) i);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+	}
+
+	class MyThread1 extends Thread {
+		Display1 d;
+
+		MyThread1(Display1 d) {
+			this.d = d;
+		}
+
+		public void run() {
+			d.displayN();
+		}
+	}
+
+	class MyThread2 extends Thread {
+		Display1 d;
+
+		MyThread2(Display1 d) {
+			this.d = d;
+		}
+
+		public void run() {
+			d.displayC();
+		}
+	}
+	
+Synchronization Block:
+	If verify few lines of the code required synchronization then it's not recommended to declared entire as synchronized. We have to enclosed
+	those few lines of the code by using synchronized block.
+	The main advantage of synchronized block over synchronized method is it reduces waiting time of threads and improves performance of the system.
+	
+	We can declare synchronized block as follows.
+	1. To get lock of current object: synchronized(this){} if a thread got lock of current object then only it's allowed to execute this area.
+	2. To get lock of particular object: synchronized(b){} if a thread got lock of particular object then only it's allowed to execute this area.
+	3. To get class level lock: synchronized(Display.class){} if a thread got class level lock of display class then only it's allowed to execute
+
+	Example: 1
+	public class Display2 {
+
+		public void wish(String name) {
+			;
+			;
+			;
+			;
+			;
+			;
+			;
+			;// 1 lake line of the code
+			synchronized (this) {
+				for (int i = 0; i < 10; i++) {
+					System.out.print("Good Morning: ");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+
+					}
+					System.out.println(name);
+				}
+			}
+			;
+			;
+			;
+			;
+			;
+			;
+			;
+			;// 1 lake line of the code
+		}
+
+	}
+
+	class MyThread3 extends Thread {
+		Display2 d;
+		String name;
+
+		MyThread3(Display2 d, String name) {
+			this.d = d;
+			this.name = name;
+		}
+
+		public void run() {
+			d.wish(name);
+		}
+	}
+
+	class SynchronizedDemo2 {
+		public static void main(String[] args) {
+			Display2 d = new Display2();
+			MyThread3 t1 = new MyThread3(d, "Dhoti");
+			MyThread3 t2 = new MyThread3(d, "YuvRaj");
+			t1.start();
+			t2.start();
+
+		}
+	}
+	
+	Example 3:
+	public class Display2 {
+
+		public void wish(String name) {
+			;
+			;
+			;
+			;
+			;
+			;
+			;
+			;// 1 lake line of the code
+			synchronized (Display2.class) {
+				for (int i = 0; i < 10; i++) {
+					System.out.print("Good Morning: ");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+
+					}
+					System.out.println(name);
+				}
+			}
+			;
+			;
+			;
+			;
+			;
+			;
+			;
+			;// 1 lake line of the code
+		}
+
+	}
+
+	class MyThread3 extends Thread {
+		Display2 d;
+		String name;
+
+		MyThread3(Display2 d, String name) {
+			this.d = d;
+			this.name = name;
+		}
+
+		public void run() {
+			d.wish(name);
+		}
+	}
+
+	class SynchronizedDemo2 {
+		public static void main(String[] args) {
+			Display2 d1 = new Display2();
+			Display2 d2 = new Display2();
+			MyThread3 t1 = new MyThread3(d1, "Dhoti");
+			MyThread3 t2 = new MyThread3(d2, "YuvRaj");
+			t1.start();
+			t2.start();
+
+		}
+	}
+
+	Note: Lock concept applicable for Object types and class types but not for primitives hence we can't pass primitives type as argument to synchronized
+	block otherwise we'll get CTE saying Unexpected type found int required reference.
+
+FAQ's
+	1. What's synchronized keyword? Where we can apply?
+	Ans. synchronized is a modifier applicable for methods and block but not for variables and class.
+	2. Explain advantage of synchronized keyword.
+	Ans. We can resolve data inconsistency problem.
+	3. Explain disadvantage of synchronized keyword.
+	Ans. It increases waiting time of the thread and create performance problem.
+	4. What is Race condition?
+	Ans. If multiple threads are operating simultaneously on the same java object then there may be a chance of data inconsistency problem this is
+	called Race condition. We can overcome this problem by using synchronized keyword.
+	5. What's object lock and when it's required.
+	Ans. Whenever a thread wants to execute synchronized method then thread required object lock.
+	6. What's class level lock and when it's required?
+	Ans. Every class in java has a unique lock which is nothing but class level lock. Whenever if a thread want to execute static synchronized method.
+	7. What's the difference between class level lock and object level lock?
+	Ans. If a thread want to execute static synchronized method class level lock required. If a thread want to execute instance synchronized method
+	then object level lock required.
+	8. While a thread executing synchronized method on the give object is the remain threads are allowed to execute any other synchronized method
+	simultaneously on the same object?
+	Ans. No
+	9. What's synchronized block?
+	Ans. 
+	10. How to declare synchronized block to get lock of current object?
+	Ans. synchronized(this){}
+	11. How to declare synchronized block to get class level lock?
+	Ans. synchronized(Display.class){}
+	12. What's the advantage of synchronized block over synchronized method?
+	Ans. performance by default will be improved and waiting time will be reduced.
+	13. Is a thread can acquired multiple lock simultaneously?
+	Ans. Yes, of course from different objects.
+	class X {
+		public synchronized void m1() {
+			//here thread has lock of 'X' object
+			Y y = new Y();
+			synchronized(y) {
+				//here thread has lock of 'X' and 'Y' object
+				Z z = new Z();
+				synchronized(z) {
+					//here thread has lock of 'X', 'Y', 'Z' object
+				}
+			}
+		}
+	}
+	14. What's synchronized statements?
+	Ans. The statements present in synchronized method and synchronized block are called synchronized statements.
+	
+	Two threads can communicate with each-other by using wait(), notify() and notifyAll() methods. The thread which is expecting update is responsible
+	to call wait() method then immediately the thread will entered into waiting state.
+	
+	The thread which is responsible to perform update, after performing update it's responsible to call notify() method then waiting thread will
+	get that notification and continue it's execution with those updated items.
+	
+	wait, notify, notifyAll methods present in object class but not in thread class because thread can call these methods on any java object.
+	
+	To call wait, notify, notifyAll methods on any object, thread should be owner of that object that's the thread should has lock of that object that's
+	the thread should be inside synchronized area.
+	
+	Hence we can call wait, notify and notifyAll methods only from synchronized area otherwise we'll get runtime exception saying IllegalMonitorStateException.
+	
+	If a thread calls wait method on any object it immediately releases the lock of that particular object and entered into waiting state.
+	
+	If a thread calls notify method on any object it releases the lock of that object but may not immediately.
+	
+	Except wait, notify and notifyAll there is not other method where thread releases the lock.
+	
+	method		| Is thread releases lock
+	yield		| No
+	join()		| No
+	sleep()		| No
+	wait()		| Yes
+	notify()	| Yes
+	notifyAll()	| Yes
+	
+	Which of the following is valid?
+	1. If a thread calls wait method immediately it'll entered into waiting state without releasing any lock. Invalid
+	2. If a thread calls wait method, it releases the lock of that object but may not immediately. Invalid
+	3. If a thread calls wait method on any object, it releases all lock acquired by that thread and immediately entered into waiting state. Invalid
+	4. If a thread calls wait method on any object, it immediately releases the lock of that particular object and entered into waiting state. Valid
+	5. If a thread calls notify method on any object, it immediately releases the lock of that particular object. Invalid
+	6. If a thread calls notify method on any object, it releases the lock of that object but not immediately. Valid
+	
+	public final void wait() throws InterruptedException
+	public final native wait(long millisecond) throws InterruptedException
+	public final void wait(long millisecond, int nanosecond) throws InterruptedException
+	
+	public final native void notify()
+	public final native void notifyAll()
+	
+	Note: Every wait method throws InterruptedException which is checked exception hence whenever we are using wait method compulsory we should
+	handle InterruptedException either by try-catch keyword or throws by keyword. Otherwise we'll get CTE
+	
+	Example: wait() & notifyAll()
+	public class ThreadA {
+		public static void main(String[] args) throws InterruptedException {
+			ThreadB b = new ThreadB();
+			b.start();
+			synchronized (b) {
+				System.out.println("Main thread trying to call wait method");
+				b.wait();
+				System.out.println("Main thread got notification");
+				System.out.println(b.total);
+			}
+		}
+	}
+
+	class ThreadB extends Thread {
+		int total = 0;
+		public void run() {
+			synchronized (this) {
+				System.out.println("Child thread starts calculation");
+				for(int i = 1; i <= 100; i++) {
+					total = total+i;
+				}
+				System.out.println("Child thread giving notification");
+				this.notify();
+			}
+		}
+	}
+	
+	Output: Main thread trying to call wait method
+			Child thread starts calculation
+			Child thread giving notification
+			Main thread got notification
+			5050
+			
+	Producer-Consumer problem:
+		Producer thread is responsible to produce items to the queue and consumer thread is responsible to consume items from the queue. If queue is
+		empty then consume thread will call wait method and entered into waiting state. After producing items to the queue producer thread is responsible
+		to call notify() method then waiting consumer will get the notification and continue it's execution with updated items.
+		
+		Difference between notify() and notifyAll():
+			We can use notify method to give the notification for only one waiting thread. If multiple threads are waiting then only one thread will be 
+			notify and the remaining threads have to wait for further notification. Which thread will be notify we can't expect. It depends on JVM.
+			
+			We can use notifyAll() to give the notification for all waiting threads of a particular object. Even tho multiple thread notify but
+			execution will be perform one by one because threads required lock and only one lock is available.
+			
+		On which object we are calling wait method? Thread required the lock of that particular object.
+		For Example if we are calling wait method on s1 then we have to get lock of s1 object but not s2 Object.
+		
+		Stack s1 = new Stack();
+		Stack s2 = new Stack();
+		synchronized(s1) {
+			s2.wait();	// Invalid: IllegalMonitorStateException
+		}
+		
+		synchronized(s1) {
+			s1.wait();	// Valid
+		}
+		
+	Deadlock:
+		If two threads are waiting for each-other forever such type of infinite waiting is called deadlock.
+		synchronized keyword is the only resign for deadlock situation. Hence while using synchronized keyword we have to take spatial care.
+		There are no resolution for deadlock but several prevention techniques are available.
+		
+	Example:
+		public class Deadlock extends Thread {
+			A a = new A();
+			B b = new B();
+			
+			public void m1() {
+				this.start();
+				a.d1(b);	// This line executed by main thread
+			}
+			
+			public void run() {
+				b.d2(a);	// This line executed by child thread
+			}
+			
+			public static void main(String[] args) {
+				Deadlock t = new Deadlock();
+				t.m1();
+			}
+			
+		}
+
+		class A {
+
+			public synchronized void d1(B b) {
+				System.out.println("Thread1 Starts execution of d1() method");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+
+				}
+				System.out.println("Thread1 trying to call B's last() method");
+				b.last();
+			}
+
+			public synchronized void last() {
+				System.out.println("Inside A, last() method");
+			}
+		}
+
+		class B {
+			public synchronized void d2(A a) {
+				System.out.println("Thread2 stats execution of d2() method");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+
+				}
+				System.out.println("Thread2 trying to call A's last() method");
+				a.last();
+			}
+
+			public synchronized void last() {
+				System.out.println("Inside B, last() method");
+			}
+		}
+		
+	Output:
+		Thread1 Starts execution of d1() method
+		Thread2 stats execution of d2() method
+		Thread2 trying to call A's last() method
+		Thread1 trying to call B's last() method
+		
+	In the above program if we remove at least one synchronized keyword then the program won't entered into Deadlock. Hence synchronized keyword is
+	the only resign for Deadlock situation. Due to this while using synchronized keyword we have to take special care.
+	
+	Deadlock vs Starvation:
+		Long waiting of a thread where waiting never ends is called Deadlock.
+		Whereas long waiting of a thread where waiting ends at certain point is called starvation.
+	Example:
+		low priority thread has to wait until completing all high priority threads. It may be long waiting but ends at certain, which is nothing
+		but starvation.
+		
+	Daemon Threads:
+		The threads which are executing in the background are called daemon threads. Example: Garbage Collector, Signal Dispatcher, Attach Listener.
+		The main objective of daemon threads is to provide support for non daemon thread (main thread). for example if main thread runs with low
+		memory then JVM runs garbage collector to destroy useless object so that no of bytes of free memory will be improved. With this free memory
+		main thread can continue it's execution.
+		
+		Usually daemon threads having low priority but based on our requirement daemon threads can run with high priority also.
+		We can check daemon nature of a thread by using isDaemon() of thread class.
+		public boolean isDaemon();
+		we can chance daemon nature of a thread by using setDaemon() method.
+		public void setDaemon(Boolean b);
+		But changing daemon nature is possible before starting of a thread only. After starting a thread if we are trying to change daemon nature
+		then we'll get RTE saying IllegalThreadStateException.
+		
+	Default nature of thread:
+		By default main thread is always non daemon. And for all remaining threads daemon nature will be inherited from parent to child that's if
+		the parent thread is daemon then automatically child thread is also daemon. and if parent thread is non daemon then automatically child
+		thread is also non daemon.
+		
+	Note: It's impossible to chance daemon nature of main thread, because it's already started by JVM at beaning.
+	Example:
+		public class Daemon {
+			public static void main(String[] args) {
+				System.out.println(Thread.currentThread().isDaemon()); // false
+		//		Thread.currentThread().setDaemon(true);					// IllegalThreadStateException
+				MyThread t = new MyThread();
+				System.out.println(t.isDaemon());						// false
+				t.setDaemon(true);
+				System.out.println(t.isDaemon());						// true
+			}
+		}
+
+		class MyThread extends Thread {}
+		
+	Whenever last non daemon thread terminates automatically all daemon threads will be terminated irrespective of there position.
+	
+	Example:
+		public class DaemonThread {
+			public static void main(String[] args) {
+				MyThread1 t = new MyThread1();
+				t.setDaemon(true);
+				t.start();
+				System.out.println("End of main thread");
+			}
+		}
+		class MyThread1 extends Thread {
+			public void run() {
+				for(int i = 0; i < 10; i++) {
+					System.out.println("Child thread");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		}
+		
+	Output:
+		End of main thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		Child thread
+		
+	If we are commenting line t.setDaemon(true) both main and child threads are non daemon and hence both thread will be executed until there completion.
+	If we are not commenting line t.setDaemon(true) then main thread non daemon and child thread is daemon. Hence whenever main thread terminates automatically
+	child thread will be terminated. In this case output is 
+	Output:
+		End of main thread
+		or 
+		End of main thread
+		Child thread
+		
+	Java multithreading concept is implemented by using the following 2 modules.
+	1. Green Thread Module
+	2. Native OS Module
+		
+	Green Thread: The thread which is managed completely by JVM without taking underling OS support is called Green Thread. Very few operating system
+	like sun solaris provide support for Green Thread module. Any way Green Thread module is deprecated and not recommended to use.
+	
+	Native OS Module: The thread which is managed by JVM with the help of underling OS, is called native os module. All Windows based OS provide
+	support for native os module.
+	
+	How to stop a thread?
+	We can stop a thread execution by using stop() method of thread class.
+	public void stop();
+	If we call stop method then immediately a thread will entered into dead state. Anyway stop method is deprecated and not recommended to use.
+	
+	How to suspend and resume of a thread?
+	We can suspend a thread by using suspend() method of thread class then immediately the thread will be entered into suspended state.
+	We can resume a suspended by using resume() method of thread class then suspended thread can continue it's execution.
+	
+	public void suspend()
+	public void resume()
+	
+	Anyway these methods are deprecated and not recommended to use.
+	
+Thread Group:
+	Based on functionality we can group threads into a single unit which is nothing but thread group that's thread group contains a group of threads.
+	In addition to thread, thread group can also contain sub thread groups.
+	The main advantage of maintaining threads in the form of thread group is, we can perform common operations very easily.
+	
+	Every thread in java belongs to some group. Main thread belongs to main group.
+	Every thread group in java is the child group of system group either directly or indirectly. Hence system group access root for all thread groups
+	in java.
+	
+	System group contain several system level threads like Finalized, Reference Handler, Signal Dispatcher, Attach Listener
+	
+	public class Test {
+		public static void main(String[] args) {
+			System.out.println(Thread.currentThread().getThreadGroup().getName());
+			System.out.println(Thread.currentThread().getThreadGroup().getParent().getName());
+		}
+	}
+	
+	Output:
+		main
+		system
+	
+	ThreadGroup is a java class. Present in java.lang package and it's the direct child class of object.
+	
+	Constructors:
+		1. ThreadGroup g = new ThreadGroup(String groupName);
+		
+	Example:
+		ThreadGroup g = new ThreadGroup("First Group");
+		System.out.println(g.getParent().getName());
+		
+	Output: main
+	
+	Creates a new thread group with the specified group name.
+	The parent of this new group is the thread group of currently executing thread.
+	
+	2. ThreadGroup g = new ThreadGroup(ThreadGroup g, String name);
+	
+		Creates a new ThreadGroup with the specified group name. The parent of this new Thread group is specified parent group.
+	
+	Example:
+		ThreadGroup g1 = new ThreadGroup("First Group");
+		System.out.println(g1.getParent().getName());
+		ThreadGroup g2 = new ThreadGroup(g1, "Second Group");
+		System.out.println(g2.getParent().getName());
+	
+	Output:
+		main
+		First Group
+		
+	Important methods of ThreadGroup class:
+		1. String getName(): returns name of the thread group.
+		2. int getMaxPriority(): returns max priority of thread group.
+		3. void setMaxPriority(int p): to set maximum priority of thread group. The default max priority of thread group is 10.
+		
+	Threads in the thread group that already have higher priority won't be affected but for newly added thread this max priority is applicable.
+	
+	Example:
+		public class Test {
+			public static void main(String[] args) {
+				ThreadGroup g1 = new ThreadGroup("tg");
+				Thread t1 = new Thread(g1, "First Group");
+				Thread t2 = new Thread(g1, "Second Group");
+				g1.setMaxPriority(3);
+				Thread t3 = new Thread(g1, "Third Group");
+				System.out.println(t1.getPriority());	// Output: 5
+				System.out.println(t2.getPriority());	// Output: 5
+				System.out.println(t3.getPriority());	// Output: 3
+			}
+		}
+		
+		4. ThreadGroup getParent(): Returns Parent group of current thread.
+		5. void list(): It prints information about thread group to the console.
+		6. int activeCount(): Returns no of active threads present in the ThreadGroup.
+		7. int activeGroupCount(): It Returns no of active groups present in the current ThreadGroup.
+		8. int enumerate(Thread[] t): To copy all active threads of this thread group into provided thread array. In this case sub thread group threads
+		also will be consider.
+		9. int enumerate(ThreadGroup[] g): To copy all active sub thread groups into ThreadGroup[].
+		10. boolean isDaemon(): To check whether the thread group is daemon or not.
+		11. void setDaemon(boolean b):
+		12. void interrupt(): To interrupt all waiting or sleeping thread present in the thread group.
+		13. void destroy(): To destroy thread group and it's sub thread groups.
+		
+		Example:
+			public class ThreadGroupDemo {
+				public static void main(String[] args) throws InterruptedException {
+					ThreadGroup pg = new ThreadGroup("ParentGroup");
+					ThreadGroup cg = new ThreadGroup(pg, "ChildGroup");
+					MyThread t1 = new MyThread(pg, "ChildThread1");
+					MyThread t2 = new MyThread(pg, "ChildThread2");
+					t1.start();
+					t2.start();
+					System.out.println(pg.activeCount());
+					System.out.println(pg.activeGroupCount());
+					pg.list();
+					Thread.sleep(10000);
+					System.out.println(pg.activeCount());
+					System.out.println(pg.activeGroupCount());
+					pg.list();
+				}
+			}
+
+			class MyThread extends Thread {
+				MyThread(ThreadGroup g, String name) {
+					super(g, name);
+				}
+
+				public void run() {
+					System.out.println("Child Thread");
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+			
+		Output:
+			2
+			1
+			Child Thread
+			Child Thread
+			java.lang.ThreadGroup[name=ParentGroup,maxpri=10]
+				Thread[#21,ChildThread1,5,ParentGroup]
+				Thread[#22,ChildThread2,5,ParentGroup]
+				java.lang.ThreadGroup[name=ChildGroup,maxpri=10]
+			0
+			1
+			java.lang.ThreadGroup[name=ParentGroup,maxpri=10]
+				java.lang.ThreadGroup[name=ChildGroup,maxpri=10]
+
+
+	Write a program to display all active thread names belongs to System group and it's child groups.
+	public class ThreadGroupDemo1 {
+		public static void main(String[] args) {
+			ThreadGroup system = Thread.currentThread().getThreadGroup().getParent();
+			Thread[] t = new Thread[system.activeCount()];
+			system.enumerate(t);
+			for(Thread t1 : t) {
+				System.out.println("Name of thread: " + t1.getName() + " , isDaemon: " + t1.isDaemon());
+			}
+		}
+	}
+	
+	Output:
+		Name of thread: main , isDaemon: false
+		Name of thread: Reference Handler , isDaemon: true
+		Name of thread: Finalizer , isDaemon: true
+		Name of thread: Signal Dispatcher , isDaemon: true
+		Name of thread: Attach Listener , isDaemon: true
+		Name of thread: Common-Cleaner , isDaemon: true
+		Name of thread: Notification Thread , isDaemon: true
+		
+	java.util.concurrent package:
+		The problems with traditional synchronized keyword:
+			1. We are not having any flexibility to try for a lock without waiting.
+			2. There is no way to specify maximum waiting time for a thread to get lock so that thread will wait until getting the lock which may
+			creates performance problem which may cause deadlock.
+			3. If a thread releases the lock then which waiting thread will that lock we are not having any control on this.
+			4. There is no api to list out all waiting thread for a lock.
+			5. The synchronized keyword compulsory we have to use either at method level or within the method and it's not possible to use across
+			multiple methods.
+			6. To overcome these problems sun people introduced java.util.concurrent.locks package in 1.5 version. It also provide several
+			enhancements to the program to provide more control on concurrency.
+			
+	Lock(I): Lock object is similar to implicit lock acquired by a thread to execute synchronized method synchronized block.
+			Lock implementation provide more extensive operation than traditional implicit locks.
+			
+	Important methods of lock interface: 
+		1. void lock(): We can use this method to acquired a lock. If lock is already available then immediately current thread will get that lock.
+		if the lock is not already available then it'll wait until getting the lock. It's exactly same behaviour of traditional synchronized keyword.
+		
+		2. boolean tryLock(): To acquired the lock without waiting. If the lock is available then the thread acquires the lock and returns true.
+		If the lock is not available then this method returns false and continue it's execution without waiting. In this case thread never be entered
+		into waiting state.
+		if(l.tryLock) {
+			perform safe operations
+		} else {
+			perform alternative operations
+		}
+		
+		3. boolean tryLock(long time, TimeUnit unit): If lock is available then the thread will get the lock and continue it's execution.
+		If the lock is not available then the thread will wait until specified amount of time. Still if the lock is not available then thread can
+		continue it's execution.
+		
+		TimeUnit: TimeUnit is an enum, present in java.util.concurrent package.
+			enum TimeUnit {
+				NANOSECONDS
+				MICROSECONDS
+				MILLISECONDS
+				SECONDS
+				MINUTES
+				HOURS
+				DAYS
+			}
+			
+		Example:
+			if(l.tryLock(1000, TimeUnit.MILLISECONDS))
+			
+		4. void lockInterruptibly(): Acquires the lock if it's available and returns immediately. If the lock is not available then it'll wait.
+		While waiting if the thread is interpreted then thread won't get the lock.
+		
+		5. void unlock(): To releases the lock. To call this method compulsory current thread should be owner of the lock. Otherwise we'll get RTE
+		saying IllegalMonitorStateException.
+		
+	ReentrantLock(C): It's the implementation class of Lock interface and it's the direct child class of Object. 
+	Reentrant means a thread can acquired same lock multiple time without any issue. Internally ReentrantLock increments threads personal count whenever
+	we call lock method and decrement count value whenever thread call unlock method and lock will be released whenever count reaches 0.
+	
+	Constructors: 
+		1. ReentrantLock l = new ReentrantLock(): Creates an instance of ReentrantLock
+		2. ReentrantLock l = new ReentrantLock(boolean, fairness): Creates ReentrantLock with the given fairness policy. If the fairness is true then
+		longest waiting thread can acquired the lock if it's available. That's it follow first come first serve policy. If the fairness is false
+		then which waiting thread will get the chance we can't expect. Default value for fairness is false.
+		
+		Which of the following declarations are equal?
+		ReentrantLock l = new ReentrantLock();		// Valid
+		ReentrantLock l = new ReentrantLock(true);
+		ReentrantLock l = new ReentrantLock(false); // Valid
+		All of the above
+		
+	Important methods of ReentrantLock: 
+		1. void lock()
+		2. boolean tryLock()
+		3. boolean tryLock(long l, TimeUnit t)
+		4. void lockInterruptibly()
+		5. void unlock()
+		6. int getHoldCount(): Returns no of holds on this lock by current thread.
+		7. boolean isHeldByCurrentThread(): Returns true if and only if lock is hold by current thread
+		8. int getQueuedLength(): Returns no of threads waiting for the lock.
+		9. Collection getQueuedThreads(): It returns a collection of threads which are waiting to get the lock.
+		9. boolean hasQueuedThreads(): Returns true if any thread waiting to get the lock.
+		10. boolean isLocked(): Returns true if the lock is acquired by some thread.
+		11. boolean isFair(): Returns true if the fairness policy is set with true value.
+		12. Thread getOwner(): Returns the thread which acquires the lock.
+		
+	Example:
+		public class ReentrantLock {
+			public static void main(String[] args) {
+				ReentrantLock l = new ReentrantLock();
+				l.lock();
+				l.lock();
+				System.out.println(l.isLocked());	// true
+				System.out.println(l.isHeldByCurrentThread()); // true
+				System.out.println(l.getQueueLength());		// 0
+				l.unlock();
+				System.out.println(l.getHoldCount());	// 1
+				System.out.println(l.isLocked());	// true
+				l.unlock();
+				System.out.println(l.isLocked());	// false
+				System.out.println(l.isFair());		// false
+			}
+		}
+		
+	Example:
+		import java.util.concurrent.locks.ReentrantLock;
+		public class ReentrantLock1 {
+			public static void main(String[] args) {
+				Display d = new Display();
+				MyThread t1 = new MyThread(d, "Dhoti");
+				MyThread t2 = new MyThread(d, "YuvRaj");
+				MyThread t3 = new MyThread(d, "Kohl");
+				MyThread t4 = new MyThread(d, "Raina");
+				t1.start();
+				t2.start();
+				t3.start();
+				t4.start();
+			}
+		}
+
+		class Display {
+			ReentrantLock l = new ReentrantLock();
+			public void wish(String name) {
+				l.lock();	// line 1
+				for (int i = 0; i < 10; i++) {
+					System.out.print("Good Morning: ");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+					System.out.println(name);
+				}
+				l.unlock();	// line 2
+			}
+		}
+
+		class MyThread extends Thread {
+			Display d;
+			String name;
+			MyThread(Display d, String name) {
+				this.d = d;
+				this.name = name;
+			}
+			public void run() {
+				d.wish(name);
+			}
+		}
+		
+	Output:
+		Good Morning: Dhoti
+		Good Morning: Dhoti
+		Good Morning: Dhoti
+		Good Morning: YuvRaj
+		Good Morning: YuvRaj
+		Good Morning: YuvRaj
+		Good Morning: Kohl
+		Good Morning: Kohl
+		Good Morning: Kohl
+		Good Morning: Kohl
+		Good Morning: Raina
+		Good Morning: Raina
+		Good Morning: Raina
+		
+		If we comment line 1 and line 2, then the thread will executed simultaneously and we'll get irregular output.
+		If we are not commenting lines 1 & 2, then the threads will be executed one by one and we'll get regular output.
+		
+	Demo program for tryLock() method:
+		public class ReentrantLock2 {
+			public static void main(String[] args) {
+				MyThread1 t1 = new MyThread1("First Thread");
+				MyThread1 t2 = new MyThread1("Second Thread");
+				t1.start();
+				t2.start();
+			}
+		}
+
+		class MyThread1 extends Thread {
+			static ReentrantLock l = new ReentrantLock();
+			MyThread1(String name) {
+				super(name);
+			}
+
+			public void run() {
+				if (l.tryLock()) {
+					System.out.println(Thread.currentThread().getName() + " ...got lock and performing safe operations");
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+					}
+					l.unlock();
+				} else {
+					System.out.println(Thread.currentThread().getName()
+							+ " ...unable to get lock and hence performing alternative operations");
+				}
+			}
+		}
+	
+	Example:
+		public class ReentrantLock3 {
+			public static void main(String[] args) {
+				MyThread2 t1 = new MyThread2("First Thread");
+				MyThread2 t2 = new MyThread2("Second Thread");
+				t1.start();
+				t2.start();
+			}
+		}
+
+		class MyThread2 extends Thread {
+			static ReentrantLock l = new ReentrantLock();
+			MyThread2(String name) {
+				super(name);
+			}
+			public void run() {
+				do {
+					try {
+						if (l.tryLock(5000, TimeUnit.MILLISECONDS)) {
+							System.out.println(Thread.currentThread().getName() + " ...got lock");
+							Thread.sleep(30000);
+							l.unlock();
+							System.out.println(Thread.currentThread().getName() + " ...releases lock");
+							break;
+						} else {
+							System.out.println(Thread.currentThread().getName() + " ...unable to get lock and will try again");
+						}
+					} catch (InterruptedException e) {
+					}
+				} while (true);
+			}
+		}
+		
+	Output:
+		First Thread ...got lock
+		Second Thread ...unable to get lock and will try again
+		Second Thread ...unable to get lock and will try again
+		Second Thread ...unable to get lock and will try again
+		Second Thread ...unable to get lock and will try again
+		Second Thread ...unable to get lock and will try again
+		Second Thread ...got lock
+		First Thread ...releases lock
+		Second Thread ...releases lock
+		
+	Thread Pools (Executor Framework): Creating a new thread for every job may creates performance & memory problem. To overcome this we should go
+	for thread pool. Thread Pool is a pool of already created threads ready to do our job. Java 1.5 version introduces thread pool frameworks to 
+	implement thread pool. Thread pool framework also known as Executor Framework.
+	
+	We can create a thread pool as follows.
+	
+	ExecutorService service = Executor.newFixedThreadPool(3);
+	
+	We can submit a runnable job by using submit method.
+	service.submit(job);
+	
+	We can shutdown ExecutorService by using shutdown method.
+	service.shutdown();
+	
+	Example:
+		public class ExecutorDemo {
+			public static void main(String[] args) {
+				PrintJob[] jobs = {new PrintJob("Parvin"),
+						new PrintJob("Dheeraj"),
+						new PrintJob("Suman"),
+						new PrintJob("Deepak"),
+						new PrintJob("Jai"),
+						new PrintJob("Jyoti")};
+				ExecutorService service = Executors.newFixedThreadPool(3);
+				for(PrintJob job : jobs) {
+					service.submit(job);
+				}
+				service.shutdown();
+			}
+		}
+
+		class PrintJob implements Runnable {
+			String name;
+			PrintJob(String name) {
+				this.name = name;
+			}
+			public void run() {
+				System.out.println(name + " ...Job started by Thread: " + Thread.currentThread().getName());
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {}
+				System.out.println(name + " ...Job Completed by Thread: " + Thread.currentThread().getName());
+			}
+		}
+		
+	Output:
+		Suman ...Job started by Thread: pool-1-thread-3
+		Parvin ...Job started by Thread: pool-1-thread-1
+		Dheeraj ...Job started by Thread: pool-1-thread-2
+		Suman ...Job Completed by Thread: pool-1-thread-3
+		Dheeraj ...Job Completed by Thread: pool-1-thread-2
+		Parvin ...Job Completed by Thread: pool-1-thread-1
+		Deepak ...Job started by Thread: pool-1-thread-3
+		Jai ...Job started by Thread: pool-1-thread-2
+		Jyoti ...Job started by Thread: pool-1-thread-1
+		Jyoti ...Job Completed by Thread: pool-1-thread-1
+		Deepak ...Job Completed by Thread: pool-1-thread-3
+		Jai ...Job Completed by Thread: pool-1-thread-2
+	
+	In the above example, 3 threads are responsible to execute 6 Jobs. So that a single thread can be reused for multiple jobs.
+	
+	Note: While Developing/Designing web servers & application servers we can use thread pool concept.
+	
+	Callable & Future: In the case of Runnable job thread won't return anything after completing the job.
+		If a thread is required to return some result after execution then we should go for Callable.
+		Callable interface contains only one method: call
+		
+		public Object call() throws Exception
+		
+		If we submit Callable object to executor then after completing the job thread returns an Object of the type Future. That's Future object
+		can be used to retrieve the result from callable job.
+		
+	Example:
+		import java.util.concurrent.Callable;
+		import java.util.concurrent.ExecutorService;
+		import java.util.concurrent.Executors;
+		import java.util.concurrent.Future;
+
+		public class CallableFutureDemo {
+			public static void main(String[] args) throws Exception {
+				MyCallable[] jobs = {new MyCallable(10),
+						new MyCallable(20),
+						new MyCallable(30),
+						new MyCallable(40),
+						new MyCallable(50),
+						new MyCallable(60)};
+				ExecutorService service = Executors.newFixedThreadPool(3);
+				for(MyCallable job : jobs) {
+					Future<Object> f =service.submit(job);
+					System.out.println(f.get());
+				}
+				service.shutdown();
+			}
+		}
+
+		class MyCallable implements Callable<Object> {
+			int num;
+			MyCallable(int num) {
+				this.num = num;
+			}
+			public Object call() throws Exception {
+				System.out.println(Thread.currentThread().getName() + " is ...responsible to find sum of " + num + " numbers");
+				int sum = 0;
+				for(int i = 1; i <= num; i++) {
+					sum = sum+i;
+				}
+				return sum;
+			}
+		}
+	Output:
+		pool-1-thread-1 is ...responsible to find sum of 10 numbers
+		55
+		pool-1-thread-2 is ...responsible to find sum of 20 numbers
+		210
+		pool-1-thread-3 is ...responsible to find sum of 30 numbers
+		465
+		pool-1-thread-1 is ...responsible to find sum of 40 numbers
+		820
+		pool-1-thread-2 is ...responsible to find sum of 50 numbers
+		1275
+		pool-1-thread-3 is ...responsible to find sum of 60 numbers
+		1830
+
+		
+	Difference between Runnable & Callable: 
+	Runnable:
+		If a thread is not required to return anything after completing the job then we should go for Runnable
+		Runnable interface contains only one method: run()
+		Runnable job not required to return anything and hence return type of run method is void.
+		Within the run method if there is any chance of raising checked exception, compulsory we should handle by using try-catch because we can't
+		use throws keyword for run method.
+		Runnable interface present in java.lang package.
+		Introduced in 1.0 version.
+		
+	Callable:
+		If a thread required to return something after completing the job then we should go for Callable.
+		Callable interface contains only one method: call()
+		Callable job is required to return something and hence return type of call method is Object.
+		Within call method if there is any chance of raising checked exception, we are not required to handle by using try-catch because call method
+		already throws exception
+		Callable interface present in java.util.concurrent package.
+		Introduced in 1.5 version.
+		
+	ThreadLocal: ThreadLocal class provides thread local variables. ThreadLocal class maintain values per thread basis. Each thread local object
+	maintains a separate value like userId, transactionId etc. for each thread that accesses that object.
+	
+	Thread can access it's local value, can manipulate it's value and even can remove it's value. In every part of the code which is executed by 
+	the thread we can access it's local variable. example: consider a servlet which invokes come business methods. we have a requirement to generate
+	a unique transactionId for each and every request and we have to pass this transactionId to the business methods. For this requirement we can 
+	use thread local to maintain a separate transactionId for every request. that's for every thread.
+	
+	Note:
+		1. ThreadLocal class introduced in 1.2 version and enhanced in 1.5 version. ThreadLocal can be associate with thread scope.
+		2. Total code which is executed by the thread has access to the corresponding ThreadLocal variable.
+		3. A thread can access it's own local variables and can't access other threads local variables.
+		4. Once thread entered into dead state all it's local variable are eligible for garbage collection.
+		
+	Constructor:
+		ThreadLocal tl = new ThreadLocal(): Creates a thread local variable.
+		
+	Methods:
+		1. Object get(): Returns the value of ThreadLocal variable associated with current thread.
+		2. Object initialValue(): Returns initial value of ThreadLocal variable associated with current thread.
+			The default implementation of this value is null. To customized our own initial value we have to override this method.
+		3. void set(Object newValue): To set a new value.
+		4. void remove(): To remove the value of ThreadLocal variable associate with current thread. It's newly added method in 1.5 version.
+			After removal if we are trying to access, it'll be reinitialise once again by invoking it's initial value method.
+		
+	Example:
+		public class ThreadLocalDemo {
+			public static void main(String[] args) {
+				ThreadLocal tl = new ThreadLocal();
+				System.out.println(tl.get()); // null
+				tl.set("Dheeraj");
+				System.out.println(tl.get()); // Dheeraj
+				tl.remove();
+				System.out.println(tl.get()); // null
+			}
+		}
+		
+	Overriding of initialValue method:
+		public class ThreadLocalDemo1A {
+			public static void main(String[] args) {
+				ThreadLocal tl = new ThreadLocal() {
+					public Object initialValue() {
+						return "abc";
+					}
+				};
+				System.out.println(tl.get()); // abc
+				tl.set("Dheeraj");
+				System.out.println(tl.get()); // Dheeraj
+				tl.remove();
+				System.out.println(tl.get()); // abc
+			}
+		}
+	
+	Example:
+		public class ThreadLocalDemo2 {
+			public static void main(String[] args) {
+				CustomerThread c1 = new CustomerThread("Customer Thread-1");
+				CustomerThread c2 = new CustomerThread("Customer Thread-2");
+				CustomerThread c3 = new CustomerThread("Customer Thread-3");
+				CustomerThread c4 = new CustomerThread("Customer Thread-4");
+				c1.start();
+				c2.start();
+				c3.start();
+				c4.start();
+			}
+		}
+		class CustomerThread extends Thread {
+			static Integer custId = 0;
+			private static ThreadLocal tl = new ThreadLocal() {
+				protected Integer initialValue() {
+					return ++custId;
+				}
+			};
+			CustomerThread(String name) {
+				super(name);
+			}
+			public void run() {
+				System.out.println(Thread.currentThread().getName() + " executing with Customer id: " + tl.get());
+			}
+		}
+		
+	Output:
+		Customer Thread-1 executing with Customer id: 1
+		Customer Thread-4 executing with Customer id: 4
+		Customer Thread-2 executing with Customer id: 2
+		Customer Thread-3 executing with Customer id: 3
+		
+	In the above program for every customer thread a separate customerId will be maintained by ThreadLocal object.
+	
+	public class ThreadLocalInherit {
+		public static void main(String[] args) {
+			ParentThread pt = new ParentThread();
+			pt.start();
+		}
+	}
+
+	class ParentThread extends Thread {
+		static ThreadLocal tl = new ThreadLocal();
+		public void run() {
+			tl.set("PP");
+			System.out.println("Parent Value: " + tl.get());
+			ChildThread ct = new ChildThread();
+			ct.start();
+		}
+	}
+
+	class ChildThread extends Thread {
+		public void run() {
+			System.out.println("Child Value: " + ParentThread.tl.get());
+		}
+	}
+	
+	Output:
+		Parent Value: PP
+		Child Value: null
+	
+	public class ThreadLocalInherit {
+		public static void main(String[] args) {
+			ParentThread pt = new ParentThread();
+			pt.start();
+		}
+	}
+
+	class ParentThread extends Thread {
+		static InheritableThreadLocal tl = new InheritableThreadLocal();
+		public void run() {
+			tl.set("PP");
+			System.out.println("Parent Value: " + tl.get());
+			ChildThread ct = new ChildThread();
+			ct.start();
+		}
+	}
+
+	class ChildThread extends Thread {
+		public void run() {
+			System.out.println("Child Value: " + ParentThread.tl.get());
+		}
+	}
+	
+	Output:
+		Parent Value: PP
+		Child Value: PP
+		
+	ThreadLocal vs Inheritance:
+		Parent threads ThreadLocal by default not available to the child thread. If we want to make Parent threads local variable value available 
+		to the child thread then we should go for InheritableThreadLocal class.
+		
+		By default child thread value is exactly same as parent threads value but we can provide customized value by overriding childValue method.
+		
+	Constructor:
+		InheritableThreadLocal tl = new InheritableThreadLocal(): 
+	
+	Methods:
+		InheritableThreadLocal is the child class of ThreadLocal. and hence all methods present in ThreadLocal by default available to InheritableThreadLocal
+		In addition to these method it contain only one method.
+		
+		public Object childValue(Object parentValue)
+	
+	Example:
+		
+	public class ThreadLocalInherit {
+		public static void main(String[] args) {
+			ParentThread pt = new ParentThread();
+			pt.start();
+		}
+	}
+
+	class ParentThread extends Thread {
+		static InheritableThreadLocal tl = new InheritableThreadLocal() {
+			public Object childValue(Object p) {
+				return "CC";
+			}
+		};
+		public void run() {
+			tl.set("PP");
+			System.out.println("Parent Value: " + tl.get());
+			ChildThread ct = new ChildThread();
+			ct.start();
+		}
+	}
+
+	class ChildThread extends Thread {
+		public void run() {
+			System.out.println("Child Value: " + ParentThread.tl.get());
+		}
+	}
+	
+	Output:
+		Parent Value: PP
+		Child Value: CC
+		
+	In the above program if we are replace InheritableThreadLocal with ThreadLocal and if we are not overriding childValue method then output is
+	Parent Value: PP
+	Child Value: null
+	
+	In the above problem if we maintaining InheritableThreadLocal and if we are not overriding child value method then output is
+	Parent Value: PP
+	Child Value: PP
