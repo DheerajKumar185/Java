@@ -683,19 +683,19 @@ Multitasking:
 			
 		In the above example interrupt call waited until child thread completes for loop 10000 times.
 	
-________________________________________________________________________________________________________________________________________
-Property		| 	yield		| join		| sleep									|
-------------------------|-----------------------|---------------|-----------------------------------------------------------------------|
-1. Purpose		|			|		|									|
-yield: If a thread want to pass to it's execution to give the chance for remain thread's of same priority then we should go for yield method|
-join: If a thread want's to wait until completing some other thread then we should go for join method.					|
-sleep: If a thread don't want to perform any operation for a particular amount of time then we should go for sleep method.		|
-2. Is it Overloaded	| No			| Yes		| Yes									|
-3. Is it final		| No			| Yes		| No									|
-4. It is throws IE	| No			| Yes		| Yes									|
-5. Is is Native		| Yes			| No		| Sleep(long ms) - Yes, sleep(long ms, int ns) - No			|
-6. Is it static		| Yes			| No		| Yes									|
-------------------------|-----------------------|---------------|-----------------------------------------------------------------------|
+________________________________________________________________________________________________________________________________________________
+Property		| 	yield		| join		| sleep										|
+------------------------|-----------------------|---------------|-------------------------------------------------------------------------------|
+1. Purpose		|			|		|										|
+yield: If a thread want to pass to it's execution to give the chance for remain thread's of same priority then we should go for yield method.	|
+join: If a thread want's to wait until completing some other thread then we should go for join method.						|
+sleep: If a thread don't want to perform any operation for a particular amount of time then we should go for sleep method.			|
+2. Is it Overloaded	| No			| Yes		| Yes										|
+3. Is it final		| No			| Yes		| No										|
+4. It is throws IE	| No			| Yes		| Yes										|
+5. Is is Native		| Yes			| No		| Sleep(long ms) - Yes, sleep(long ms, int ns) - No				|
+6. Is it static		| Yes			| No		| Yes										|
+------------------------|-----------------------|---------------|-------------------------------------------------------------------------------|
 
 
 Synchronization:
