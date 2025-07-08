@@ -1020,7 +1020,7 @@ Synchronization Block:
 	Note: Lock concept applicable for Object types and class types but not for primitives hence we can't pass primitives type as argument to synchronized
 	block otherwise we'll get CTE saying Unexpected type found int required reference.
 
-FAQ's
+	FAQ's
 	1. What's synchronized keyword? Where we can apply?
 	Ans. synchronized is a modifier applicable for methods and block but not for variables and class.
 	2. Explain advantage of synchronized keyword.
@@ -1503,57 +1503,54 @@ Thread Group:
 		Name of thread: Notification Thread , isDaemon: true
 		
 	java.util.concurrent package:
-		The problems with traditional synchronized keyword:
-			1. We are not having any flexibility to try for a lock without waiting.
-			2. There is no way to specify maximum waiting time for a thread to get lock so that thread will wait until getting the lock which may
-			creates performance problem which may cause deadlock.
-			3. If a thread releases the lock then which waiting thread will that lock we are not having any control on this.
-			4. There is no api to list out all waiting thread for a lock.
-			5. The synchronized keyword compulsory we have to use either at method level or within the method and it's not possible to use across
-			multiple methods.
-			6. To overcome these problems sun people introduced java.util.concurrent.locks package in 1.5 version. It also provide several
-			enhancements to the program to provide more control on concurrency.
+	The problems with traditional synchronized keyword:
+		1. We are not having any flexibility to try for a lock without waiting.
+		2. There is no way to specify maximum waiting time for a thread to get lock so that thread will wait until getting the lock which may creates performance problem which may cause deadlock.
+		3. If a thread releases the lock then which waiting thread will that lock we are not having any control on this.
+		4. There is no api to list out all waiting thread for a lock.
+		5. The synchronized keyword compulsory we have to use either at method level or within the method and it's not possible to use across multiple methods.
+		6. To overcome these problems sun people introduced java.util.concurrent.locks package in 1.5 version. It also provide several enhancements to the program to provide more control on concurrency.
 			
 	Lock(I): Lock object is similar to implicit lock acquired by a thread to execute synchronized method synchronized block.
-			Lock implementation provide more extensive operation than traditional implicit locks.
+	Lock implementation provide more extensive operation than traditional implicit locks.
 			
 	Important methods of lock interface: 
-		1. void lock(): We can use this method to acquired a lock. If lock is already available then immediately current thread will get that lock.
-		if the lock is not already available then it'll wait until getting the lock. It's exactly same behaviour of traditional synchronized keyword.
+	1. void lock(): We can use this method to acquired a lock. If lock is already available then immediately current thread will get that lock.
+	if the lock is not already available then it'll wait until getting the lock. It's exactly same behaviour of traditional synchronized keyword.
 		
-		2. boolean tryLock(): To acquired the lock without waiting. If the lock is available then the thread acquires the lock and returns true.
-		If the lock is not available then this method returns false and continue it's execution without waiting. In this case thread never be entered
-		into waiting state.
-		if(l.tryLock) {
-			perform safe operations
-		} else {
-			perform alternative operations
+	2. boolean tryLock(): To acquired the lock without waiting. If the lock is available then the thread acquires the lock and returns true.
+	If the lock is not available then this method returns false and continue it's execution without waiting. In this case thread never be entered
+	into waiting state.
+	if(l.tryLock) {
+		perform safe operations
+	} else {
+		perform alternative operations
+	}
+		
+	3. boolean tryLock(long time, TimeUnit unit): If lock is available then the thread will get the lock and continue it's execution.
+	If the lock is not available then the thread will wait until specified amount of time. Still if the lock is not available then thread can
+	continue it's execution.
+		
+	TimeUnit: TimeUnit is an enum, present in java.util.concurrent package.
+		enum TimeUnit {
+			NANOSECONDS
+			MICROSECONDS
+			MILLISECONDS
+			SECONDS
+			MINUTES
+			HOURS
+			DAYS
 		}
-		
-		3. boolean tryLock(long time, TimeUnit unit): If lock is available then the thread will get the lock and continue it's execution.
-		If the lock is not available then the thread will wait until specified amount of time. Still if the lock is not available then thread can
-		continue it's execution.
-		
-		TimeUnit: TimeUnit is an enum, present in java.util.concurrent package.
-			enum TimeUnit {
-				NANOSECONDS
-				MICROSECONDS
-				MILLISECONDS
-				SECONDS
-				MINUTES
-				HOURS
-				DAYS
-			}
 			
-		Example:
-			if(l.tryLock(1000, TimeUnit.MILLISECONDS))
-			
-		4. void lockInterruptibly(): Acquires the lock if it's available and returns immediately. If the lock is not available then it'll wait.
-		While waiting if the thread is interpreted then thread won't get the lock.
+	Example:
+		if(l.tryLock(1000, TimeUnit.MILLISECONDS))
 		
-		5. void unlock(): To releases the lock. To call this method compulsory current thread should be owner of the lock. Otherwise we'll get RTE
-		saying IllegalMonitorStateException.
-		
+	4. void lockInterruptibly(): Acquires the lock if it's available and returns immediately. If the lock is not available then it'll wait.
+	While waiting if the thread is interpreted then thread won't get the lock.
+	
+	5. void unlock(): To releases the lock. To call this method compulsory current thread should be owner of the lock. Otherwise we'll get RTE
+	saying IllegalMonitorStateException.
+	
 	ReentrantLock(C): It's the implementation class of Lock interface and it's the direct child class of Object. 
 	Reentrant means a thread can acquired same lock multiple time without any issue. Internally ReentrantLock increments threads personal count whenever
 	we call lock method and decrement count value whenever thread call unlock method and lock will be released whenever count reaches 0.
@@ -1892,21 +1889,21 @@ Thread Group:
 	use thread local to maintain a separate transactionId for every request. that's for every thread.
 	
 	Note:
-		1. ThreadLocal class introduced in 1.2 version and enhanced in 1.5 version. ThreadLocal can be associate with thread scope.
-		2. Total code which is executed by the thread has access to the corresponding ThreadLocal variable.
-		3. A thread can access it's own local variables and can't access other threads local variables.
-		4. Once thread entered into dead state all it's local variable are eligible for garbage collection.
+	1. ThreadLocal class introduced in 1.2 version and enhanced in 1.5 version. ThreadLocal can be associate with thread scope.
+	2. Total code which is executed by the thread has access to the corresponding ThreadLocal variable.
+	3. A thread can access it's own local variables and can't access other threads local variables.
+	4. Once thread entered into dead state all it's local variable are eligible for garbage collection.
 		
 	Constructor:
 		ThreadLocal tl = new ThreadLocal(): Creates a thread local variable.
 		
 	Methods:
-		1. Object get(): Returns the value of ThreadLocal variable associated with current thread.
-		2. Object initialValue(): Returns initial value of ThreadLocal variable associated with current thread.
-			The default implementation of this value is null. To customized our own initial value we have to override this method.
-		3. void set(Object newValue): To set a new value.
-		4. void remove(): To remove the value of ThreadLocal variable associate with current thread. It's newly added method in 1.5 version.
-			After removal if we are trying to access, it'll be reinitialise once again by invoking it's initial value method.
+	1. Object get(): Returns the value of ThreadLocal variable associated with current thread.
+	2. Object initialValue(): Returns initial value of ThreadLocal variable associated with current thread.
+	   The default implementation of this value is null. To customized our own initial value we have to override this method.
+	3. void set(Object newValue): To set a new value.
+	4. void remove(): To remove the value of ThreadLocal variable associate with current thread. It's newly added method in 1.5 version.
+	   After removal if we are trying to access, it'll be reinitialise once again by invoking it's initial value method.
 		
 	Example:
 		public class ThreadLocalDemo {
